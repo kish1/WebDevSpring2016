@@ -7,9 +7,9 @@ app.get('/', function(req, res){
     //res.send('Hello World');
     res.sendFile(path.join(__dirname + '/index.html'));
 });
-app.get('/public/assignment/', function(req, res){
+app.get('/assignment/home.html', function(req, res){
     //res.send('Hello World');
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile(path.join(__dirname + '/assignment/home.html'));
 });
 
 app.listen(port, ipaddress);
