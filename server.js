@@ -3,13 +3,10 @@ var app = express();
 app.use(express.static(__dirname + '/public'));
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+/*
 app.get('/', function(req, res){
-    //res.send('Hello World');
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.send('Hello World');
+    //res.sendFile(path.join(__dirname + '/index.html'));
 });
-app.get('/assignment/home.html', function(req, res){
-    //res.send('Hello World');
-    res.sendFile(path.join(__dirname + '/assignment/home.html'));
-});
-
+*/
 app.listen(port, ipaddress);
