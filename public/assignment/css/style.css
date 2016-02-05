@@ -2,3 +2,13 @@
 {
     text-align: left;
 }
+
+table
+{
+    max-width: none;
+}
+
+th
+{
+    background-color: #cacaca;
+}
