@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assignment/css/dashboard.css" rel="stylesheet">
+    <link href="/assignment/css/style.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <title>Forms</title>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/assignment/home.html">Form Maker</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/assignment/profile.html">Username</a></li>
+                <li><a href="/assignment/login.html">Logout</a></li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+        <li><a href="/assignment/home.html">Home</a></li>
+        <li><a href="/assignment/profile.html">Profile</a></li>
+        <li><a href="/assignment/admin.html">Admin</a></li>
+        <li class="active"><a href="/assignment/forms.html">Forms<span class="sr-only">(current)</span></a></li>
+    </ul>
+</div>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Forms : Registration Form</h1>
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="/assignment/forms.html">Forms</a></li>
+        <li role="presentation" class="active"><a href="/assignment/form-fields.html">Fields</a></li>
+    </ul>
+    <br>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="first_name" class="col-sm-2 control-label">First Name:</label>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="first_name" placeholder="First Name">
+            </div>
+                <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+            </div>
+
+        <div class="form-group">
+            <label for="last_name" class="col-sm-2 control-label">Last Name:</label>
+        </div>
+        <div class="row form-group">
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="last_name" placeholder="Last Name">
+            </div>
+
+                <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+        </div>
+
+        <div class="form-group">
+            <label for="dob" class="col-sm-2 control-label">Date of Birth:</label>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                <input type="date" class="form-control" id="dob" placeholder="Select Date">
+            </div>
+            <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Gender:</label>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                <select id="full-width">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Roles:</label>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                <div class="checkbox">
+                    <label><input type="checkbox" checked="checked" value="Admin">Admin</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="Student">Student</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" checked="checked" value="User">User</label>
+                </div>
+            </div>
+            <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">License Agreement:</label>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                <div class="radio">
+                    <label><input type="radio" checked="checked" name="license" value="Yes">Yes</label>
+                </div>
+                    <div class="radio"><label><input type="radio" name="license" value="No">No</label>
+                </div>
+            </div>
+            <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Add New Field:</label>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                <select id="full-width">
+                    <option value="Single Line Text">Single Line Text</option>
+                    <option value="Date">Date</option>
+                    <option value="Dropdown">Dropdown</option>
+                    <option value="Checkboxes">Checkboxes</option>
+                    <option value="Radio buttons">Radio buttons</option>
+                    <option value="Paragraph Text Field">Paragraph Text Field</option>
+                </select>
+            </div>
+            <a href="" class="glyphicon glyphicon-align-justify pull-right" id="hidden-icon"></a>
+            <a href="" class="glyphicon glyphicon-remove pull-right" id="hidden-icon"></a>
+            <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+            <a href="" class="glyphicon glyphicon-pencil pull-right" id="hidden-icon"></a>
+        </div>
+
+
+    </form>
+
+
+</div>
+</body>
+</html>

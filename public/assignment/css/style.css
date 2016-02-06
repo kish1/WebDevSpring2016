@@ -13,23 +13,21 @@ th
     background-color: #cacaca;
 }
 
-#left-icon
-{
-
-    float: left;
-    font-size: large;
-}
-
-#right-icon
-{
-    float: right;
-    font-size: large;
-}
-
 #center-icon
 {
+    text-align: center;
+    font-size: x-large;
+}
 
-    font-size: large;
+#big-icon
+{
+    font-size: x-large;
+}
+
+#hidden-icon
+{
+    font-size: x-large;
+    visibility: hidden;
 }
 
 #full-width
