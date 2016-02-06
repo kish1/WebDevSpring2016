@@ -12,3 +12,32 @@ th
 {
     background-color: #cacaca;
 }
+
+#left-icon
+{
+
+    float: left;
+    font-size: large;
+}
+
+#right-icon
+{
+    float: right;
+    font-size: large;
+}
+
+#center-icon
+{
+
+    font-size: large;
+}
+
+#full-width
+{
+    width: 100%;
+}
+
+#width-90
+{
+    width: 90%;
+}
