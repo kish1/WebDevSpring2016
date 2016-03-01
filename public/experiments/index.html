@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SomeDBApp">
+<head>
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <meta charset="UTF-8">
+    <title>Angular JS</title>
+
+
+</head>
+<body>
+    <div class="container">
+        <h1>Some Database</h1>
+        <table class="table" ng-controller="SomeController">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Club</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input ng-model="player.name" class="form-control"></td>
+                <td><input ng-model="player.country" class="form-control"></td>
+                <td><input ng-model="player.club" class="form-control"></td>
+                <td><button ng-click="addPlayer(player)" class="btn btn-success">Add</button></td>
+                <td><button ng-click="updatePlayer(player)" class="btn btn-info">Update</button></td>
+            </tr>
+                <tr ng-repeat="player in players">
+                    <td>{{player.name}}</td>
+                    <td>{{player.country}}</td>
+                    <td>{{player.club}}</td>
+                    <td><button ng-click="selectPlayer(player)" class="btn btn-info">Select</button></td>
+                    <td><button ng-click="removePlayer(player)" class="btn btn-danger">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
