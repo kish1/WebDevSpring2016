@@ -13,11 +13,22 @@
 
     <script src="app.js"></script>
     <script src="config.js"></script>
+    <script src="views/home/home.controller.js"></script>
+    <script src="views/users/profile.controller.js"></script>
+    <script src="views/users/login.controller.js"></script>
+    <script src="views/users/register.controller.js"></script>
+    <script src="views/admin/admin.controller.js"></script>
+    <script src="views/forms/forms.controller.js"></script>
+    <script src="views/forms/fields.controller.js"></script>
+    <script src="views/main/main.controller.js"></script>
 
 
     <title>Welcome !</title>
 </head>
-<body>
+<body ng-controller="MainController">
+<ng-include src="'views/header/header.view.html'">
+
+</ng-include>
 
 </body>
 </html>
