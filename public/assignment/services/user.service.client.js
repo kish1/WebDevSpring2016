@@ -31,10 +31,10 @@
         return service;
 
         function findUserByCredentials(username, password, callback) {
-            var user;
-            for(user in users) {
-                if (user.username === username && user.password === passowrd) {
-                    return callback(user);
+            var i;
+            for(i in users) {
+                if (users[i].username == username && users[i].password == password) {
+                    return callback(users[i]);
                 }
             }
             return callback(null);
@@ -51,33 +51,32 @@
                 lastName : user.lastName,
                 username : user.username,
                 password : user.password,
-                roles : user.roles
+                roles : (user.roles)? user.roles : []
             };
             users.push(new_user);
             return callback(new_user);
         }
 
         function deleteUserById (userId, callback) {
-            var user, index;
-            for(user in users) {
-                if (user._id === userId) {
-                    index = users.indexOf(user);
-                    users.splice(index, 1);
+            var i;
+            for(i in users) {
+                if (users[i]._id === userId) {
+                    users.splice(i, 1);
                     return callback(users);
                 }
             }
         }
 
         function updateUser (userId, user, callback) {
-            var existing_user;
-            for (existing_user in users) {
-                if (existing_user._id === userId) {
-                    existing_user.firstName = user.firstName;
-                    existing_user.lastName = user.lastName;
-                    existing_user.username = user.username;
-                    existing_user.password = user.password;
+            var i;
+            for (i in users) {
+                if (users[i]._id === userId) {
+                    users[i].firstName = user.firstName;
+                    users[i].lastName = user.lastName;
+                    users[i].username = user.username;
+                    users[i].password = user.password;
                     //existing_user.roles = user.roles;
-                    return callback(existing_user);
+                    return callback(users[i]);
                 }
                 return callback(null);
             }

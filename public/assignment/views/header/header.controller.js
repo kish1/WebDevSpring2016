@@ -9,14 +9,14 @@
 
     function HeaderController ($scope, $location, $rootScope) {
         $scope.location = $location;
-        $scope.registerHref = ($location.path() === "/register") ? "" : "#/register";
-        $scope.loginHref = ($location.path() === "/login") ? "" : "#/login";
-
 
         $scope.isLoggedIn = isLoggedIn;
         $scope.isAdmin = isAdmin;
+        $scope.logout = logout;
+
         $scope.loginClicked = loginClicked;
         $scope.registerClicked = registerClicked;
+        $scope.$rootScope = $rootScope;
 
 
         function isLoggedIn() {
@@ -28,6 +28,11 @@
                 return ($rootScope.currentUser.roles.indexOf("admin") > -1);
             }
             return false;
+        }
+
+        function logout() {
+            $rootScope.currentUser = null;
+            $location.url('/home');
         }
 
         function loginClicked() {
