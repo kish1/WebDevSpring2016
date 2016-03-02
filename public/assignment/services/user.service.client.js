@@ -45,9 +45,16 @@
         }
 
         function createUser (user, callback) {
-            user._id = (new Date).getTime();
-            users.push(user);
-            return callback(user);
+            var new_user = {
+                _id : (new Date).getTime(),
+                firstName : user.firstName,
+                lastName : user.lastName,
+                username : user.username,
+                password : user.password,
+                roles : user.roles
+            };
+            users.push(new_user);
+            return callback(new_user);
         }
 
         function deleteUserById (userId, callback) {
@@ -69,7 +76,7 @@
                     existing_user.lastName = user.lastName;
                     existing_user.username = user.username;
                     existing_user.password = user.password;
-                    existing_user.roles = user.roles;
+                    //existing_user.roles = user.roles;
                     return callback(existing_user);
                 }
                 return callback(null);

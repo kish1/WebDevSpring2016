@@ -11,31 +11,31 @@
         $routeProvider
             .when("/home", {
                 templateUrl: "views/home/home.view.html",
-                controller: "views/home/home.controller.js"
+                controller: "HomeController"
             })
             .when("/profile", {
                 templateUrl: "views/users/profile.view.html",
-                controller: "views/users/profile.controller.js"
+                controller: "ProfileController"
             })
             .when("/login", {
                 templateUrl: "views/users/login.view.html",
-                controller: "views/users/login.controller.js"
+                controller: "LoginController"
             })
             .when("/register", {
                 templateUrl: "views/users/register.view.html",
-                controller: "views/users/register.controller.js"
+                controller: "RegisterController"
             })
             .when("/admin", {
                 templateUrl: "views/admin/admin.view.html",
-                controller: "views/admin/admin.controller.js"
+                controller: "AdminController"
             })
             .when("/forms", {
                 templateUrl: "views/forms/forms.view.html",
-                controller: "views/forms/forms.controller.js"
+                controller: "FormController"
             })
             .when("/fields", {
                 templateUrl: "views/forms/fields.view.html",
-                controller: "views/forms/fields.controller.js"
+                controller: "FieldController"
             })
             .otherwise({
                 redirectTo: "/home"
