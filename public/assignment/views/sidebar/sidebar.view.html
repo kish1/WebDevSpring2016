@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div class="col-sm-3 col-md-2 sidebar" ng-controller="SidebarController">
+    <ul class="nav nav-sidebar">
+        <li ng-class="{ active : $location.path() === '/home'}"><a href="#/home">Home</a></li>
+        <li ng-class="{ active : $location.path() === '/profile'}"><a href="#/profile">Profile</a></li>
+        <li ng-class="{ active : $location.path() === '/admin'}"><a href="#/admin">Admin</a></li>
+        <li ng-class="{ active : $location.path() === '/forms' || $location.path() === '/fields'}"><a href="#/forms">Forms</a></li>
+    </ul>
+</div>
