@@ -18,10 +18,10 @@
         }
 
         $scope.details = {
-            username : $scope.currentUser.username,
-            password : $scope.currentUser.password,
-            firstName : $scope.currentUser.firstName,
-            lastName : $scope.currentUser.lastName
+            username: $scope.currentUser.username,
+            password: $scope.currentUser.password,
+            firstName: $scope.currentUser.firstName,
+            lastName: $scope.currentUser.lastName
         }
 
         $scope.update = update;

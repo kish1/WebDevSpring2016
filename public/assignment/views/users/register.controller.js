@@ -12,7 +12,6 @@
         $scope.register = register;
 
         function register(user) {
-            //console.log("Reg");
             $scope.message = null;
             if (user == null) {
                 $scope.message = "Please fill in the fields";

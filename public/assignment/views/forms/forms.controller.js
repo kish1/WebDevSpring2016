@@ -13,7 +13,7 @@
         }
         $scope.currentUserId = $rootScope.currentUser._id;
         $scope.forms = FormService.findAllFormsForUser($scope.currentUserId, identity);
-        $scope.selectedFormIndex = -1;
+
 
         $scope.addForm = addForm;
         $scope.updateForm = updateForm;
@@ -23,27 +23,27 @@
 
         function addForm(form) {
             var newForm = FormService.createFormForUser($scope.currentUserId,{
-                name : form.name
+                title : form.title
             }, identity);
             $scope.forms.push(newForm);
             $scope.form = {};
         }
 
         function updateForm(form) {
-            $scope.forms[$scope.selectedFormIndex] = {
-                name : form.name
-            }
+            FormService.updateFormById(form._id, form, identity);
             $scope.form = {};
         }
 
         function selectForm(index) {
-            $scope.selectedFormIndex = index;
             $scope.form = {
-                name : $scope.forms[index].name
+                _id: $scope.forms[index]._id,
+                title: $scope.forms[index].title,
+                userId: $scope.forms[index].userId
             }
         }
 
         function deleteForm(index) {
+            FormService.deleteFormById($scope.forms[index]._id, identity);
             $scope.forms.splice(index, 1);
         }
 

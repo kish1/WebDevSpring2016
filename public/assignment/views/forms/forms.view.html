@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         <tr>
-            <td><input ng-model="form.name" type="text" placeholder="name" id="full-width"></input></td>
+            <td><input ng-model="form.title" type="text" placeholder="name" id="full-width"></input></td>
 
             <td class="text-center">
                 <a ng-click="addForm(form)" role="button" class="glyphicon glyphicon-plus" id="big-icon"></a>
@@ -21,7 +21,7 @@
             </td>
         </tr>
         <tr ng-repeat="form in forms">
-                <td>{{form.name}}</td>
+                <td>{{form.title}}</td>
                 <td class="text-center">
                     <a ng-click="deleteForm($index)" role="button" class="glyphicon glyphicon-remove" id="big-icon"></a>
                     <a ng-click="selectForm($index)" role="button" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>

@@ -10,6 +10,7 @@
     function AdminController($scope, $rootScope, $location) {
         if (!$rootScope.currentUser) {
             $location.url('/home');
+            return;
         }
     }
 })();

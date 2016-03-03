@@ -22,17 +22,16 @@
                 "username":"ed",     "password":"ed",      "roles": ["student"]                }
         ];
         var service = {
-            findUserByCredentials : findUserByCredentials,
-            findAllUsers : findAllUsers,
-            createUser : createUser,
-            deleteUserById : deleteUserById,
-            updateUser : updateUser
+            findUserByCredentials: findUserByCredentials,
+            findAllUsers: findAllUsers,
+            createUser: createUser,
+            deleteUserById: deleteUserById,
+            updateUser: updateUser
         };
         return service;
 
         function findUserByCredentials(username, password, callback) {
-            var i;
-            for(i in users) {
+            for(var i in users) {
                 if (users[i].username == username && users[i].password == password) {
                     return callback(users[i]);
                 }
@@ -46,21 +45,20 @@
 
         function createUser (user, callback) {
             var new_user = {
-                _id : (new Date).getTime(),
-                firstName : user.firstName,
-                lastName : user.lastName,
-                username : user.username,
-                password : user.password,
-                email : user.email,
-                roles : (user.roles)? user.roles : []
+                _id: (new Date).getTime(),
+                firstName: user.firstName,
+                lastName: user.lastName,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                roles: (user.roles)? user.roles : []
             };
             users.push(new_user);
             return callback(new_user);
         }
 
         function deleteUserById (userId, callback) {
-            var i;
-            for(i in users) {
+            for(var i in users) {
                 if (users[i]._id === userId) {
                     users.splice(i, 1);
                     return callback(users);
@@ -70,15 +68,14 @@
         }
 
         function updateUser (userId, user, callback) {
-            var i;
-            for (i in users) {
+            for (var i in users) {
                 if (users[i]._id === userId) {
                     users[i].firstName = user.firstName;
                     users[i].lastName = user.lastName;
                     users[i].username = user.username;
                     users[i].password = user.password;
                     users[i].email = user.email
-                    //existing_user.roles = user.roles;
+
                     return callback(users[i]);
                 }
             }

@@ -15,10 +15,10 @@
             {"_id": "020", "title": "CDs",      "userId": 234}
         ];
         var service = {
-            createFormForUser : createFormForUser,
-            findAllFormsForUser : findAllFormsForUser,
-            deleteFormById : deleteFormById,
-            updateFormById : updateFormById
+            createFormForUser: createFormForUser,
+            findAllFormsForUser: findAllFormsForUser,
+            deleteFormById: deleteFormById,
+            updateFormById: updateFormById
         }
         return service;
 
@@ -57,7 +57,7 @@
                     return callback(forms[i]);
                 }
             }
+            return callback(null);
         }
-
     }
 })();
