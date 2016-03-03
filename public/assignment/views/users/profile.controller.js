@@ -11,18 +11,20 @@
         $scope.message = null;
         $scope.error = null;
         $scope.currentUser = $rootScope.currentUser;
+
+        if (!$scope.currentUser) {
+            $location.url('/home');
+            return;
+        }
+
         $scope.details = {
             username : $scope.currentUser.username,
             password : $scope.currentUser.password,
             firstName : $scope.currentUser.firstName,
             lastName : $scope.currentUser.lastName
         }
-        $scope.update = update;
 
-        //console.log($scope.currentUser);
-        if (!$scope.currentUser) {
-            $location.url('/home');
-        }
+        $scope.update = update;
 
         function update(details) {
             if (details) {

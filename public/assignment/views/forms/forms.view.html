@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<h1 class="page-header">Forms</h1>
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="/assignment/forms.html">Forms</a></li>
+    <li role="presentation"><a href="/assignment/form-fields.html">Fields</a></li>
+</ul>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr scope="row">
+            <th id="dark-th"><span class="glyphicon glyphicon-triangle-bottom"></span> Form Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input ng-model="form.name" type="text" placeholder="name" id="full-width"></input></td>
 
-</body>
-</html>
+            <td class="text-center">
+                <a ng-click="addForm(form)" role="button" class="glyphicon glyphicon-plus" id="big-icon"></a>
+                <a ng-click="updateForm(form)" role="button" class="glyphicon glyphicon-ok pull-right" id="big-icon"></a>
+            </td>
+        </tr>
+        <tr ng-repeat="form in forms">
+                <td>{{form.name}}</td>
+                <td class="text-center">
+                    <a ng-click="deleteForm($index)" role="button" class="glyphicon glyphicon-remove" id="big-icon"></a>
+                    <a ng-click="selectForm($index)" role="button" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

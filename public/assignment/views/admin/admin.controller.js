@@ -7,7 +7,9 @@
         .module("FormBuilderApp")
         .controller("AdminController", AdminController);
 
-    function AdminController() {
-
+    function AdminController($scope, $rootScope, $location) {
+        if (!$rootScope.currentUser) {
+            $location.url('/home');
+        }
     }
 })();
