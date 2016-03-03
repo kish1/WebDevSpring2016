@@ -28,10 +28,9 @@
 
         function update(details) {
             if (details) {
-                //console.log(details);
                 UserService.updateUser($scope.currentUser._id, details, identity);
                 $scope.message = "User details updated successfully";
-                //console.log($scope.currentUser);
+
             } else {
                 $scope.error = "Unable to update user details";
             }

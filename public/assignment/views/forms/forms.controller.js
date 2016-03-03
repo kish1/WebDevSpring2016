@@ -7,7 +7,12 @@
         .controller("FormController", FormController);
 
     function FormController($scope, FormService, $rootScope, $location) {
-        $scope.forms = [];
+        if (!$rootScope.currentUser) {
+            $location.url('/home');
+            return;
+        }
+        $scope.currentUserId = $rootScope.currentUser._id;
+        $scope.forms = FormService.findAllFormsForUser($scope.currentUserId, identity);
         $scope.selectedFormIndex = -1;
 
         $scope.addForm = addForm;
@@ -15,14 +20,12 @@
         $scope.selectForm = selectForm;
         $scope.deleteForm = deleteForm;
 
-        if (!$rootScope.currentUser) {
-            $location.url('/home');
-        }
 
         function addForm(form) {
-            $scope.forms.push({
+            var newForm = FormService.createFormForUser($scope.currentUserId,{
                 name : form.name
-            })
+            }, identity);
+            $scope.forms.push(newForm);
             $scope.form = {};
         }
 
@@ -42,6 +45,10 @@
 
         function deleteForm(index) {
             $scope.forms.splice(index, 1);
+        }
+
+        function identity(param) {
+            return param;
         }
     }
 })();

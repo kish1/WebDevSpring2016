@@ -66,6 +66,7 @@
                     return callback(users);
                 }
             }
+            return callback(users);
         }
 
         function updateUser (userId, user, callback) {
@@ -76,11 +77,12 @@
                     users[i].lastName = user.lastName;
                     users[i].username = user.username;
                     users[i].password = user.password;
+                    users[i].email = user.email
                     //existing_user.roles = user.roles;
                     return callback(users[i]);
                 }
-                return callback(null);
             }
+            return callback(null);
         }
     }
 
