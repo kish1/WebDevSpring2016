@@ -3,11 +3,30 @@
  */
 "use strict";
 
-$(function () {
+(function () {
+    angular
+        .module("APITest", [])
+        .controller("SearchController", SearchController);
 
-});
+    function SearchController($scope) {
+        $scope.search = search;
+        //$scope.clientReady = clientReady();
+        $scope.results = [];
+        console.log("Hello");
 
-function clientReady(){
-    gapi.client.setApiKey("AIzaSyCx9cGg3yPKiWiMJyUGRAxKCCg5hlMKOqw");
-    gapi.client.load("youtube", "v3", function () {});
-}
+        function search(query) {
+            var request = gapi.client.youtube.search.list({
+                part: "snippet",
+                type: "video",
+                q: encodeURIComponent(query).replace(/%20/g, "+"),
+                maxResults: 10,
+                order: "viewCount"
+            });
+            request.execute(function (response) {
+                console.log(response);
+            })
+        }
+    }
+})();
+
+

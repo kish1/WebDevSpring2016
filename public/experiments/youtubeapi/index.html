@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="APITest">
 <head>
     <meta charset="UTF-8">
     <title>YouTube Data API</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script src="https://apis.google.com/js/client.js?onload=clientReady"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src="app.js"></script>
+    <script>
+        function clientReady(){
+            gapi.client.setApiKey("AIzaSyCx9cGg3yPKiWiMJyUGRAxKCCg5hlMKOqw");
+            gapi.client.load("youtube", "v3", function () {});
+            console.log("Loaded");
+        }
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=clientReady"></script>
 
 </head>
 <body>
-    <div class="container">
+    <div class="container" ng-controller="SearchController">
         <h1>YouTube Search</h1>
         <table class="table">
             <tbody>
                 <tr>
-                    <td><input type="text" class="form-control" placeholder="Search"></td>
-                    <td><a role="button" class="btn btn-info">Submit</a></td>
+                    <td><input ng-model="query" type="text" class="form-control" placeholder="Search"></td>
+                    <td><a ng-click="search(query)" role="button" class="btn btn-info">Submit</a></td>
+                </tr>
+                <tr ng-repeat="result in results">
+                    <td></td>
                 </tr>
             </tbody>
         </table>
