@@ -1,1 +1,44 @@
 <h1 class="page-header">User</h1>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Description</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input ng-model="user.firstName" type="text"></td>
+                <td><input ng-model="user.LastName" type="text"></td>
+                <td><input ng-model="user.email" type="text"></td>
+                <td><input ng-model="user.password" type="text"></td>
+                <td><input ng-model="user.dob" type="date" class="form-control"></td>
+                <td><select ng-model="user.gender">
+                    <option ng-selected="user.gender === 'male'" value="male">Male</option>
+                    <option ng-selected="user.gender === 'female'" value="female">Female</option>
+                </select></td>
+                <td><input ng-model="user.description" type="text"></td>
+                <td><a ng-click="addUser(user)" role="button" class="btn btn-success">Add</a>
+                <a ng-click="updateUser(user)" role="button" class="btn btn-info">Update</a></td>
+            </tr>
+            <tr ng-repeat="user in users">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.password}}</td>
+                <td>{{user.dob}}</td>
+                <td>{{user.gender}}</td>
+                <td>{{user.description}}</td>
+                <td class="no-wrap"><a ng-click="selectUser($index)" role="button" class="btn btn-primary">Select</a>
+                <a ng-click="deleteUser($index)" role="button" class="btn btn-danger">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
