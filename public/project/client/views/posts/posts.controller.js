@@ -4,11 +4,9 @@
         .controller("PostsController", PostsController);
 
     function PostsController($scope, PostService) {
-        $scope.post = {};
+        $scope.today = getToday();
+        $scope.post = {createdOn: getToday()};
         $scope.posts = PostService.findAllPosts(identity);
-        var d = new Date();
-        $scope.today = d.toISOString().substring(0, 10);
-        $scope.post = {createdOn: d};
 
         $scope.addPost = addPost;
         $scope.updatePost = updatePost;
@@ -17,12 +15,12 @@
 
         function addPost(post) {
             PostService.createPost(post, identity);
-            $scope.post = {createdOn: d};
+            $scope.post = {createdOn: getToday()};
         }
 
         function updatePost(post) {
-            PostService.updatePostById($scope.post._id, $scope.post, identity);
-            $scope.post = {createdOn: d};
+            PostService.updatePostById(post._id, post, identity);
+            $scope.post = {createdOn: getToday()};
         }
 
         function selectPost(index) {
@@ -37,6 +35,10 @@
 
         function deletePost(index) {
             PostService.deletePostById($scope.posts[index]._id, identity);
+        }
+
+        function getToday() {
+            return new Date().toISOString().substring(0, 10);
         }
 
         function identity(param) {

@@ -22,7 +22,7 @@
             controller: "PostsController"
             })
             .when("/comments", {
-                templateUrl: "views/comments.view.html",
+                templateUrl: "views/comments/comments.view.html",
                 controller: "CommentsController"
             })
             .otherwise({

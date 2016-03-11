@@ -8,11 +8,9 @@
         .controller("UsersController", UsersController);
 
     function UsersController($scope, UserService) {
-        $scope.user = {};
+        $scope.today = getToday();
+        $scope.user = {dob: getToday()};
         $scope.users = UserService.findAllUsers(identity);
-        var d = new Date();
-        $scope.today = d.toISOString().substring(0, 10);
-        $scope.user = {dob: d};
 
         $scope.addUser = addUser;
         $scope.updateUser = updateUser;
@@ -21,12 +19,12 @@
 
         function addUser(user) {
             UserService.createUser(user, identity);
-            $scope.user = {dob: d};
+            $scope.user = {dob: getToday()};
         }
 
         function updateUser(user) {
             UserService.updateUserById(user._id, user, identity);
-            $scope.user = {dob: d};
+            $scope.user = {dob: getToday()};
         }
 
         function selectUser(index) {
@@ -46,6 +44,10 @@
         function deleteUser(index) {
             UserService.deleteUserById($scope.users[index]._id, identity);
             //$scope.users.splice(index, 1);
+        }
+
+        function getToday() {
+            return new Date().toISOString().substring(0, 10);
         }
 
         function identity(param) {

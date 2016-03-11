@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<h1 class="page-header">Comments</h1>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Post ID</th>
+            <th>Timestamp</th>
+            <th>Content</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input ng-model="comment.userId" type="text"></td>
+            <td><input ng-model="comment.postId" type="text"></td>
+            <td><input ng-model="comment.timestamp" value={{time}} type="datetime-local" class="form-control"></td>
+            <td><input ng-model="comment.content" type="text"></td>
+            <td class="no-wrapping">
+                <button ng-click="addComment(comment)" class="btn btn-success">Add</button>
+                <button ng-click="updateComment(comment)" class="btn btn-info">Update</button>
+            </td>
+        </tr>
+        <tr ng-repeat="comment in comments">
+            <td>{{comment.userId}}</td>
+            <td>{{comment.postId}}</td>
+            <td>{{[comment.timestamp.toString()}}</td>
+            <td>{{comment.content}}</td>
+            <td class="no-wrapping">
+                <button ng-click="selectComment($index)" class="btn btn-primary">Select</button>
+                <button ng-click="deleteComment($index)" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
