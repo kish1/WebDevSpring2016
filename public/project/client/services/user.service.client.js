@@ -10,9 +10,9 @@
     function UserService() {
         var users = [];
         users = [
-            {"_id": "001", "firstName": "Lionel", "lastName": "Messi", "email":"leo@messi.com", "password": "thiago", "dob": "06/24/1987", "gender": "male", "description": "I'm Leo Messi", "roles":[]},
-            {"_id": "002", "firstName": "Saina", "lastName": "Nehwal", "email":"saina@nehwal.com", "password": "saina", "dob": "03/17/1990", "gender": "female", "description": "I'm Saina Nehwal", "roles":["admin"]},
-            {"_id": "003", "firstName": "Mesut", "lastName": "Ozil", "email":"mesut@ozil.com", "password": "mesut", "dob": "10/15/1988", "gender": "male", "description": "I'm Mesut Ozil", "roles":[]}
+            {"_id": "001", "firstName": "Lionel", "lastName": "Messi", "email":"leo@messi.com", "password": "thiago", "dob": new Date("1987", "5", "24"), "gender": "male", "description": "I'm Leo Messi", "admin":false},
+            {"_id": "002", "firstName": "Saina", "lastName": "Nehwal", "email":"saina@nehwal.com", "password": "saina", "dob": new Date("1990", "2", "17"), "gender": "female", "description": "I'm Saina Nehwal", "admin":true},
+            {"_id": "003", "firstName": "Mesut", "lastName": "Ozil", "email":"mesut@ozil.com", "password": "mesut", "dob": new Date("1988", "9", "15"), "gender": "male", "description": "I'm Mesut Ozil", "admin":false}
         ];
         var service = {
             findAllUsers: findAllUsers,
@@ -35,7 +35,8 @@
                 password: user.password,
                 dob: user.dob,
                 gender: user.gender,
-                description: user.description
+                description: user.description,
+                admin: user.admin != null
             };
             users.push(newUser);
             return callback(newUser);
@@ -51,6 +52,7 @@
                     users[i].dob = user.dob;
                     users[i].gender = user.gender;
                     users[i].description = user.description;
+                    users[i].admin = user.admin;
 
                     return callback(users[i]);
                 }

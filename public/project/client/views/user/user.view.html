@@ -10,34 +10,39 @@
                 <th>DOB</th>
                 <th>Gender</th>
                 <th>Description</th>
+                <th>Admin</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><input ng-model="user.firstName" type="text"></td>
-                <td><input ng-model="user.LastName" type="text"></td>
+                <td><input ng-model="user.lastName" type="text"></td>
                 <td><input ng-model="user.email" type="text"></td>
                 <td><input ng-model="user.password" type="text"></td>
-                <td><input ng-model="user.dob" type="date" class="form-control"></td>
+                <td><input ng-model="user.dob" type="date" value="{{today}}" class="form-control"></td>
                 <td><select ng-model="user.gender">
                     <option ng-selected="user.gender === 'male'" value="male">Male</option>
                     <option ng-selected="user.gender === 'female'" value="female">Female</option>
                 </select></td>
                 <td><input ng-model="user.description" type="text"></td>
-                <td><a ng-click="addUser(user)" role="button" class="btn btn-success">Add</a>
-                <a ng-click="updateUser(user)" role="button" class="btn btn-info">Update</a></td>
+                <td class="text-center"><label><input ng-model="user.admin" type="checkbox"></label></td>
+                <td><button ng-click="addUser(user)" class="btn btn-success">Add</button>
+                <button ng-click="updateUser(user)" class="btn btn-info">Update</button></td>
             </tr>
             <tr ng-repeat="user in users">
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.password}}</td>
-                <td>{{user.dob}}</td>
+                <td>{{[user.dob.getMonth()+1, user.dob.getDate(), user.dob.getFullYear()].join('/')}}</td>
                 <td>{{user.gender}}</td>
                 <td>{{user.description}}</td>
-                <td class="no-wrap"><a ng-click="selectUser($index)" role="button" class="btn btn-primary">Select</a>
-                <a ng-click="deleteUser($index)" role="button" class="btn btn-danger">Delete</a></td>
+                <td class="text-center">{{user.admin}}</label></td>
+                <td class="no-wrapping">
+                    <button ng-click="selectUser($index)" class="btn btn-primary">Select</button>
+                    <button ng-click="deleteUser($index)" class="btn btn-danger">Delete</button>
+                </td>
             </tr>
         </tbody>
     </table>
