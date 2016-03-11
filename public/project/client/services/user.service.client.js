@@ -28,23 +28,23 @@
 
         function createUser(user, callback) {
             var newUser = {
-                _id: (new Date).getTime(),
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                password: user.password,
-                dob: user.dob,
-                gender: user.gender,
+                _id:         (new Date).getTime(),
+                firstName:   user.firstName,
+                lastName:    user.lastName,
+                email:       user.email,
+                password:    user.password,
+                dob:         user.dob,
+                gender:      user.gender,
                 description: user.description,
-                admin: user.admin != null
+                admin:       user.admin != null
             };
             users.push(newUser);
             return callback(newUser);
         }
 
-        function updateUserById(userId, user, callback) {
+        function updateUserById(_id, user, callback) {
             for(var i in users) {
-                if (users[i]._id === userId) {
+                if (users[i]._id === _id) {
                     users[i].firstName = user.firstName;
                     users[i].lastName = user.lastName;
                     users[i].email = user.email;
@@ -60,9 +60,9 @@
             return callback(null);
         }
 
-        function deleteUserById (userId, callback) {
+        function deleteUserById (_id, callback) {
             for(var i in users) {
-                if (users[i]._id === userId) {
+                if (users[i]._id === _id) {
                     users.splice(i, 1);
                     return callback(users);
                 }

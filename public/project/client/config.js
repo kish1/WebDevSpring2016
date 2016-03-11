@@ -17,6 +17,10 @@
                 templateUrl: "views/user/user.view.html",
                 controller: "UserController"
             })
+            .when("/posts", {
+            templateUrl: "views/posts/posts.view.html",
+            controller: "PostsController"
+            })
             .otherwise({
                 redirectTo:"/home"
             });

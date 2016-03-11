@@ -31,15 +31,15 @@
 
         function selectUser(index) {
             $scope.user = {
-                _id: $scope.users[index]._id,
-                firstName: $scope.users[index].firstName,
-                lastName: $scope.users[index].lastName,
-                email: $scope.users[index].email,
-                password: $scope.users[index].password,
-                dob: $scope.users[index].dob,
-                gender: $scope.users[index].gender,
+                _id:         $scope.users[index]._id,
+                firstName:   $scope.users[index].firstName,
+                lastName:    $scope.users[index].lastName,
+                email:       $scope.users[index].email,
+                password:    $scope.users[index].password,
+                dob:         $scope.users[index].dob,
+                gender:      $scope.users[index].gender,
                 description: $scope.users[index].description,
-                admin: $scope.users[index].admin
+                admin:       $scope.users[index].admin
             }
         }
 
