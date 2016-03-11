@@ -13,13 +13,17 @@
                 templateUrl: "views/home/home.view.html",
                 controller: "HomeController"
             })
-            .when("/user", {
-                templateUrl: "views/user/user.view.html",
-                controller: "UserController"
+            .when("/users", {
+                templateUrl: "views/users/users.view.html",
+                controller: "UsersController"
             })
             .when("/posts", {
             templateUrl: "views/posts/posts.view.html",
             controller: "PostsController"
+            })
+            .when("/comments", {
+                templateUrl: "views/comments.view.html",
+                controller: "CommentsController"
             })
             .otherwise({
                 redirectTo:"/home"

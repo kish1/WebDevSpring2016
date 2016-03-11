@@ -5,9 +5,9 @@
 (function () {
     angular
         .module("BlogApp")
-        .controller("UserController", UserController);
+        .controller("UsersController", UsersController);
 
-    function UserController($scope, UserService) {
+    function UsersController($scope, UserService) {
         $scope.user = {};
         $scope.users = UserService.findAllUsers(identity);
         var d = new Date();

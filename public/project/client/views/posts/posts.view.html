@@ -16,8 +16,10 @@
             <td><input ng-model="post.name" type="text"></td>
             <td><input ng-model="post.createdOn" type="date" value="{{today}}" class="form-control"></td>
             <td><input ng-model="post.content" type="text"></td>
-            <td><button ng-click="addPost(post)" class="btn btn-success">Add</button>
-                <button ng-click="updatePost(post)" class="btn btn-info">Update</button></td>
+            <td class="no-wrapping">
+                <button ng-click="addPost(post)" class="btn btn-success">Add</button>
+                <button ng-click="updatePost(post)" class="btn btn-info">Update</button>
+            </td>
         </tr>
         <tr ng-repeat="post in posts">
             <td>{{post.userId}}</td>

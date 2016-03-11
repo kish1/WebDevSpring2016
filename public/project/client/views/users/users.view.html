@@ -1,4 +1,4 @@
-<h1 class="page-header">User</h1>
+<h1 class="page-header">Users</h1>
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -27,8 +27,10 @@
                 </select></td>
                 <td><input ng-model="user.description" type="text"></td>
                 <td class="text-center"><label><input ng-model="user.admin" type="checkbox"></label></td>
-                <td><button ng-click="addUser(user)" class="btn btn-success">Add</button>
-                <button ng-click="updateUser(user)" class="btn btn-info">Update</button></td>
+                <td class="no-wrapping">
+                    <button ng-click="addUser(user)" class="btn btn-success">Add</button>
+                    <button ng-click="updateUser(user)" class="btn btn-info">Update</button>
+                </td>
             </tr>
             <tr ng-repeat="user in users">
                 <td>{{user.firstName}}</td>
