@@ -2,7 +2,6 @@
  * Created by kishore on 3/5/16.
  */
 "use strict";
-
 (function () {
     angular
         .module("APITest", [])
@@ -28,5 +27,3 @@
         }
     }
 })();
-
-

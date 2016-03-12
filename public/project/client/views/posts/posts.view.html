@@ -22,7 +22,7 @@
             </td>
         </tr>
         <tr ng-repeat="post in posts">
-            <td>{{post.userId}}</td>
+            <td class="text-right">{{post.userId}}</td>
             <td>{{post.name}}</td>
             <td>{{[post.createdOn.getMonth()+1, post.createdOn.getDate(), post.createdOn.getFullYear()].join('/')}}</td>
             <td>{{post.content}}</td>

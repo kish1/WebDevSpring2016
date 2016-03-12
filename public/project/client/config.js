@@ -25,6 +25,14 @@
                 templateUrl: "views/comments/comments.view.html",
                 controller: "CommentsController"
             })
+            .when("/search", {
+                templateUrl: "views/search/search.view.html",
+                controller: "SearchController"
+            })
+            .when("/details", {
+                templateUrl: "views/details/details.view.html",
+                controller: "DetailsController",
+            })
             .otherwise({
                 redirectTo:"/home"
             });

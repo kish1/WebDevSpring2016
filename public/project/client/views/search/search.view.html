@@ -1,0 +1,26 @@
+<h1 class="page-header">Search (YouTube Data API)</h1>
+<div class="no-wrapping">
+    <div class="col-xs-4">
+        <input ng-model="query" type="text" class="form-control" placeholder="Search">
+    </div>
+    <a ng-click="search(query)" role="button" class="btn btn-info">Submit</a>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Thumbnail</th>
+            <th>Title</th>
+            <th>VideoID</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr ng-repeat="result in results">
+            <td><img ng-src="{{result.snippet.thumbnails.default.url}}"></td>
+            <td>{{result.snippet.title}}</td>
+            <td><a ng-click="details($index, result.id.videoId)" role="button">{{result.id.videoId}}</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

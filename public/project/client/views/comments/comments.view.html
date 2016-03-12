@@ -22,9 +22,9 @@
             </td>
         </tr>
         <tr ng-repeat="comment in comments">
-            <td>{{comment.userId}}</td>
-            <td>{{comment.postId}}</td>
-            <td>{{[comment.timestamp.toString()}}</td>
+            <td class="text-right">{{comment.userId}}</td>
+            <td class="text-right">{{comment.postId}}</td>
+            <td>{{comment.timestamp.toString()}}</td>
             <td>{{comment.content}}</td>
             <td class="no-wrapping">
                 <button ng-click="selectComment($index)" class="btn btn-primary">Select</button>

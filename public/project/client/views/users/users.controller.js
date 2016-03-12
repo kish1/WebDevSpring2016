@@ -47,7 +47,8 @@
         }
 
         function getToday() {
-            return new Date().toISOString().substring(0, 10);
+            //return new Date().toISOString().substring(0, 10);
+            return new Date();
         }
 
         function identity(param) {
