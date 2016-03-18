@@ -7,40 +7,31 @@
         .module("FormBuilderApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController ($scope, $location, $rootScope) {
-        $scope.location = $location;
+    function HeaderController ($location, UserService) {
+        var vm = this;
+        vm.location = $location;
 
-        $scope.isLoggedIn = isLoggedIn;
-        $scope.isAdmin = isAdmin;
-        $scope.logout = logout;
-
-        $scope.loginClicked = loginClicked;
-        $scope.registerClicked = registerClicked;
-        $scope.$rootScope = $rootScope;
+        vm.isLoggedIn = isLoggedIn;
+        vm.isAdmin = isAdmin;
+        vm.logout = logout;
 
 
         function isLoggedIn() {
-            return $rootScope.currentUser != null;
+            vm.currentUser = UserService.getCurrentUser();
+            return vm.currentUser != null;
         }
 
         function isAdmin() {
-            if ($rootScope.currentUser) {
-                return ($rootScope.currentUser.roles.indexOf("admin") > -1);
+            if (vm.currentUser && vm.currentUser.roles) {
+                return (vm.currentUser.roles.indexOf("admin") > -1);
             }
             return false;
         }
 
         function logout() {
-            $rootScope.currentUser = null;
+            vm.currentUser = null;
+            UserService.setCurrentUser(null);
             $location.url('/home');
-        }
-
-        function loginClicked() {
-
-        }
-
-        function registerClicked() {
-
         }
     }
 })();

@@ -7,18 +7,21 @@
         .module("FormBuilderApp")
         .controller("SidebarController", SidebarController);
 
-    function SidebarController($scope, $location, $rootScope) {
-        $scope.$location = $location;
-        $scope.isLoggedIn = isLoggedIn;
-        $scope.isAdmin = isAdmin;
+    function SidebarController($location, UserService) {
+        var vm = this;
+
+        vm.$location = $location;
+        vm.isLoggedIn = isLoggedIn;
+        vm.isAdmin = isAdmin;
 
         function isLoggedIn() {
-            return $rootScope.currentUser != null;
+            vm.currentUser = UserService.getCurrentUser();
+            return vm.currentUser != null;
         }
 
         function isAdmin() {
-            if ($rootScope.currentUser) {
-                return ($rootScope.currentUser.roles.indexOf("admin") > -1);
+            if (vm.currentUser && vm.currentUser.roles) {
+                return (vm.currentUser.roles.indexOf("admin") > -1);
             }
             return false;
         }

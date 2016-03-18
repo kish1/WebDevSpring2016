@@ -34,7 +34,7 @@
                         $location.url('/profile');
                     } else {
                         vm.message = "User not found";
-                        console.log("failed");
+                        console.log(vm.message);
                         console.log(response);
                     }
                 });

@@ -8,6 +8,7 @@
         .factory("UserService", UserService);
 
     function UserService($http, $rootScope) {
+        $rootScope.currentUser = null;
 
         var service = {
             setCurrentUser: setCurrentUser,
