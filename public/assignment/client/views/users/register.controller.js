@@ -15,6 +15,7 @@
         var init = function() {
             if (isLoggedIn()) {
                 $location.url("/profile");
+                return;
             }
         };
         init();

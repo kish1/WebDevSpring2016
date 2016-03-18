@@ -6,49 +6,74 @@
     angular.module("FormBuilderApp")
         .controller("FormController", FormController);
 
-    function FormController($scope, FormService, $rootScope, $location) {
-        if (!$rootScope.currentUser) {
-            $location.url('/home');
-            return;
-        }
-        $scope.currentUserId = $rootScope.currentUser._id;
-        $scope.forms = FormService.findAllFormsForUser($scope.currentUserId, identity);
+    function FormController(FormService, UserService, $location) {
+        var vm = this;
+        vm.currentUser = null;
+        vm.currentUserId = null;
+        vm.forms = null;
+        vm.form = null;
 
 
-        $scope.addForm = addForm;
-        $scope.updateForm = updateForm;
-        $scope.selectForm = selectForm;
-        $scope.deleteForm = deleteForm;
+        vm.addForm = addForm;
+        vm.updateForm = updateForm;
+        vm.selectForm = selectForm;
+        vm.deleteForm = deleteForm;
+
+        var init = function () {
+            vm.currentUser = UserService.getCurrentUser();
+            if (!vm.currentUser) {
+                $location.url('/home');
+                return;
+            }
+            vm.currentUserId = vm.currentUser._id;
+            FormService
+                .findAllFormsForUser(vm.currentUserId)
+                .then(function (response) {
+                    vm.forms = response.data;
+                });
+            //console.log(vm.forms);
+        };
+        init();
 
 
         function addForm(form) {
-            var newForm = FormService.createFormForUser($scope.currentUserId,{
+            FormService
+                .createFormForUser(vm.currentUserId,{
                 title : form.title
-            }, identity);
-            $scope.forms.push(newForm);
-            $scope.form = {};
+            })
+                .then(function (response) {
+                   if (response.data) {
+                       vm.forms.push(response.data);
+                       vm.form = {};
+                   }
+                });
         }
 
         function updateForm(form) {
-            FormService.updateFormById(form._id, form, identity);
-            $scope.form = {};
+            FormService
+                .updateFormById(form._id, form)
+                .then(function (response) {
+                    FormService
+                        .findAllFormsForUser(vm.currentUserId)
+                        .then(function (response) {
+                            vm.forms = response.data;
+                        });
+                });
+
+            vm.form = {};
         }
 
         function selectForm(index) {
-            $scope.form = {
-                _id: $scope.forms[index]._id,
-                title: $scope.forms[index].title,
-                userId: $scope.forms[index].userId
+            vm.form = {
+                _id: vm.forms[index]._id,
+                title: vm.forms[index].title,
+                userId: vm.forms[index].userId
             }
         }
 
         function deleteForm(index) {
-            FormService.deleteFormById($scope.forms[index]._id, identity);
-            $scope.forms.splice(index, 1);
-        }
-
-        function identity(param) {
-            return param;
+            FormService.deleteFormById(vm.forms[index]._id);
+            vm.forms.splice(index,1);
         }
     }
 })();

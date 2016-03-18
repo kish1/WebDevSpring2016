@@ -13,18 +13,18 @@
         </thead>
         <tbody>
         <tr>
-            <td><input ng-model="form.title" type="text" placeholder="name" id="full-width"></input></td>
+            <td><input ng-model="model.form.title" type="text" placeholder="name" id="full-width"></input></td>
 
             <td class="text-center">
-                <a ng-click="addForm(form)" role="button" class="glyphicon glyphicon-plus" id="big-icon"></a>
-                <a ng-click="updateForm(form)" role="button" class="glyphicon glyphicon-ok pull-right" id="big-icon"></a>
+                <a ng-click="model.addForm(model.form)" role="button" class="glyphicon glyphicon-plus" id="big-icon"></a>
+                <a ng-click="model.updateForm(model.form)" role="button" class="glyphicon glyphicon-ok pull-right" id="big-icon"></a>
             </td>
         </tr>
-        <tr ng-repeat="form in forms">
+        <tr ng-repeat="form in model.forms">
                 <td>{{form.title}}</td>
                 <td class="text-center">
-                    <a ng-click="deleteForm($index)" role="button" class="glyphicon glyphicon-remove" id="big-icon"></a>
-                    <a ng-click="selectForm($index)" role="button" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                    <a ng-click="model.deleteForm($index)" role="button" class="glyphicon glyphicon-remove" id="big-icon"></a>
+                    <a ng-click="model.selectForm($index)" role="button" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
                 </td>
         </tr>
         </tbody>

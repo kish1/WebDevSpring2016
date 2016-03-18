@@ -16,6 +16,7 @@
         var init = function() {
             if (isLoggedIn()) {
                 $location.url("/profile");
+                return;
             }
         };
         init();
@@ -29,13 +30,12 @@
                 .findUserByCredentials(user.username, user.password)
                 .then(function(response) {
                     if (response.data) {
-                        console.log(response);
+
                         UserService.setCurrentUser(response.data);
                         $location.url('/profile');
                     } else {
                         vm.message = "User not found";
-                        console.log(vm.message);
-                        console.log(response);
+
                     }
                 });
         }
