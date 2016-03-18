@@ -7,23 +7,41 @@
         .module("FormBuilderApp")
         .controller("LoginController", LoginController);
 
-    function LoginController ($scope, $location, UserService, $rootScope) {
-        $scope.message = null;
-        $scope.login = login;
+    function LoginController ($location, UserService) {
+        var vm = this;
+
+        vm.message = null;
+        vm.login = login;
+
+        var init = function() {
+            if (isLoggedIn()) {
+                $location.url("/profile");
+            }
+        };
+        init();
 
         function login(user) {
-            $scope.message = null;
-            var validUser = UserService.findUserByCredentials(user.username, user.password, identity);
-            if (!validUser) {
-                $scope.message = "Invalid credentials"
+            vm.message = null;
+            if (!user) {
+                vm.message = "Invalid credentials"
             }
-            else {
-                $rootScope.currentUser = validUser;
-                $location.url('/profile');
-            }
-            function identity(param) {
-                return param;
-            }
+            UserService
+                .findUserByCredentials(user.username, user.password)
+                .then(function(response) {
+                    if (response.data) {
+                        console.log(response);
+                        UserService.setCurrentUser(response.data);
+                        $location.url('/profile');
+                    } else {
+                        vm.message = "User not found";
+                        console.log("failed");
+                        console.log(response);
+                    }
+                });
+        }
+
+        function isLoggedIn() {
+            return UserService.getCurrentUser() != null;
         }
     }
 })();
