@@ -40,4 +40,4 @@ module.exports = function(app, formModel) {
         form = formModel.updateFormById(formId, form);
         res.json(form);
     }
-}
+};

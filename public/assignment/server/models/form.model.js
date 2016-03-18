@@ -10,9 +10,81 @@ module.exports = function() {
         findFormById: findFormById,
         findAllFormsForUser: findAllFormsForUser,
         updateFormById: updateFormById,
-        deleteFormById: deleteFormById
+        deleteFormById: deleteFormById,
+
+        findAllFieldsForForm: findAllFieldsForForm,
+        findFieldInForm: findFieldInForm,
+        deleteFieldFromForm: deleteFieldFromForm,
+        createFieldInForm: createFieldInForm,
+        updateFieldInForm: updateFieldInForm
     };
     return api;
+
+    function updateFieldInForm(formId, fieldId, field) {
+        for(var i in mock) {
+            if (mock[i]._id == formId) {
+                for(var j in mock[i].fields) {
+                    if (mock[i].fields[j]._id == fieldId) {
+                        field._id = fieldId;
+                        mock[i].fields[j] = field;
+                        return mock[i].fields[j];
+                    }
+                }
+            }
+        }
+    }
+
+    function createFieldInForm(formId, field) {
+        field._id = uuid.v1();
+        for(var i in mock) {
+            if (mock[i]._id == formId) {
+                mock[i].fields.push(field);
+                return mock[i];
+            }
+        }
+        return null;
+    }
+
+    function deleteFieldFromForm(formId, fieldId) {
+        var deleted = false;
+        for(var i in mock) {
+            if (mock[i]._id == formId) {
+                for(var j in mock[i].fields) {
+                    if (mock[i].fields[j]._id == fieldId) {
+                        mock[i].fields.splice(j, 1);
+                        deleted = true;
+                        break;
+                    }
+                }
+            }
+            if (deleted) {
+                break;
+            }
+        }
+        return mock[i].fields;
+    }
+
+    function findFieldInForm(formId, fieldId) {
+        for(var i in mock) {
+            if (mock[i]._id == formId) {
+                for(var j in mock[i].fields) {
+                    if (mock[i].fields[j]._id == fieldId) {
+                        return mock[i].fields[j];
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    function findAllFieldsForForm(formId) {
+        for(var i in mock) {
+            if (mock[i]._id == formId) {
+                return mock[i].fields;
+            }
+        }
+        return [];
+    }
 
     function createFormForUser(userId, form) {
         form._id = uuid.v1();

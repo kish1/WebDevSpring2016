@@ -63,4 +63,4 @@ module.exports = function(app, userModel) {
         var id = req.params.id;
         var users = userModel.deleteUserById(id);
     }
-}
+};

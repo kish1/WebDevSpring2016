@@ -2,6 +2,7 @@
  * Created by kishore on 3/17/16.
  */
 "use strict";
+var uuid = require('node-uuid');
 var mock = require("./user.mock.json");
 //console.log(mock);
 module.exports = function() {
@@ -18,7 +19,7 @@ module.exports = function() {
 
     function createUser(user) {
         var newUser = {
-            _id: (new Date).getTime(),
+            _id: uuid.v1(),
             firstName: user.firstName,
             lastName: user.lastName,
             username: user.username,
