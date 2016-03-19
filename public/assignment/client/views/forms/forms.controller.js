@@ -18,6 +18,7 @@
         vm.updateForm = updateForm;
         vm.selectForm = selectForm;
         vm.deleteForm = deleteForm;
+        vm.goToFields = goToFields;
 
         var init = function () {
             vm.currentUser = UserService.getCurrentUser();
@@ -35,6 +36,9 @@
         };
         init();
 
+        function goToFields(index) {
+            $location.url("/form/"+ vm.forms[index]._id + "/fields")
+        }
 
         function addForm(form) {
             FormService

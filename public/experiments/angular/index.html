@@ -4,6 +4,8 @@
     <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/modal.controller.js"></script>
+    <script src="ui-bootstrap-tpls-1.2.4.min.js"></script>
     <meta charset="UTF-8">
     <title>Angular JS</title>
 
@@ -37,6 +39,32 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div ng-controller="ModalDemoCtrl">
+        <script type="text/ng-template">
+            <div class="modal-header">
+                <h3 class="modal-title">I'm a modal!</h3>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li ng-repeat="item in items">
+                        <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+                    </li>
+                </ul>
+                Selected: <b>{{ selected.item }}</b>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            </div>
+        </script>
+
+        <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+        <button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
+        <button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>
+        <button type="button" class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>
+        <div ng-show="selected">Selection from a modal: {{ selected }}</div>
     </div>
 
 </body>

@@ -21,7 +21,7 @@
             </td>
         </tr>
         <tr ng-repeat="form in model.forms">
-                <td>{{form.title}}</td>
+                <td><a role="button" ng-click="model.goToFields($index)">{{form.title}}<a/></td>
                 <td class="text-center">
                     <a ng-click="model.deleteForm($index)" role="button" class="glyphicon glyphicon-remove" id="big-icon"></a>
                     <a ng-click="model.selectForm($index)" role="button" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>

@@ -27,6 +27,7 @@
             }
             vm.currentUser = UserService.getCurrentUser();
             vm.currentUserId = vm.currentUser._id;
+            /*
             FormService
                 .findAllFormsForUser(vm.currentUserId)
                 .then(function (response) {
@@ -40,6 +41,16 @@
                             console.log(vm.fields);
                         });
                 });
+            */
+            vm.formId = $location.path().split("/")[2];
+            FieldService
+                .getFieldsForForm(vm.formId)
+                .then(function(response) {
+                    vm.fields = response.data;
+                    //console.log(response);
+                    //console.log(vm.fields);
+                });
+
 
         };
         init();
