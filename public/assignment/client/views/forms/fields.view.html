@@ -6,98 +6,118 @@
 <br>
 
 <form class="form-horizontal">
-    <div class="form-group">
-        <label for="first_name" class="col-sm-2 control-label">First Name:</label>
-    </div>
-    <div class="row form-group">
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="first_name" placeholder="First Name">
-        </div>
-        <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
-    </div>
-
-    <div class="form-group">
-        <label for="last_name" class="col-sm-2 control-label">Last Name:</label>
-    </div>
-    <div class="row form-group">
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="last_name" placeholder="Last Name">
-        </div>
-
-        <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
-    </div>
-
-    <div class="form-group">
-        <label for="dob" class="col-sm-2 control-label">Date of Birth:</label>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-3">
-            <input type="date" class="form-control" id="dob" placeholder="Select Date">
-        </div>
-        <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Gender:</label>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-3">
-            <select id="full-width">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
-        </div>
-        <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Roles:</label>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-3">
-            <div class="checkbox">
-                <label><input type="checkbox" checked="checked" value="Admin">Admin</label>
+    <div ng-repeat="field in model.fields" ng-switch="field.type">
+        <div ng-switch-when="TEXT">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{field.label}}:</label>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="Student">Student</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" checked="checked" value="User">User</label>
+            <div class="row form-group">
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="{{field.placeholder}}">
+                </div>
+                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
             </div>
         </div>
-        <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
-    </div>
 
-    <div class="form-group">
-        <label class="col-sm-2 control-label">License Agreement:</label>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-3">
-            <div class="radio">
-                <label><input type="radio" checked="checked" name="license" value="Yes">Yes</label>
+        <div ng-switch-when="EMAIL">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{field.label}}:</label>
             </div>
-            <div class="radio"><label><input type="radio" name="license" value="No">No</label>
+            <div class="row form-group">
+                <div class="col-sm-3">
+                    <input type="email" class="form-control" placeholder="{{field.placeholder}}">
+                </div>
+                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
             </div>
         </div>
-        <a href="" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+
+        <div ng-switch-when="TEXTAREA">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{field.label}}:</label>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-3">
+                    <textarea class="form-control" placeholder="{{field.placeholder}}"></textarea>
+                </div>
+                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+            </div>
+        </div>
+
+        <div ng-switch-when="DATE">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{field.label}}:</label>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <input type="date" class="form-control" placeholder="{{field.placeholder}}">
+                </div>
+                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+            </div>
+        </div>
+
+        <div ng-switch-when="OPTIONS">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{field.label}}:</label>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <select id="full-width">
+                        <option ng-repeat="option in field.options" value="{{option.value}}">{{option.label}}</option>
+                    </select>
+                </div>
+                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+            </div>
+        </div>
+
+        <div ng-switch-when="CHECKBOXES">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{field.label}}:</label>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3" ng-repeat="option in field.options">
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="option.value">{{option.label}}</label>
+                    </div>
+                </div>
+                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+            </div>
+        </div>
+
+        <div ng-switch-when="RADIOS">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{field.label}}:</label>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3" ng-repeat="option in field.options">
+                    <div class="radio">
+                        <label><input type="radio" name="license" value="option.value">{{option.label}}</label>
+                    </div>
+                </div>
+                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+            </div>
+        </div>
+
     </div>
 
     <hr>
@@ -107,20 +127,54 @@
     </div>
     <div class="form-group">
         <div class="col-sm-3">
-            <select id="full-width">
-                <option value="Single Line Text">Single Line Text</option>
-                <option value="Date">Date</option>
-                <option value="Dropdown">Dropdown</option>
-                <option value="Checkboxes">Checkboxes</option>
-                <option value="Radio buttons">Radio buttons</option>
-                <option value="Paragraph Text Field">Paragraph Text Field</option>
+            <select ng-model="model.fieldType" id="full-width">
+                <option value="TEXT">Single Line Text</option>
+                <option value="DATE">Date</option>
+                <option value="OPTIONS">Dropdown</option>
+                <option value="CHECKBOXES">Checkboxes</option>
+                <option value="RADIOS">Radio buttons</option>
+                <option value="TEXTAREA">Paragraph Text Field</option>
             </select>
         </div>
-        <a href="" class="glyphicon glyphicon-align-justify pull-right" id="hidden-icon"></a>
-        <a href="" class="glyphicon glyphicon-remove pull-right" id="hidden-icon"></a>
-        <a href="" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-        <a href="" class="glyphicon glyphicon-pencil pull-right" id="hidden-icon"></a>
+        <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="hidden-icon"></a>
+        <a role="button" class="glyphicon glyphicon-remove pull-right" id="hidden-icon"></a>
+        <a role="button" ng-click="model.addField(model.fieldType)" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+        <a role="button" class="glyphicon glyphicon-pencil pull-right" id="hidden-icon"></a>
     </div>
-
-
 </form>
+
+<modal ng-title="model.field.type" visible="model.edit">
+    <form role="form" ng-switch="model.field.type">
+        <div class="form-group">
+            <label>Label</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group" ng-switch-when="TEXT">
+            <label>Placeholder</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group" ng-switch-when="TEXTAREA">
+            <label>Placeholder</label>
+            <textarea class="form-control"></textarea>
+        </div>
+        <div class="form-group" ng-switch-when="DATE">
+        </div>
+        <div class="form-group" ng-switch-when="OPTIONS">
+            <label>Placeholder</label>
+            <textarea class="form-control"></textarea>
+        </div>
+        <div class="form-group" ng-switch-when="CHECKBOXES">
+            <label>Placeholder</label>
+            <textarea class="form-control"></textarea>
+        </div>
+        <div class="form-group" ng-switch-when="RADIOS">
+            <label>Placeholder</label>
+            <textarea class="form-control"></textarea>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-primary">Ok</button>
+        </div>
+
+    </form>
+</modal>

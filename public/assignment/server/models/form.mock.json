@@ -16,7 +16,17 @@
         "fields": [
           {"_id": "777", "label": "Title", "type": "TEXT", "placeholder": "Title"},
           {"_id": "888", "label": "Description", "type": "TEXTAREA", "placeholder": "Title"},
-          {"_id": "999", "label": "Due Date", "type": "DATE"}
+          {"_id": "999", "label": "Due Date", "type": "DATE"},
+          {"_id": "1001", "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
+            {"label": "Option A", "value": "OPTION_A"},
+            {"label": "Option B", "value": "OPTION_B"},
+            {"label": "Option C", "value": "OPTION_C"}
+          ]},
+          {"_id": null, "label": "New Radio Buttons", "type": "RADIOS", "options": [
+            {"label": "Option X", "value": "OPTION_X"},
+            {"label": "Option Y", "value": "OPTION_Y"},
+            {"label": "Option Z", "value": "OPTION_Z"}
+          ]}
         ]
       }
 ]
