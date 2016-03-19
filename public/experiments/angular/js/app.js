@@ -3,7 +3,7 @@
  */
 (function (){
     angular
-        .module("SomeDBApp", [])
+        .module("SomeDBApp", ['ngAnimate', 'ui.bootstrap'])
         .controller("SomeController", SomeController);
 
     function SomeController($scope) {

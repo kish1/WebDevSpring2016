@@ -143,38 +143,39 @@
     </div>
 </form>
 
-<modal ng-title="model.field.type" visible="model.edit">
+<div ng-show="model.edit">
+    <h3>{{model.editTitle}}</h3>
     <form role="form" ng-switch="model.field.type">
         <div class="form-group">
             <label>Label</label>
-            <input type="text" class="form-control">
+            <input type="text" ng-model="model.editLabel" class="form-control">
         </div>
         <div class="form-group" ng-switch-when="TEXT">
             <label>Placeholder</label>
-            <input type="text" class="form-control">
+            <input ng-model="model.editValue" type="text" class="form-control">
         </div>
         <div class="form-group" ng-switch-when="TEXTAREA">
             <label>Placeholder</label>
-            <textarea class="form-control"></textarea>
+            <textarea ng-model="model.editValue" class="form-control"></textarea>
         </div>
         <div class="form-group" ng-switch-when="DATE">
         </div>
         <div class="form-group" ng-switch-when="OPTIONS">
             <label>Placeholder</label>
-            <textarea class="form-control"></textarea>
+            <textarea ng-model="model.editValue" class="form-control"></textarea>
         </div>
         <div class="form-group" ng-switch-when="CHECKBOXES">
             <label>Placeholder</label>
-            <textarea class="form-control"></textarea>
+            <textarea ng-model="model.editValue" class="form-control"></textarea>
         </div>
         <div class="form-group" ng-switch-when="RADIOS">
             <label>Placeholder</label>
-            <textarea class="form-control"></textarea>
+            <textarea ng-model="model.editValue" class="form-control"></textarea>
         </div>
         <div>
-            <button type="submit" class="btn btn-default">Cancel</button>
-            <button type="submit" class="btn btn-primary">Ok</button>
+            <button type="submit" ng-click="model.cancelEdit()" class="btn btn-default">Cancel</button>
+            <button type="submit" ng-click="model.update(model.editLabel, model.editValue, model.field.type)" class="btn btn-primary">Ok</button>
         </div>
 
     </form>
-</modal>
+</div>

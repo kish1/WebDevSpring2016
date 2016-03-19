@@ -19,6 +19,8 @@
         vm.addField = addField;
         vm.removeField = removeField;
         vm.selectField = selectField;
+        vm.cancelEdit = cancelEdit;
+        vm.update = update;
 
         var init = function () {
             if (!UserService.getCurrentUser()) {
@@ -47,18 +49,73 @@
                 .getFieldsForForm(vm.formId)
                 .then(function(response) {
                     vm.fields = response.data;
-                    //console.log(response);
-                    //console.log(vm.fields);
                 });
 
 
         };
         init();
 
+        function cancelEdit() {
+            vm.edit = false;
+        }
+
+        function update(label, placeholder, type) {
+            console.log(placeholder);
+            vm.field.label = label;
+            if (["TEXT", "TEXTAREA"].indexOf(type) > -1) {
+                vm.field.placeholder = placeholder;
+                FieldService.updateField(vm.formId, vm.field._id, vm.field);
+            } else if (["OPTIONS", "CHECKBOXES", "RADIOS"].indexOf(type) > -1) {
+                var text = placeholder.split("\n");
+                var options = [];
+                for(var i in text) {
+                    var opt = text[i].split(":");
+                    options.push({
+                        label: opt[0],
+                        value: opt[1]
+                    });
+                }
+                console.log(options);
+                vm.field.options = options;
+            }
+            FieldService
+                .updateField(vm.formId, vm.field._id, vm.field)
+                .then(function(resp) {
+                    FieldService
+                        .getFieldsForForm(vm.formId)
+                        .then(function(response) {
+                            vm.fields = response.data;
+                        });
+                });
+            vm.edit = false;
+        }
+
         function selectField(index) {
+            var titleMap = {
+                "TEXT": "Single Line Field",
+                "TEXTAREA": "Multiple Line Field",
+                "DATE": "Date Field",
+                "OPTIONS": "Dropdown Field",
+                "CHECKBOXES": "Checkbox Field",
+                "RADIOS": "Radio Button Field"
+            };
             vm.field = vm.fields[index];
             vm.edit = true;
-            console.log(vm.field);
+            vm.editTitle = titleMap[vm.field.type];
+            vm.editLabel = vm.field.label;
+            console.log(vm.field.type);
+            if (["TEXT", "TEXTAREA"].indexOf(vm.field.type) > -1) {
+                vm.editValue = vm.field.placeholder;
+            } else if (["OPTIONS", "CHECKBOXES", "RADIOS"].indexOf(vm.field.type) > -1) {
+                var text = "";
+                for(var i in vm.field.options) {
+                    var line = vm.field.options[i].label + ":" + vm.field.options[i].value + "\n";
+                    text = text + line;
+                    //console.log(text);
+                }
+                vm.editValue = text;
+            }
+            //console.log(vm.field);
         }
 
         function removeField(index) {

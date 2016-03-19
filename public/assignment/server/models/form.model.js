@@ -25,8 +25,9 @@ module.exports = function() {
             if (mock[i]._id == formId) {
                 for(var j in mock[i].fields) {
                     if (mock[i].fields[j]._id == fieldId) {
-                        field._id = fieldId;
-                        mock[i].fields[j] = field;
+                        mock[i].fields[j].label = field.label;
+                        mock[i].fields[j].placeholder = field.placeholder;
+                        mock[i].fields[j].options = field.options;
                         return mock[i].fields[j];
                     }
                 }
