@@ -8,51 +8,85 @@
         .controller("UsersController", UsersController);
 
     function UsersController($scope, UserService) {
-        $scope.today = getToday();
-        $scope.user = {dob: getToday()};
-        $scope.users = UserService.findAllUsers(identity);
+        var vm = this;
+        
+        vm.today = getToday();
+        vm.user = {dob: getToday()};
+        vm.users = [];
 
-        $scope.addUser = addUser;
-        $scope.updateUser = updateUser;
-        $scope.selectUser = selectUser;
-        $scope.deleteUser = deleteUser;
+        vm.addUser = addUser;
+        vm.updateUser = updateUser;
+        vm.selectUser = selectUser;
+        vm.deleteUser = deleteUser;
+        vm.title = "Hello";
+
+        var init = function() {
+            console.log("Hello");
+            UserService.findAllUsers()
+                .then(function(response) {
+                    vm.users = response.data;
+                    for(var i in vm.users) {
+                        vm.users[i].dob = new Date(vm.users[i].dob);
+                    }
+                });
+        };
+        init();
+        //console.log(vm);
+        //console.log(this);
+
 
         function addUser(user) {
-            UserService.createUser(user, identity);
-            $scope.user = {dob: getToday()};
+            UserService.createUser(user)
+                .then(function(response) {
+                    var newUser = response.data;
+                    newUser.dob = new Date(newUser.dob);
+                    vm.users.push(newUser);
+                });
+            vm.user = {dob: getToday()};
         }
 
         function updateUser(user) {
-            UserService.updateUserById(user._id, user, identity);
-            $scope.user = {dob: getToday()};
+            console.log(user._id);
+            UserService.updateUserById(user._id, user)
+                .then(function(response) {
+                    var newUser = response.data;
+                    newUser.dob = new Date(newUser.dob);
+                    for(var i in vm.users) {
+                        if (vm.users[i]._id == user._id) {
+                            vm.users[i] = newUser;
+                            console.log(response);
+                            return;
+                        }
+                    }
+                });
+            vm.user = {dob: getToday()};
         }
 
         function selectUser(index) {
-            $scope.user = {
-                _id:         $scope.users[index]._id,
-                firstName:   $scope.users[index].firstName,
-                lastName:    $scope.users[index].lastName,
-                email:       $scope.users[index].email,
-                password:    $scope.users[index].password,
-                dob:         $scope.users[index].dob,
-                gender:      $scope.users[index].gender,
-                description: $scope.users[index].description,
-                admin:       $scope.users[index].admin
+            vm.user = {
+                _id:         vm.users[index]._id,
+                firstName:   vm.users[index].firstName,
+                lastName:    vm.users[index].lastName,
+                email:       vm.users[index].email,
+                password:    vm.users[index].password,
+                dob:         vm.users[index].dob,
+                gender:      vm.users[index].gender,
+                description: vm.users[index].description,
+                admin:       vm.users[index].admin
             }
         }
 
         function deleteUser(index) {
-            UserService.deleteUserById($scope.users[index]._id, identity);
-            //$scope.users.splice(index, 1);
+            UserService.deleteUserById(vm.users[index]._id)
+                .then(function(response) {
+                    vm.users = response.data;
+                });
+            //vm.users.splice(index, 1);
         }
 
         function getToday() {
             //return new Date().toISOString().substring(0, 10);
             return new Date();
-        }
-
-        function identity(param) {
-            return param;
         }
     }
 })();

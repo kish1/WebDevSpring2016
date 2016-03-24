@@ -1,0 +1,5 @@
+[
+  {"_id": "001", "firstName": "Lionel", "lastName": "Messi", "email":"leo@messi.com", "password": "thiago", "dob": ["1987", "5", "24"], "gender": "male", "description": "I'm Leo Messi", "admin":false},
+  {"_id": "002", "firstName": "Saina", "lastName": "Nehwal", "email":"saina@nehwal.com", "password": "saina", "dob": ["1990", "2", "17"], "gender": "female", "description": "I'm Saina Nehwal", "admin":true},
+  {"_id": "003", "firstName": "Mesut", "lastName": "Ozil", "email":"mesut@ozil.com", "password": "mesut", "dob": ["1988", "9", "15"], "gender": "male", "description": "I'm Mesut Ozil", "admin":false}
+]

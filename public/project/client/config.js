@@ -13,9 +13,15 @@
                 templateUrl: "views/home/home.view.html",
                 controller: "HomeController"
             })
+            .when("/register", {
+                templateUrl: "views/users/register.view.html",
+                controller: "RegisterController",
+                controllerAs: "model"
+            })
             .when("/users", {
                 templateUrl: "views/users/users.view.html",
-                controller: "UsersController"
+                controller: "UsersController",
+                controllerAs: "model"
             })
             .when("/posts", {
             templateUrl: "views/posts/posts.view.html",

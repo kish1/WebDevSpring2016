@@ -1,4 +1,4 @@
-<h1 class="page-header">Users</h1>
+<h1 class="page-header">User</h1>
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -16,23 +16,23 @@
         </thead>
         <tbody>
             <tr>
-                <td><input ng-model="user.firstName" type="text"></td>
-                <td><input ng-model="user.lastName" type="text"></td>
-                <td><input ng-model="user.email" type="text"></td>
-                <td><input ng-model="user.password" type="text"></td>
-                <td><input ng-model="user.dob" type="date" value="{{today}}" class="form-control"></td>
-                <td><select ng-model="user.gender">
-                    <option ng-selected="user.gender === 'male'" value="male">Male</option>
-                    <option ng-selected="user.gender === 'female'" value="female">Female</option>
+                <td><input ng-model="model.user.firstName" type="text"></td>
+                <td><input ng-model="model.user.lastName" type="text"></td>
+                <td><input ng-model="model.user.email" type="text"></td>
+                <td><input ng-model="model.user.password" type="text"></td>
+                <td><input ng-model="model.user.dob" type="date" value="{{model.today}}" class="form-control"></td>
+                <td><select ng-model="model.user.gender">
+                    <option ng-selected="model.user.gender === 'male'" value="male">Male</option>
+                    <option ng-selected="model.user.gender === 'female'" value="female">Female</option>
                 </select></td>
-                <td><input ng-model="user.description" type="text"></td>
-                <td class="text-center"><label><input ng-model="user.admin" type="checkbox"></label></td>
+                <td><input ng-model="model.user.description" type="text"></td>
+                <td class="text-center"><label><input ng-model="model.user.admin" type="checkbox"></label></td>
                 <td class="no-wrapping">
-                    <button ng-click="addUser(user)" class="btn btn-success">Add</button>
-                    <button ng-click="updateUser(user)" class="btn btn-info">Update</button>
+                    <button ng-click="model.addUser(model.user)" class="btn btn-success">Add</button>
+                    <button ng-click="model.updateUser(model.user)" class="btn btn-info">Update</button>
                 </td>
             </tr>
-            <tr ng-repeat="user in users">
+            <tr ng-repeat="user in model.users">
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>
@@ -42,8 +42,8 @@
                 <td>{{user.description}}</td>
                 <td class="text-center">{{user.admin}}</label></td>
                 <td class="no-wrapping">
-                    <button ng-click="selectUser($index)" class="btn btn-primary">Select</button>
-                    <button ng-click="deleteUser($index)" class="btn btn-danger">Delete</button>
+                    <button ng-click="model.selectUser($index)" class="btn btn-primary">Select</button>
+                    <button ng-click="model.deleteUser($index)" class="btn btn-danger">Delete</button>
                 </td>
             </tr>
         </tbody>

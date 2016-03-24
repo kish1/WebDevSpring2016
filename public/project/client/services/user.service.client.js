@@ -7,13 +7,7 @@
         .module("BlogApp")
         .factory("UserService", UserService);
 
-    function UserService() {
-        var users = [];
-        users = [
-            {"_id": "001", "firstName": "Lionel", "lastName": "Messi", "email":"leo@messi.com", "password": "thiago", "dob": new Date("1987", "5", "24"), "gender": "male", "description": "I'm Leo Messi", "admin":false},
-            {"_id": "002", "firstName": "Saina", "lastName": "Nehwal", "email":"saina@nehwal.com", "password": "saina", "dob": new Date("1990", "2", "17"), "gender": "female", "description": "I'm Saina Nehwal", "admin":true},
-            {"_id": "003", "firstName": "Mesut", "lastName": "Ozil", "email":"mesut@ozil.com", "password": "mesut", "dob": new Date("1988", "9", "15"), "gender": "male", "description": "I'm Mesut Ozil", "admin":false}
-        ];
+    function UserService($http) {
         var service = {
             findAllUsers: findAllUsers,
             createUser: createUser,
@@ -22,11 +16,11 @@
         };
         return service;
 
-        function findAllUsers(callback) {
-            return callback(users);
+        function findAllUsers() {
+            return $http.get("/api/project/user");
         }
 
-        function createUser(user, callback) {
+        function createUser(user) {
             var newUser = {
                 _id:         (new Date).getTime(),
                 firstName:   user.firstName,
@@ -38,36 +32,15 @@
                 description: user.description,
                 admin:       user.admin != null
             };
-            users.push(newUser);
-            return callback(newUser);
+            return $http.post("/api/project/user", newUser);
         }
 
-        function updateUserById(_id, user, callback) {
-            for(var i in users) {
-                if (users[i]._id === _id) {
-                    users[i].firstName = user.firstName;
-                    users[i].lastName = user.lastName;
-                    users[i].email = user.email;
-                    users[i].password = user.password;
-                    users[i].dob = user.dob;
-                    users[i].gender = user.gender;
-                    users[i].description = user.description;
-                    users[i].admin = user.admin;
-
-                    return callback(users[i]);
-                }
-            }
-            return callback(null);
+        function updateUserById(userId, user) {
+            return $http.put("/api/project/user/" + userId, user);
         }
 
-        function deleteUserById (_id, callback) {
-            for(var i in users) {
-                if (users[i]._id === _id) {
-                    users.splice(i, 1);
-                    return callback(users);
-                }
-            }
-            return callback(users);
+        function deleteUserById (userId) {
+            return $http.delete("/api/project/user/" + userId);
         }
     }
 })();
