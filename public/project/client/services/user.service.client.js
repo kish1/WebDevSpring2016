@@ -7,14 +7,32 @@
         .module("BlogApp")
         .factory("UserService", UserService);
 
-    function UserService($http) {
+    function UserService($rootScope, $http) {
+        $rootScope.currentUser = null;
+
         var service = {
+            getCurrentUser: getCurrentUser,
+            setCurrentUser: setCurrentUser,
+
+            findUserByCredentials: findUserByCredentials,
             findAllUsers: findAllUsers,
             createUser: createUser,
             updateUserById: updateUserById,
             deleteUserById: deleteUserById
         };
         return service;
+
+        function getCurrentUser() {
+            return $rootScope.currentUser;
+        }
+
+        function setCurrentUser(user) {
+            $rootScope.currentUser = user;
+        }
+
+        function findUserByCredentials(email, password) {
+            return $http.get("/api/project/user?email=" + email + "&password=" + password);
+        }
 
         function findAllUsers() {
             return $http.get("/api/project/user");

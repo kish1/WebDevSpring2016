@@ -24,9 +24,10 @@ module.exports = function() {
     function findUserByCredentials(email, password) {
         for(var i in users) {
             if (users[i].email == email && users[i].password == password) {
-                return
+                return users[i];
             }
         }
+        return null;
     }
 
     function deleteUserById(userId) {

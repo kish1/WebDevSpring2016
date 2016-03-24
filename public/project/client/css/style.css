@@ -1,3 +1,9 @@
 .no-wrapping {
     white-space: nowrap;
 }
+
+.inactive-link {
+    pointer-events: none;
+    cursor: default;
+}
+

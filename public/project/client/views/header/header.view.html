@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController as model">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -11,8 +11,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-hide="false"><a role="button">Register</a></li>
-                <li ng-hide="false"><a role="button">Login</a></li>
+                <li ng-hide="model.isLoggedIn()" ng-class="{ active : model.$location.path() === '/register'}"><a role="button" ng-class="{ 'inactive-link' : model.$location.path() === '/register'}" href="#/register">Register</a></li>
+                <li ng-hide="model.isLoggedIn()" ng-class="{ active : model.$location.path() === '/login'}"><a role="button" ng-class="{ 'inactive-link' : model.$location.path() === '/login'}" href="#/login">Login</a></li>
+                <li ng-show="model.isLoggedIn()" ng-class="{ active : model.$location.path() === '/profile'}"><a role="button" ng-class="{ 'inactive-link' : model.$location.path() === '/profile'}" href="#/profile">{{model.currentUser.firstName}}</a></li>
+                <li ng-show="model.isLoggedIn()"><a role="button" ng-click="model.signOut()">Sign Out</a></li>
             </ul>
 
         </div>
