@@ -14,9 +14,9 @@
 
 </head>
 <body>
-    <div class="container">
+    <div class="container" ng-controller="SomeController as sc">
         <h1>Some Database</h1>
-        <table class="table" ng-controller="SomeController">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -26,48 +26,27 @@
             </thead>
             <tbody>
             <tr>
-                <td><input ng-model="player.name" class="form-control"></td>
-                <td><input ng-model="player.country" class="form-control"></td>
-                <td><input ng-model="player.club" class="form-control"></td>
-                <td><button ng-click="addPlayer(player)" class="btn btn-success">Add</button></td>
-                <td><button ng-click="updatePlayer(player)" class="btn btn-info">Update</button></td>
+                <td><input ng-model="sc.player.name" class="form-control"></td>
+                <td><input ng-model="sc.player.country" class="form-control"></td>
+                <td><input ng-model="sc.player.club" class="form-control"></td>
+                <td><button ng-click="sc.addPlayer(sc.player)" class="btn btn-success">Add</button></td>
+                <td><button ng-click="sc.updatePlayer(sc.player)" class="btn btn-info">Update</button></td>
             </tr>
-                <tr ng-repeat="player in players">
+                <tr ng-repeat="player in sc.players">
                     <td>{{player.name}}</td>
                     <td>{{player.country}}</td>
                     <td>{{player.club}}</td>
-                    <td><button ng-click="selectPlayer(player)" class="btn btn-info">Select</button></td>
-                    <td><button ng-click="removePlayer(player)" class="btn btn-danger">Delete</button></td>
+                    <td><button ng-click="sc.selectPlayer(player)" class="btn btn-info">Select</button></td>
+                    <td><button ng-click="sc.removePlayer(player)" class="btn btn-danger">Delete</button></td>
                 </tr>
             </tbody>
         </table>
+        <div ng-controller="ModalController as mc">
+            <button class="btn btn-primary" ng-click="mc.open('lg', sc.players)">Search</button>
+        </div>
     </div>
 
-    <div ng-controller="ModalDemoCtrl">
-        <script type="text/ng-template" id="myModalContent.html">
-            <div class="modal-header">
-                <h3 class="modal-title">I'm a modal!</h3>
-            </div>
-            <div class="modal-body">
-                <ul>
-                    <li ng-repeat="item in items">
-                        <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-                    </li>
-                </ul>
-                Selected: <b>{{ selected.item }}</b>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-            </div>
-        </script>
 
-        <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
-        <button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
-        <button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>
-        <button type="button" class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>
-        <div ng-show="selected">Selection from a modal: {{ selected }}</div>
-    </div>
 
 </body>
 </html>

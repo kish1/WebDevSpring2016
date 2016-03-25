@@ -1,0 +1,5 @@
+[
+  {"_id": "101", "userId": "001", "name": "The Alps", "createdOn": ["2015", "7", "28"], "content": ["I recently visited..."]},
+  {"_id": "102", "userId": "001", "name": "Latest Trends in JS", "createdOn": ["2015", "2", "16"], "content": ["What's hot in JavaScript...\nOver the years..."]},
+  {"_id": "103", "userId": "003", "name": "My New Recipe", "createdOn": ["2015", "5", "9"], "content": ["Latest Recipe...\nLast week..."]}
+]

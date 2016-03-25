@@ -1,0 +1,14 @@
+<div>
+    <ul class="nav nav-pills">
+        <li><a href="#/post">Posts</a></li>
+        <li><a class="btn btn-primary" href="">Edit</a></li>
+    </ul>
+</div>
+
+<h2 class="text-center">{{model.post.name}}</h2>
+<p class="big-font text-center">created on {{model.post.createdOn.toDateString()}}</p>
+<hr>
+<div ng-repeat="part in model.post.content">
+    {{part}}
+</div>
+

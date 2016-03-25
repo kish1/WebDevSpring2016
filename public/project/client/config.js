@@ -33,9 +33,25 @@
                 controller: "UsersController",
                 controllerAs: "model"
             })
+            .when("/post", {
+                templateUrl: "views/posts/post.view.html",
+                controller: "PostController",
+                controllerAs: "model"
+            })
+            .when("/newpost", {
+                templateUrl: "views/posts/newpost.view.html",
+                controller: "NewpostController",
+                controllerAs: "model"
+            })
+            .when("/readpost", {
+                templateUrl: "views/posts/readpost.view.html",
+                controller: "ReadpostController",
+                controllerAs: "model"
+            })
             .when("/posts", {
-            templateUrl: "views/posts/posts.view.html",
-            controller: "PostsController"
+                templateUrl: "views/posts/posts.view.html",
+                controller: "PostsController",
+                controllerAs: "model"
             })
             .when("/comments", {
                 templateUrl: "views/comments/comments.view.html",

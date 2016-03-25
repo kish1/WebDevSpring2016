@@ -1,0 +1,13 @@
+<h1 class="page-header">Posts</h1>
+<div>
+    <ul class="nav nav-pills">
+        <li><a href="#/newpost">Write</a></li>
+        <li><a href="#/profile">Profile</a></li>
+    </ul>
+</div>
+
+<h3>My Posts</h3>
+<div ng-repeat="post in model.myposts">
+    <h4><a role="button" ng-click="model.readPost(post._id)">{{post.name}}</a></h4>
+</div>
+
