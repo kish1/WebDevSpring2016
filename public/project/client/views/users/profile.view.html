@@ -1,12 +1,45 @@
 <h1 class="page-header text-center">Profile</h1>
-<div>
-    <div>
-        <img class="img-responsive pull-left" src="/project/images/default.jpg">
-    </div>
-    <div style="line-height: 100px">
-        <h3><b>{{model.currentUser.firstName + " " + model.currentUser.lastName}}</b></h3>
-    </div>
-    
+<div class="row text-center">
+    <img class="img-responsive img-thumbnail" src="/project/images/envelope.png">
 </div>
+<br><br>
+<h5 class="page-header"></h5>
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="big-font col-sm-2">First Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="big-font col-sm-2">Last Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="big-font col-sm-2">Gender</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="big-font col-sm-2">Email</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="big-font col-sm-2">Intro</label>
+        <div class="col-sm-10">
+            <textarea class="form-control">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </textarea>
+        </div>
+    </div>
+</form>
+
+<!input type="file">
 
 

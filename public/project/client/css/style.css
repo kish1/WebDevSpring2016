@@ -7,3 +7,17 @@
     cursor: default;
 }
 
+.big-font {
+    font-size: 20px;
+}
+
+.cropped {
+    width: 128px;
+    height: 128px;
+    overflow: hidden;
+}
+
+.cropped img {
+    width: 128px;
+    height: 128px;
+}
