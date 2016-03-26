@@ -1,14 +1,43 @@
 <div>
     <ul class="nav nav-pills">
-        <li><a href="#/post">Posts</a></li>
-        <li><a class="btn btn-primary" href="">Edit</a></li>
+        <li ng-show="model.isOwnPost()"><a href="#/post">Posts</a></li>
+        <li ng-show="model.isOwnPost()"><a class="btn btn-primary" href="">Edit</a></li>
     </ul>
 </div>
 
 <h2 class="text-center">{{model.post.name}}</h2>
 <p class="big-font text-center">created on {{model.post.createdOn.toDateString()}}</p>
 <hr>
-<div ng-repeat="part in model.post.content">
-    {{part}}
+
+<div ng-repeat="part in model.post.content" ng-switch="part.type">
+    <div class="form-group row" ng-switch-when="text">
+        <div class="col-xs-10">
+            <p>{{part.value}}</p>
+        </div>
+        <br>
+    </div>
+    <div class="row" ng-switch-when="video">
+        <iframe ng-src="{{model.trust(part.value)}}" type="text/html" width="280" frameborder="0"  allowfullscreen></iframe>
+        <br>
+    </div>
 </div>
 
+<br><hr>
+<div class="alert alert-danger" role="alert" ng-show="model.message != null">{{model.message}}</div>
+<div class="form-group">
+    <h4 class="col-sm-2">Comment</h4>
+    <div class="col-sm-6">
+            <textarea class="form-control" ng-model="model.comment.content">
+            </textarea>
+    </div>
+    <button class="btn btn-secondary" ng-click="model.addComment(model.comment)">Submit</button>
+</div>
+
+<br><br>
+
+<div ng-repeat="comment in model.comments">
+    <h4>{{comment.firstName + " " + comment.lastName + " "}} at {{comment.timestamp.toUTCString()}}:</h4>
+    <p>{{comment.content}}</p>
+    <button class="btn btn-danger" ng-click="model.removeComment(comment._id, $index)" ng-show="model.isOwnerOrCommenter(comment.userId)">Remove</button>
+    <br><br>
+</div>

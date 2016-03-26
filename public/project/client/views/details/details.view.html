@@ -2,3 +2,8 @@
 <h3>Title: {{title}}</h3>
 <h3>Description : {{description}}</h3>
 <h3>Channel Title: {{channelTitle}}</h3>
+<h3>VideoId: {{videoId}}</h3>
+<iframe ng-src="{{trust(url)}}" type="text/html" allowfullscreen></iframe>
+<!iframe title="YouTube video player" class="youtube-player" type="text/html"
+        width="640" height="390" src="http://www.youtube.com/embed/{{videoId}}"
+        frameborder="0" allowFullScreen><!/iframe>

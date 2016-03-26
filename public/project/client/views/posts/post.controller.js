@@ -16,15 +16,14 @@
 
         var init = function() {
             vm.currentUser = UserService.getCurrentUser();
+            if (!vm.currentUser) {
+                $location.url("/login");
+                return;
+            }
             PostService.findAllPostsForUser(vm.currentUser._id)
                 .then(function(response) {
                     vm.myposts = response.data;
                 });
-            /*
-            if (!vm.currentUser) {
-                $location.url("/login");
-                return;
-            }*/
         };
         init();
 

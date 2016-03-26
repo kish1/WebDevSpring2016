@@ -28,7 +28,7 @@
         init();
 
         function addPost(post) {
-            post.content = [post.content];
+            post.content = [{type: "text", value: post.content}];
             PostService.createPost(post.userId, post)
                 .then(function(response) {
                     var newPost = response.data;
@@ -39,7 +39,7 @@
         }
 
         function updatePost(post) {
-            post.content = [post.content];
+            post.content = [{type: "text", value: post.content}];
             PostService.updatePostById(post._id, post)
                 .then(function(response) {
                     var newPost = response.data;
@@ -61,7 +61,7 @@
                 userId:    vm.posts[index].userId,
                 name:      vm.posts[index].name,
                 createdOn: vm.posts[index].createdOn,
-                content:   vm.posts[index].content[0]
+                content:   vm.posts[index].content[0].value
             };
         }
 

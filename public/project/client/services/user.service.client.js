@@ -16,11 +16,16 @@
 
             findUserByCredentials: findUserByCredentials,
             findAllUsers: findAllUsers,
+            findUserById: findUserById,
             createUser: createUser,
             updateUserById: updateUserById,
             deleteUserById: deleteUserById
         };
         return service;
+
+        function findUserById(userId) {
+            return $http.get("/api/project/user/" + userId);
+        }
 
         function getCurrentUser() {
             return $rootScope.currentUser;

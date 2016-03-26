@@ -4,9 +4,15 @@
 "use strict";
 module.exports = function (app, userModel) {
     app.get("/api/project/user", userResolve);
+    app.get("/api/project/user/:id", findUserById);
     app.post("/api/project/user", createUser);
     app.put("/api/project/user/:id", updateUserById);
     app.delete("/api/project/user/:id", deleteUserById);
+
+    function findUserById(req, res) {
+        var userId = req.params.id;
+        res.json(userModel.findUserById(userId));
+    }
 
     function deleteUserById(req, res) {
         var userId = req.params.id;

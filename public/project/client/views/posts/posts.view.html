@@ -25,7 +25,7 @@
             <td class="text-right">{{post.userId}}</td>
             <td>{{post.name}}</td>
             <td>{{[post.createdOn.getMonth()+1, post.createdOn.getDate(), post.createdOn.getFullYear()].join('/')}}</td>
-            <td>{{post.content[0]}}</td>
+            <td>{{post.content[0].value}}</td>
             <td class="no-wrapping">
                 <button ng-click="model.selectPost($index)" class="btn btn-primary">Select</button>
                 <button ng-click="model.deletePost($index)" class="btn btn-danger">Delete</button>

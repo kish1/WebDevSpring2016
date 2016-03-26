@@ -40,6 +40,7 @@ module.exports = function() {
     }
 
     function createPost(uId, post) {
+        console.log(post.createdOn);
         var date = new Date(post.createdOn);
         var newPost = {
             _id: uuid.v1(),

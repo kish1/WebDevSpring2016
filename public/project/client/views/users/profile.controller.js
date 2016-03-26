@@ -18,7 +18,7 @@
                 vm.currentUser = UserService.getCurrentUser();
             }
         };
-        //init();
+        init();
 
     }
 })();

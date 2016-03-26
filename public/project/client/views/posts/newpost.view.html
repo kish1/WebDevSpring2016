@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<h1 class="page-header text-center">Write</h1>
 
-</body>
-</html>
+<div class="form-group">
+    <div class="col-xs-10">
+        <input ng-model="model.post.name" type="text" class="form-control" placeholder="Post Name">
+    </div>
+</div>
+
+<br><br><br>
+
+<div ng-repeat="part in model.post.content" ng-switch="part.type">
+    <div class="form-group row" ng-switch-when="text">
+        <div class="col-xs-10">
+            <p>{{part.value}}</p>
+        </div>
+        <a ng-click="model.editText($index)" role="button" class="glyphicon glyphicon-pencil"></a>
+        <a ng-click="model.removeText($index)" role="button" class="glyphicon glyphicon-remove"></a>
+        <br>
+    </div>
+    <div class="row" ng-switch-when="video">
+        <iframe ng-src="{{model.trust(part.value)}}" type="text/html" width="280" frameborder="0"  allowfullscreen></iframe>
+        <a ng-click="model.editVideo($index)" role="button" class="glyphicon glyphicon-pencil"></a>
+        <a ng-click="model.removeVideo($index)" role="button" class="glyphicon glyphicon-remove"></a>
+        <br>
+    </div>
+</div>
+
+<br><br>
+
+<div class="form-group row">
+    <div class="col-xs-6">
+            <textarea class="form-control" ng-model="model.text">
+            </textarea>
+    </div>
+    <ul class="nav nav-pills">
+        <li ng-show="model.textIndex == null"><button class="btn btn-secondary btn-sm" ng-click="model.addText(model.text)">Add Text</button></li>
+        <li ng-show="model.textIndex != null"><button class="btn btn-secondary btn-sm" ng-click="model.updateText(model.text)">Update Text</button></li>
+        <li><button class="btn btn-info btn-sm" ng-click="model.addVideo()">Add Video</button></li>
+    </ul>
+
+    <br>
+
+    <div class="col-sm-6">
+        <button class="btn btn-success" ng-click="model.addPost(model.post)">Create Post</button>
+    </div>
+
+</div>

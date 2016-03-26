@@ -13,6 +13,7 @@ var users = require("./mock.user.json");
 })();
 module.exports = function() {
     var api = {
+        findUserById: findUserById,
         findAllUsers: findAllUsers,
         createUser: createUser,
         updateUserById: updateUserById,
@@ -20,6 +21,15 @@ module.exports = function() {
         findUserByCredentials: findUserByCredentials
   };
     return api;
+
+    function findUserById(userId) {
+        for(var i in users) {
+            if (users[i]._id == userId) {
+                return users[i];
+            }
+        }
+        return null;
+    }
 
     function findUserByCredentials(email, password) {
         for(var i in users) {

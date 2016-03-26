@@ -12,23 +12,23 @@
         </thead>
         <tbody>
         <tr>
-            <td><input ng-model="comment.userId" type="text"></td>
-            <td><input ng-model="comment.postId" type="text"></td>
-            <td><input ng-model="comment.timestamp" value={{time}} type="datetime-local" class="form-control"></td>
-            <td><input ng-model="comment.content" type="text"></td>
+            <td><input ng-model="model.comment.userId" type="text"></td>
+            <td><input ng-model="model.comment.postId" type="text"></td>
+            <td><input ng-model="model.comment.timestamp" value={{model.time}} type="datetime-local" class="form-control"></td>
+            <td><input ng-model="model.comment.content" type="text"></td>
             <td class="no-wrapping">
-                <button ng-click="addComment(comment)" class="btn btn-success">Add</button>
-                <button ng-click="updateComment(comment)" class="btn btn-info">Update</button>
+                <button ng-click="model.addComment(model.comment)" class="btn btn-success">Add</button>
+                <button ng-click="model.updateComment(model.comment)" class="btn btn-info">Update</button>
             </td>
         </tr>
-        <tr ng-repeat="comment in comments">
+        <tr ng-repeat="comment in model.comments">
             <td class="text-right">{{comment.userId}}</td>
             <td class="text-right">{{comment.postId}}</td>
             <td>{{comment.timestamp.toString()}}</td>
             <td>{{comment.content}}</td>
             <td class="no-wrapping">
-                <button ng-click="selectComment($index)" class="btn btn-primary">Select</button>
-                <button ng-click="deleteComment($index)" class="btn btn-danger">Delete</button>
+                <button ng-click="model.selectComment($index)" class="btn btn-primary">Select</button>
+                <button ng-click="model.deleteComment($index)" class="btn btn-danger">Delete</button>
             </td>
         </tr>
         </tbody>

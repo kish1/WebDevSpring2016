@@ -55,7 +55,8 @@
             })
             .when("/comments", {
                 templateUrl: "views/comments/comments.view.html",
-                controller: "CommentsController"
+                controller: "CommentsController",
+                controllerAs: "model"
             })
             .when("/search", {
                 templateUrl: "views/search/search.view.html",
