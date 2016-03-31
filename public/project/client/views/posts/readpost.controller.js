@@ -27,11 +27,6 @@
 
             vm.currentUser = UserService.getCurrentUser();
 
-            if(!vm.currentUser) {
-                $location.url("/login");
-                return;
-            }
-
             PostService.findPostById(vm.postId)
                 .then(function(response) {
                     //console.log(response);
