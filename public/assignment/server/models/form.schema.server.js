@@ -7,5 +7,5 @@ module.exports=function(mongoose) {
       userId: String,
       title: String,
       fields: [fieldSchema]
-  });
+  }, {collection: 'form'});
 };

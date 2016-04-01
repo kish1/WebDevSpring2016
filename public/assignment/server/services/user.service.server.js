@@ -12,35 +12,56 @@ module.exports = function(app, userModel) {
 
     function getUserResolver(req, res) {
         if (req.query.username == null && req.query.password == null) {
-            return findAllUsers(req, res);
+            findAllUsers(req, res);
         } else if (req.query.username != null && req.query.password == null) {
             return findUserByUsername(req, res);
         } else {
-            return findUserByCredentials(req, res);
+            findUserByCredentials(req, res);
         }
     }
 
     function createUser(req, res) {
         var newUser = req.body;
-        newUser = userModel.createUser(newUser);
-        res.json(newUser);
+        userModel.createUser(newUser)
+            .then(function (user) {
+                res.json(user);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
+
     }
 
     function findAllUsers(req, res) {
-        var users = userModel.findAllUsers();
-        res.json(users);
+        userModel.findAllUsers()
+            .then(function (users) {
+                res.json(users);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
     function findUserById(req, res) {
         var id = req.params.id;
-        var user = userModel.findUserById(id);
-        res.json(user);
+        userModel.findUserById(id)
+            .then(function (user) {
+                res.json(user);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
     function findUserByUsername(req, res) {
         var username = req.query.username;
-        var user = userModel.findUserByUsername(username);
-        res.json(user);
+        userModel.findUserByUsername(username)
+            .then(function (user) {
+                res.json(user);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
     function findUserByCredentials(req, res) {
@@ -48,15 +69,26 @@ module.exports = function(app, userModel) {
             username: req.query.username,
             password: req.query.password
         };
-        var user = userModel.findUserByCredentials(credentials);
-        res.json(user);
+        userModel.findUserByCredentials(credentials)
+            .then(function (user) {
+                res.json(user);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
+
     }
 
     function updateUserById(req, res) {
         var id = req.params.id;
         var user = req.body;
-        var users = userModel.updateUserById(id, user);
-        res.json(users);
+        userModel.updateUserById(id, user)
+            .then(function (user) {
+                res.json(user);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
     function deleteUserById(req, res) {

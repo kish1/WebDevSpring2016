@@ -38,6 +38,7 @@
                 vm.message = "The passwords do not match";
                 return;
             }
+            user.emails = [user.email];
 
             UserService.
             findUserByCredentials(user.username, user.password)
@@ -51,6 +52,9 @@
                             .then(function(response) {
                                 UserService.setCurrentUser(response.data);
                                 $location.url("/profile");
+                            },
+                            function (err) {
+                                console.log(err);
                             })
                     }
                 });

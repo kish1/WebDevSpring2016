@@ -2,9 +2,10 @@
  * Created by kishore on 3/17/16.
  */
 "use strict";
-var uuid = require('node-uuid');
-var mock = require("./form.mock.json");
+var q = require('q');
 module.exports = function() {
+    var FormSchema = require("./form.schema.server.js")(mongoose);
+    var FormModel = mongoose.model('Form', FormSchema);
     var api = {
         createFormForUser: createFormForUser,
         findFormById: findFormById,

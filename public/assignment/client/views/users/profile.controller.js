@@ -7,37 +7,53 @@
         .module("FormBuilderApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($scope, UserService, $rootScope, $location) {
-        $scope.message = null;
-        $scope.error = null;
-        $scope.currentUser = $rootScope.currentUser;
+    function ProfileController(UserService, $rootScope, $location) {
+        var vm = this;
+        vm.message = null;
+        vm.error = null;
+        vm.currentUser = null;
 
-        if (!$scope.currentUser) {
-            $location.url('/home');
-            return;
-        }
+        vm.update = update;
 
-        $scope.details = {
-            username: $scope.currentUser.username,
-            password: $scope.currentUser.password,
-            firstName: $scope.currentUser.firstName,
-            lastName: $scope.currentUser.lastName
-        }
+        var init = function () {
+            vm.currentUser = UserService.getCurrentUser();
+            if (!vm.currentUser) {
+                $location.url('/home');
+                return;
+            }
+            vm.details = {
+                username: vm.currentUser.username,
+                password: vm.currentUser.password,
+                firstName: vm.currentUser.firstName,
+                lastName: vm.currentUser.lastName,
+                email: vm.currentUser.emails? vm.currentUser.emails[0] : null
+            }
+        };
+        init();
 
-        $scope.update = update;
 
         function update(details) {
             if (details) {
-                UserService.updateUser($scope.currentUser._id, details, identity);
-                $scope.message = "User details updated successfully";
+                var updatedDetails = {
+                    username: details.username,
+                    password: details.password,
+                    firstName: details.firstName,
+                    lastName: details.lastName,
+                    emails: [details.email]
+                };
+                UserService.updateUser(vm.currentUser._id, updatedDetails)
+                    .then(function(response) {
+                        UserService.setCurrentUser(response.data);
+                        vm.message = "User details updated successfully";
+                    },
+                    function (err) {
+                        vm.error = "Server could not update user details";
+                    });
 
             } else {
-                $scope.error = "Unable to update user details";
+                vm.error = "Unable to update user details";
             }
 
-            function identity(param) {
-                return param;
-            }
         }
     }
 })();
