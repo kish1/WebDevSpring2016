@@ -76,8 +76,10 @@
         }
 
         function deleteForm(index) {
-            FormService.deleteFormById(vm.forms[index]._id);
-            vm.forms.splice(index,1);
+            FormService.deleteFormById(vm.forms[index]._id)
+                .then(function (response) {
+                    vm.forms.splice(index,1);
+                });
         }
     }
 })();
