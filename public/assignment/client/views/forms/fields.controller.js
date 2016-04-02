@@ -48,7 +48,8 @@
             FieldService
                 .getFieldsForForm(vm.formId)
                 .then(function(response) {
-                    vm.fields = response.data;
+                    vm.fields = response.data.fields;
+                    console.log(vm.fields);
                 });
 
 
@@ -64,7 +65,10 @@
             vm.field.label = label;
             if (["TEXT", "TEXTAREA"].indexOf(type) > -1) {
                 vm.field.placeholder = placeholder;
-                FieldService.updateField(vm.formId, vm.field._id, vm.field);
+                FieldService.updateField(vm.formId, vm.field._id, vm.field)
+                    .then(function (resp) {
+                        vm.fields = resp.data;
+                    });
             } else if (["OPTIONS", "CHECKBOXES", "RADIOS"].indexOf(type) > -1) {
                 var text = placeholder.split("\n");
                 var options = [];
@@ -81,11 +85,7 @@
             FieldService
                 .updateField(vm.formId, vm.field._id, vm.field)
                 .then(function(resp) {
-                    FieldService
-                        .getFieldsForForm(vm.formId)
-                        .then(function(response) {
-                            vm.fields = response.data;
-                        });
+                    vm.fields = resp.data;
                 });
             vm.edit = false;
         }
@@ -119,14 +119,15 @@
         }
 
         function removeField(index) {
+            console.log(vm.fields);
             FieldService
                 .deleteFieldFromForm(vm.formId, vm.fields[index]._id)
                 .then(function (r) {
-                    FieldService
-                        .getFieldsForForm(vm.formId)
-                        .then(function (response) {
-                            vm.fields = response.data;
-                        });
+                    vm.fields.splice(index, 1);
+                    console.log(vm.fields);
+                },
+                function (err) {
+                    console.log(err);
                 });
         }
 
@@ -139,12 +140,8 @@
                     _id: null,
                     type: fieldType
                 })
-                .then(function (r) {
-                    FieldService
-                        .getFieldsForForm(vm.formId)
-                        .then(function (response) {
-                            vm.fields = response.data;
-                        });
+                .then(function (resp) {
+                    vm.fields = resp.data;
                 });
         }
 

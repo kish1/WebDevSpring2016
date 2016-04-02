@@ -75,7 +75,7 @@ module.exports = function(db, mongoose) {
             emails: user.emails,
         };
         var deferred = q.defer();
-        UserModel.findByIdAndUpdate(userId, newUser, {new: true}, function (err, user) {
+        UserModel.findByIdAndUpdate(userId,{$set: newUser} , {new: true}, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {

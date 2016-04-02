@@ -23,70 +23,77 @@ module.exports = function(db, mongoose) {
     return api;
 
     function updateFieldInForm(formId, fieldId, field) {
-        for(var i in mock) {
-            if (mock[i]._id == formId) {
-                for(var j in mock[i].fields) {
-                    if (mock[i].fields[j]._id == fieldId) {
-                        mock[i].fields[j].label = field.label;
-                        mock[i].fields[j].placeholder = field.placeholder;
-                        mock[i].fields[j].options = field.options;
-                        return mock[i].fields[j];
-                    }
-                }
+        var newField = {
+            _id: field._id,
+            label: field.label,
+            type: field.type,
+            placeholder:field.placeholder,
+            options: field.options
+        };
+        var deferred = q.defer();
+        FormModel.findOneAndUpdate({_id: formId, "fields._id": fieldId}, {$set: {"fields.$": newField}}, {new: true}, function (err, form) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(form);
             }
-        }
+        });
+        return deferred.promise;
     }
 
     function createFieldInForm(formId, field) {
-        field._id = uuid.v1();
-        for(var i in mock) {
-            if (mock[i]._id == formId) {
-                mock[i].fields.push(field);
-                return mock[i];
+        var newField = {
+            label: field.label,
+            type: field.type,
+            placeholder:field.placeholder,
+            options: field.options
+        };
+        var deferred = q.defer();
+        FormModel.findByIdAndUpdate(formId, {$push: {"fields" : newField}}, {new: true}, function (err, form) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(form);
             }
-        }
-        return null;
+        });
+        return deferred.promise;
     }
 
     function deleteFieldFromForm(formId, fieldId) {
-        var deleted = false;
-        for(var i in mock) {
-            if (mock[i]._id == formId) {
-                for(var j in mock[i].fields) {
-                    if (mock[i].fields[j]._id == fieldId) {
-                        mock[i].fields.splice(j, 1);
-                        deleted = true;
-                        break;
-                    }
-                }
+        var deferred = q.defer();
+        FormModel.update({_id: formId}, {$pull: {"fields": {_id: fieldId}}}, function (err, form) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(form);
             }
-            if (deleted) {
-                break;
-            }
-        }
-        return mock[i].fields;
+        });
+        console.log('exit');
+        return deferred.promise;
     }
 
     function findFieldInForm(formId, fieldId) {
-        for(var i in mock) {
-            if (mock[i]._id == formId) {
-                for(var j in mock[i].fields) {
-                    if (mock[i].fields[j]._id == fieldId) {
-                        return mock[i].fields[j];
-                    }
-                }
+        var deferred = q.defer();
+        FormModel.findOne({_id: formId, "fields._id": fieldId}, {"fields.$" : 1}, function (err, form) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(form);
             }
-        }
-        return null;
+        });
+        return deferred.promise;
     }
 
     function findAllFieldsForForm(formId) {
-        for(var i in mock) {
-            if (mock[i]._id == formId) {
-                return mock[i].fields;
+        var deferred = q.defer();
+        FormModel.findById(formId, 'fields', function (err, form) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(form);
             }
-        }
-        return [];
+        });
+        return deferred.promise;
     }
 
     function createFormForUser(userId, form) {

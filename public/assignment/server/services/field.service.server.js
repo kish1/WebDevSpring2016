@@ -13,36 +13,71 @@ module.exports = function (app, formModel) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = req.body;
-        field = formModel.updateFieldInForm(formId, fieldId, field);
-        res.json(field);
+        formModel.updateFieldInForm(formId, fieldId, field)
+            .then(function (form) {
+                console.log('udate');
+                console.log(form);
+                res.json(form.fields);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
+
     }
 
     function createFieldInForm(req, res) {
         var formId = req.params.formId;
         var field = req.body;
-        field = formModel.createFieldInForm(formId, field);
-        res.json(field);
+        formModel.createFieldInForm(formId, field)
+            .then(function (form) {
+                console.log('create');
+                res.json(form.fields);
+                console.log(form);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
     function deleteFieldInForm(req, res) {
+
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        var fields = formModel.deleteFieldFromForm(formId, fieldId);
-        res.json(fields);
+
+        formModel.deleteFieldFromForm(formId, fieldId)
+            .then(function (resp) {
+                res.json(resp);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
     function findFieldInForm(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        var field = formModel.findFieldInForm(formId, fieldId);
-        res.json(field);
+        formModel.findFieldInForm(formId, fieldId)
+            .then(function (form) {
+                conosle.log('field');
+                console.log(form);
+                res.json(form.fields[0]);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
     function findAllFieldsForForm(req, res) {
         var formId = req.params.formId;
-        var fields = formModel.findAllFieldsForForm(formId);
-        res.json(fields);
+        formModel.findAllFieldsForForm(formId)
+            .then(function (fields) {
+                console.log('all');
+                console.log(fields);
+                res.json(fields);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
-
 
 };
