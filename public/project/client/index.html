@@ -32,6 +32,7 @@
     <script src="views/users/register.controller.js"></script>
     <script src="views/users/login.controller.js"></script>
     <script src="views/users/profile.controller.js"></script>
+    <script src="views/users/user.controller.js"></script>
     <script src="views/posts/post.controller.js"></script>
     <script src="views/posts/readpost.controller.js"></script>
     <script src="views/posts/newpost.controller.js"></script>
@@ -47,8 +48,9 @@
 </head>
 <body ng-controller="MainController">
     <ng-include src="'views/header/header.view.html'"></ng-include>
-    <ng-include src="'views/sidebar/sidebar.view.html'"></ng-include>
+    <!ng-include src="'views/sidebar/sidebar.view.html'"><!/ng-include>
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-view></div>
+    <!div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-view><!/div>
+    <div class="view-container" ng-view></div>
 </body>
 </html>

@@ -16,6 +16,7 @@
         vm.update = update;
 
         var init = function () {
+            checkLoggedIn();
             vm.currentUser = UserService.getCurrentUser();
             if (!vm.currentUser) {
                 $location.url('/home');
@@ -30,6 +31,15 @@
             }
         };
         init();
+
+        function checkLoggedIn() {
+            UserService.getLoggedIn()
+                .then(function (resp) {
+                    UserService.setCurrentUser(resp.data);
+                    vm.currentUser = UserService.getCurrentUser();
+                    return resp.data != null;
+                });
+        }
 
 
         function update(details) {
@@ -55,5 +65,6 @@
             }
 
         }
+
     }
 })();

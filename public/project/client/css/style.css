@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 .no-wrapping {
     white-space: nowrap;
 }
@@ -22,3 +26,62 @@
     height: 128px;
 }
 
+.navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+}
+
+.navbar .navbar-collapse {
+    text-align: center;
+}
+
+.view-container {
+    height: 100%;
+}
+
+.container {
+    height: 100%;
+}
+
+.login-container {
+    min-height: 100%;
+    max-width: 400px;
+}
+
+.vertical-align-parent {
+    display: table;
+}
+
+.vertical-align-child-middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.profile aside p {
+    font-size: 12px;
+}
+
+.profile ul li {
+    float: left;
+    margin-right: 8px;
+}
+
+.profile aside ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.profile aside ul:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.profile {
+    margin-right: 40px;
+}
+
+.box {
+    border: 1px red dotted;
+}

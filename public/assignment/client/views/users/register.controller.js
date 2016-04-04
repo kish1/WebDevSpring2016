@@ -61,7 +61,11 @@
         }
 
         function isLoggedIn() {
-            return UserService.getCurrentUser() != null;
+            UserService.getCurrentUser()
+                .then(function (resp) {
+                UserService.setCurrentUser(resp.data);
+                return resp.data != "";
+            });
         }
     }
 })();

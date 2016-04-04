@@ -28,6 +28,11 @@
                 controller: "ProfileController",
                 controllerAs: "model"
             })
+            .when("/user/:userId?", {
+                templateUrl: "views/users/user.view.html",
+                controller: "UserController",
+                controllerAs: "model"
+            })
             .when("/users", {
                 templateUrl: "views/users/users.view.html",
                 controller: "UsersController",

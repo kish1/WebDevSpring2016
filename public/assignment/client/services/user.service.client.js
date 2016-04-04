@@ -14,6 +14,10 @@
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
 
+            login: login,
+            logout: logout,
+            getLoggedIn: getLoggedIn,
+
             findUserByUsername : findUserByUsername,
             findUserByCredentials: findUserByCredentials,
             findAllUsers: findAllUsers,
@@ -23,12 +27,24 @@
         };
         return service;
 
+        function login(credentials) {
+            return $http.post("/api/assignment/login", credentials);
+        }
+
+        function logout(user) {
+            return $http.post("/api/assignment/logout", user);
+        }
+
         function setCurrentUser(user) {
             $rootScope.currentUser = user;
         }
 
         function getCurrentUser() {
             return $rootScope.currentUser;
+        }
+
+        function getLoggedIn() {
+            return $http.post("/api/assignment/loggedin", {});
         }
 
         function findUserByUsername(username) {

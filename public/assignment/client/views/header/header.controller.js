@@ -10,15 +10,29 @@
     function HeaderController ($location, UserService) {
         var vm = this;
         vm.location = $location;
+        vm.currentUser = null;
 
         vm.isLoggedIn = isLoggedIn;
         vm.isAdmin = isAdmin;
         vm.logout = logout;
 
+        var init = function () {
+            vm.currentUser = UserService.getCurrentUser();
+            checkLoggedIn();
+        };
+        init();
+
+        function checkLoggedIn() {
+            UserService.getLoggedIn()
+                .then(function (resp) {
+                    UserService.setCurrentUser(resp.data);
+                    vm.currentUser = UserService.getCurrentUser();
+                    return resp.data != null;
+            });
+        }
 
         function isLoggedIn() {
-            vm.currentUser = UserService.getCurrentUser();
-            return vm.currentUser != null;
+            return UserService.getCurrentUser() != null;
         }
 
         function isAdmin() {
@@ -30,7 +44,10 @@
 
         function logout() {
             vm.currentUser = null;
-            UserService.setCurrentUser(null);
+            UserService.logout()
+                .then(function (res) {
+                    UserService.setCurrentUser(null);
+                });
             $location.url('/home');
         }
     }
