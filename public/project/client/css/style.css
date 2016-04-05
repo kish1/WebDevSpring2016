@@ -2,6 +2,10 @@ html, body {
     height: 100%;
 }
 
+body {
+    padding-top: 65px;
+}
+
 .no-wrapping {
     white-space: nowrap;
 }
@@ -26,14 +30,22 @@ html, body {
     height: 128px;
 }
 
-.navbar .navbar-nav {
-    display: inline-block;
-    float: none;
-    vertical-align: top;
+.navbar-header {
+    float: left;
 }
 
-.navbar .navbar-collapse {
-    text-align: center;
+
+.navbar-default {
+    background-color: ##f8f8f8;
+    border-bottom: lightgrey solid 1px;
+}
+
+.navbar-fixed-top {
+    border-radius: ;
+}
+
+.navbar-collapse .collapse {
+    float: right;
 }
 
 .view-container {
@@ -72,15 +84,78 @@ html, body {
     padding: 0px;
 }
 
-.profile aside ul:after {
-    content: "";
-    display: block;
-    clear: both;
-}
-
 .profile {
     margin-right: 40px;
 }
+
+.row header h2 {
+    margin-bottom: 0px;
+}
+
+.row footer {
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+.lead {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.label {
+    font-size: 14px;
+}
+
+.display-picture {
+    height: 100%;
+}
+
+.display-picture img{
+    height: 100px;
+    width: 100px;
+}
+
+.profile-name {
+    margin-bottom: 0px;
+}
+
+.follow {
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.profile-content {
+    width: 100%;
+}
+
+.social-icons {
+    margin-top: 10px;
+    float: left;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .display-picture {
+        float: left;
+        margin-right: 15px;
+    }
+
+    .profile-content {
+        float: left;
+    }
+
+    .follow {
+        float: left;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .social-icons {
+        float: left;
+    }
+}
+
 
 .box {
     border: 1px red dotted;
