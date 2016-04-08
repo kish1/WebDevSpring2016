@@ -1,13 +1,14 @@
 /**
- * Created by kishore on 3/25/16.
+ * Created by kishore on 4/7/16.
  */
 (function() {
     angular
         .module("BlogApp")
-        .controller("NewpostController", NewpostController);
+        .controller("EditpostController", EditpostController);
 
-    function NewpostController($sce, $location, $uibModal, $log, UserService, PostService) {
+    function EditpostController($sce, $location, $uibModal, $log, UserService, PostService) {
         var vm = this;
+        vm.postId = null;
         vm.post = {
             name: "",
             content: []
@@ -27,7 +28,7 @@
         vm.removeText = removeText;
         vm.removeVideo = removeVideo;
 
-        vm.addPost = addPost;
+        vm.updatePost = updatePost;
 
         var init = function () {
             vm.currentUser = UserService.getCurrentUser();
@@ -35,19 +36,23 @@
                 $location.url("/login");
                 return;
             }
+            vm.postId = $location.search().postId;
+            console.log(vm.postId);
+            PostService.findPostById(vm.postId)
+                .then(function (response) {
+                    if (response.data) {
+                        vm.post = response.data;
+                        console.log(vm.post);
+                    }
+                });
 
         };
         init();
 
-        function addPost(post) {
-            var newPost = {
-                name: post.name,
-                createdOn: new Date(),
-                content: post.content
-            };
-            PostService.createPost(vm.currentUser._id, post)
-                .then(function(response) {
-                    $location.url("/post");
+        function updatePost(post) {
+            PostService.updatePostById(post._id, post)
+                .then(function (response) {
+                    $location.path("/post");
                 });
         }
 

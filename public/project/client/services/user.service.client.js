@@ -17,11 +17,16 @@
             findUserByCredentials: findUserByCredentials,
             findAllUsers: findAllUsers,
             findUserById: findUserById,
+            findNameByUserId: findNameByUserId,
             createUser: createUser,
             updateUserById: updateUserById,
             deleteUserById: deleteUserById
         };
         return service;
+
+        function findNameByUserId(userId) {
+            return $http.get("/api/project/user/name/" + userId);
+        }
 
         function findUserById(userId) {
             return $http.get("/api/project/user/" + userId);

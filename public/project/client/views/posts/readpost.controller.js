@@ -13,6 +13,7 @@
         vm.currentUser = null;
         vm.postId = null;
         vm.post = null;
+        vm.postOwnerName = null;
         vm.comments = null;
         vm.comment = {};
         vm.message = null;
@@ -21,6 +22,8 @@
         vm.addComment = addComment;
         vm.isOwnerOrCommenter = isOwnerOrCommenter;
         vm.removeComment = removeComment;
+        vm.postOwner = postOwner;
+        vm.editPost = editPost;
 
         var init = function() {
             vm.postId = $location.search().postId;
@@ -32,25 +35,42 @@
                     //console.log(response);
                     vm.post = response.data;
                     vm.post.createdOn = new Date(vm.post.createdOn[0], vm.post.createdOn[1], vm.post.createdOn[2]);
+
+                    UserService.findNameByUserId(vm.post.userId)
+                        .then(function (response) {
+                            var data = response.data;
+                            vm.postOwnerName = data.firstName + " " + data.lastName;
+                        });
                 });
+
+
 
             CommentService.findAllCommentsForPost(vm.postId)
                 .then(function(response) {
                     vm.comments = response.data;
                     for(var i in vm.comments) {
                         vm.comments[i].timestamp = new Date(vm.comments[i].timestamp);
-                        UserService.findUserById(vm.comments[i].userId)
+                        UserService.findNameByUserId(vm.comments[i].userId)
                             .then(function(resp) {
                                 console.log(resp);
-                                var user = resp.data;
-                                vm.comments[i].firstName = user.firstName;
-                                vm.comments[i].lastName = user.lastName;
+                                console.log(i);
+                                var name = resp.data;
+                                vm.comments[i].firstName = name.firstName;
+                                vm.comments[i].lastName = name.lastName;
+                                //console.log(vm.comments[i]);
                             });
                     }
-                    console.log(vm.comments);
                 });
         };
         init();
+
+        function editPost() {
+            $location.search("postId", vm.post._id).path("/editpost");
+        }
+
+        function postOwner() {
+            $location.search("userId", vm.post.userId).path("/user")
+        }
 
         function removeComment(commentId,$index) {
             CommentService.deleteCommentById(commentId)

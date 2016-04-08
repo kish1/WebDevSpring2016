@@ -5,9 +5,19 @@
 module.exports = function (app, userModel) {
     app.get("/api/project/user", userResolve);
     app.get("/api/project/user/:id", findUserById);
+    app.get("/api/project/user/name/:id", findNameByUserId);
     app.post("/api/project/user", createUser);
     app.put("/api/project/user/:id", updateUserById);
     app.delete("/api/project/user/:id", deleteUserById);
+
+    function findNameByUserId(req, res) {
+        var userId = req.params.id;
+        var user = userModel.findUserById(userId);
+        res.json({
+            firstName: user.firstName,
+            lastName: user.lastName
+        });
+    }
 
     function findUserById(req, res) {
         var userId = req.params.id;

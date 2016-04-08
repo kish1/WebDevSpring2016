@@ -53,6 +53,11 @@
                 controller: "ReadpostController",
                 controllerAs: "model"
             })
+            .when("/editpost", {
+                templateUrl: "views/posts/editpost.view.html",
+                controller: "EditpostController",
+                controllerAs: "model"
+            })
             .when("/posts", {
                 templateUrl: "views/posts/posts.view.html",
                 controller: "PostsController",

@@ -1,42 +1,96 @@
-<div>
-    <ul class="nav nav-pills">
-        <li ng-show="model.isOwnPost()"><a href="#/post">Posts</a></li>
-        <li ng-show="model.isOwnPost()"><a class="btn btn-primary" href="">Edit</a></li>
-    </ul>
-</div>
-
-<h2 class="text-center">{{model.post.name}}</h2>
-<p class="big-font text-center">created on {{model.post.createdOn.toDateString()}}</p>
-<hr>
-
-<div ng-repeat="part in model.post.content" ng-switch="part.type">
-    <div class="form-group row" ng-switch-when="text">
-        <div class="col-xs-10">
-            <p>{{part.value}}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            <ul class="nav nav-pills">
+                <li ng-show="model.isOwnPost()"><a class="btn btn-default" href="#/post">Posts</a></li>
+                <li ng-show="model.isOwnPost()"><a class="btn btn-primary" ng-click="model.editPost()"">Edit</a></li>
+            </ul>
         </div>
-        <br>
     </div>
-    <div class="row" ng-switch-when="video">
-        <iframe ng-src="{{model.trust(part.value)}}" type="text/html" width="280" frameborder="0"  allowfullscreen></iframe>
-        <br>
+    <div class="row">
+        <br><br>
+        <div class="col-xs-2">
+            <div class="thumb-picture text-center">
+                <a role="button" ng-click="model.postOwner()"><img class="center-block img-responsive img-circle" src="/project/images/messi.jpg"></a>
+                <a role="button" ng-click="model.postOwner()"><h6>{{model.postOwnerName}}</h6></a>
+            </div>
+        </div>
     </div>
-</div>
 
-<br><hr>
-<div class="alert alert-danger" role="alert" ng-show="model.message != null">{{model.message}}</div>
-<div class="form-group row">
-    <div class="col-xs-6">
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-md-8 text-center post-heading">
+            <h2>{{model.post.name}}</h2>
+            <small>{{model.post.createdOn.toDateString()}}</small>
+            <hr>
+
+            <div ng-repeat="part in model.post.content" ng-switch="part.type">
+                <div class="row" ng-switch-when="text">
+                    <div class="col-md-12 text-left">
+                        <p>{{part.value}}</p>
+                    </div>
+                    <br>
+                </div>
+                <div class="row" ng-switch-when="video">
+                    <div class="col-xs-8">
+                        <iframe ng-src="{{model.trust(part.value)}}" type="text/html" width="280" frameborder="0"  allowfullscreen></iframe>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <br>
+            <h3>Comments</h3>
+            <div class="alert alert-danger" role="alert" ng-show="model.message != null">{{model.message}}</div>
+            <div class="form-group row">
+                <div class="col-xs-6">
             <textarea class="form-control" ng-model="model.comment.content">
             </textarea>
+                </div>
+                <button class="btn btn-secondary btn-sm" ng-click="model.addComment(model.comment)">Comment</button>
+            </div>
+
+            <br><br>
+            <div ng-repeat="comment in model.comments">
+                <div class="row">
+
+                    <div class="col-xs-8 comment comment-thumb-picture">
+                        <div class="row">
+                            <div class="comment-picture-col">
+                                <a ng-href="#/user/{{comment.userId}}"><img class="pull-right img-responsive img-thumbnail" src="/project/images/messi.jpg"></a>
+                            </div>
+                            <div class="col-md-6 comment-name">
+                                <a ng-href="#/user/{{comment.userId}}"><h4 class="">{{comment.firstName + " " + comment.lastName + " "}}</h4></a>
+                                <small>{{comment.timestamp.toUTCString()}}</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="comment-picture-col"></div>
+                            <div class="col-xs-6">
+                                <p>{{comment.content}}</p>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-danger" ng-click="model.removeComment(comment._id, $index)" ng-show="model.isOwnerOrCommenter(comment.userId)">Remove</button>
+                    </div>
+                    <br><br>
+                </div>
+
+
+
+            </div>
+        </div>
     </div>
-    <button class="btn btn-secondary btn-sm" ng-click="model.addComment(model.comment)">Comment</button>
+
+    <div class="row"></div>
+
 </div>
 
-<br><br>
-
-<div ng-repeat="comment in model.comments">
-    <h4>{{comment.firstName + " " + comment.lastName + " "}} at {{comment.timestamp.toUTCString()}}:</h4>
-    <p>{{comment.content}}</p>
-    <button class="btn btn-danger" ng-click="model.removeComment(comment._id, $index)" ng-show="model.isOwnerOrCommenter(comment.userId)">Remove</button>
-    <br><br>
-</div>

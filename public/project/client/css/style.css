@@ -156,6 +156,45 @@ body {
     }
 }
 
+.thumb-picture img{
+    height: 50px;
+    width: 50px;
+
+    margin-bottom: 10px;
+}
+
+.comment-thumb-picture img{
+    height: 50px;
+    width: 50px;
+}
+
+.comment h4 {
+    margin-bottom: 0px;
+}
+
+.comment-picture-col {
+    max-width: 80px;
+    width: 80px;
+
+    position: relative;
+    float: left;
+
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.comment-picture-col img {
+    margin-top: 5px;
+}
+
+.comment-name h4{
+    margin-left: 0px;
+}
+
+.post-heading h2{
+    margin-bottom: 0px;
+}
 
 .box {
     border: 1px red dotted;
