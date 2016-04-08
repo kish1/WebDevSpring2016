@@ -7,7 +7,7 @@
         .module("BlogApp")
         .controller("ReadpostController", ReadpostController);
 
-    function ReadpostController($location, PostService, UserService, CommentService) {
+    function ReadpostController($location, $sce, PostService, UserService, CommentService) {
         var vm = this;
 
         vm.currentUser = null;
@@ -24,6 +24,7 @@
         vm.removeComment = removeComment;
         vm.postOwner = postOwner;
         vm.editPost = editPost;
+        vm.trust = trust;
 
         var init = function() {
             vm.postId = $location.search().postId;
@@ -40,6 +41,7 @@
                         .then(function (response) {
                             var data = response.data;
                             vm.postOwnerName = data.firstName + " " + data.lastName;
+                            console.log(vm.post);
                         });
                 });
 
@@ -63,6 +65,11 @@
                 });
         };
         init();
+
+        function trust(videoId) {
+            console.log(videoId);
+            return $sce.trustAsResourceUrl("http://youtube.com/embed/" + videoId);
+        }
 
         function editPost() {
             $location.search("postId", vm.post._id).path("/editpost");
