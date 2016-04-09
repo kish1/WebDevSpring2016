@@ -84,6 +84,21 @@ body {
     padding: 0px;
 }
 
+.social-icons ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.social-icons ul li {
+    float: left;
+    margin-right: 8px;
+}
+
+.social-icons p {
+    text-align: left;
+}
+
+
 .profile {
     margin-right: 40px;
 }

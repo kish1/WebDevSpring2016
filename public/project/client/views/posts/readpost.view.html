@@ -26,15 +26,32 @@
 
             <div ng-repeat="part in model.post.content" ng-switch="part.type">
                 <div class="row" ng-switch-when="text">
-                    <div class="col-md-12 text-left">
+                    <div class="col-xs-2"></div>
+                    <div class="col-md-12 text-left lead">
                         <p>{{part.value}}</p>
                     </div>
                     <br>
                 </div>
                 <div class="row" ng-switch-when="video">
-                    <div class="col-md-12 pull-left">
-                        <iframe ng-src="{{model.trust(part.value)}}" type="text/html" width="280" frameborder="0"  allowfullscreen></iframe>
+                    <div class="col-xs-2"></div>
+                    <div class="col-md-12">
+                        <iframe class="pull-left" ng-src="{{model.trust(part.value)}}" type="text/html" width="280" frameborder="0"  allowfullscreen></iframe>
                         <br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-md-12">
+                    <div class="social-icons">
+                        <p>Share this page:</p>
+                        <ul class="clearfix">
+                            <li><a href=""><img src="/project/images/icons/fb.png"></a></li>
+                            <li><a href=""><img src="/project/images/icons/twitter.png"></a></li>
+                            <li><a href=""><img src="/project/images/icons/pinterest.png"></a></li>
+                            <li><a href=""><img src="/project/images/icons/gplus.png"></a></li>
+                            <li><a href=""><img src="/project/images/icons/linkedin.png"></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
