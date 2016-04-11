@@ -5,6 +5,7 @@ var multer = require('multer');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var mongoose = require('mongoose');
+var passport = require('passport');
 
 var connectionString = 'mongodb://127.0.0.1:27017/webdev';
 
@@ -31,6 +32,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 require("./public/assignment/server/app.js")(app, db, mongoose);
 require("./public/project/server/app.js")(app);
 

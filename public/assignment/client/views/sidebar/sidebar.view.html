@@ -1,8 +1,8 @@
 <div class="col-sm-3 col-md-2 sidebar" ng-controller="SidebarController as model">
     <ul class="nav nav-sidebar">
         <li ng-class="{ active : $location.path() === '/home'}"><a href="#/home">Home</a></li>
-        <li ng-show="model.isLoggedIn()" ng-class="{ active : $location.path() === '/profile'}"><a href="#/profile">Profile</a></li>
-        <li ng-show="model.isLoggedIn() && model.isAdmin()" ng-class="{ active : $location.path() === '/admin'}"><a href="#/admin">Admin</a></li>
-        <li ng-show="model.isLoggedIn()" ng-class="{ active : $location.path() === '/forms' || $location.path() === '/fields'}"><a href="#/forms">Forms</a></li>
+        <li ng-show="currentUser" ng-class="{ active : $location.path() === '/profile'}"><a href="#/profile">Profile</a></li>
+        <li ng-show="currentUser && currentUser.roles.indexOf('admin') > -1" ng-class="{ active : $location.path() === '/admin'}"><a href="#/admin">Admin</a></li>
+        <li ng-show="currentUser" ng-class="{ active : $location.path() === '/forms' || $location.path() === '/fields'}"><a href="#/forms">Forms</a></li>
     </ul>
 </div>

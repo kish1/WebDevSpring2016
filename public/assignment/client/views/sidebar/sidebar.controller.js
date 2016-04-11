@@ -9,36 +9,23 @@
 
     function SidebarController($location, UserService) {
         var vm = this;
-        vm.currentUser = null;
-
-        vm.$location = $location;
-        vm.isLoggedIn = isLoggedIn;
-        vm.isAdmin = isAdmin;
+        vm.logout = logout;
 
         var init = function () {
-            checkLoggedIn();
+            vm.location = $location;
         };
         init();
 
-        function checkLoggedIn() {
-            UserService.getLoggedIn()
-                .then(function (resp) {
-                UserService.setCurrentUser(resp.data);
-                vm.currentUser = resp.data;
-                return resp.data != "";
-            });
+        function logout() {
+            vm.currentUser = null;
+            UserService.logout()
+                .then(function (res) {
+                        UserService.setCurrentUser(null);
+                        $location.url('/login');
+                    },
+                    function (err) {
+                        vm.error = err;
+                    });
         }
-
-        function isLoggedIn() {
-            return UserService.getCurrentUser() != null;
-        }
-
-        function isAdmin() {
-            if (vm.currentUser && vm.currentUser.roles) {
-                return (vm.currentUser.roles.indexOf("admin") > -1);
-            }
-            return false;
-        }
-
     }
 })();

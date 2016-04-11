@@ -16,30 +16,30 @@
         vm.update = update;
 
         var init = function () {
-            checkLoggedIn();
-            vm.currentUser = UserService.getCurrentUser();
-            if (!vm.currentUser) {
-                $location.url('/home');
-                return;
-            }
-            vm.details = {
-                username: vm.currentUser.username,
-                password: vm.currentUser.password,
-                firstName: vm.currentUser.firstName,
-                lastName: vm.currentUser.lastName,
-                email: vm.currentUser.emails? vm.currentUser.emails[0] : null
-            }
+            UserService
+                .getCurrentUser()
+                .then(function (response) {
+                    if(response.data) {
+                        vm.currentUser = response.data;
+                        vm.details = {
+                            username: vm.currentUser.username,
+                            password: vm.currentUser.password,
+                            firstName: vm.currentUser.firstName,
+                            lastName: vm.currentUser.lastName,
+                            email: vm.currentUser.emails? vm.currentUser.emails[0] : null
+                        }
+                    } else {
+                        vm.error = "User details not available";
+                    }
+
+                },
+                function (err) {
+                    vm.error = err;
+                    vm.message = "Error fetching user details";
+                });
+
         };
         init();
-
-        function checkLoggedIn() {
-            UserService.getLoggedIn()
-                .then(function (resp) {
-                    UserService.setCurrentUser(resp.data);
-                    vm.currentUser = UserService.getCurrentUser();
-                    return resp.data != null;
-                });
-        }
 
 
         function update(details) {

@@ -15,10 +15,6 @@
         vm.login = login;
 
         var init = function() {
-            if (isLoggedIn()) {
-                $location.url("/profile");
-                return;
-            }
         };
         init();
 
@@ -34,7 +30,6 @@
                 })
                 .then(function(response) {
                     if (response.data) {
-
                         UserService.setCurrentUser(response.data);
                         console.log(response);
                         $location.url('/profile');
@@ -45,13 +40,6 @@
                 });
         }
 
-        function isLoggedIn() {
-            UserService.getLoggedIn()
-                .then(function (resp) {
-                    UserService.setCurrentUser(resp.data);
-                    console.log(resp);
-                    return resp.data != "";
-            });
-        }
+
     }
 })();

@@ -40,7 +40,7 @@
         }
 
         function getCurrentUser() {
-            return $rootScope.currentUser;
+            return $http.get("/api/assignment/loggedin");
         }
 
         function getLoggedIn() {
