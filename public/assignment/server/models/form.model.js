@@ -15,12 +15,17 @@ module.exports = function(db, mongoose) {
         deleteFormById: deleteFormById,
 
         findAllFieldsForForm: findAllFieldsForForm,
+        updateAllFieldsInForm: updateAllFieldsInForm,
         findFieldInForm: findFieldInForm,
         deleteFieldFromForm: deleteFieldFromForm,
         createFieldInForm: createFieldInForm,
         updateFieldInForm: updateFieldInForm
     };
     return api;
+
+    function updateAllFieldsInForm(formId, newFields) {
+
+    }
 
     function updateFieldInForm(formId, fieldId, field) {
         var newField = {

@@ -9,7 +9,6 @@
     function FormController(FormService, UserService, $location) {
         var vm = this;
         vm.currentUser = null;
-        vm.currentUserId = null;
         vm.forms = null;
         vm.form = null;
 
@@ -21,17 +20,21 @@
         vm.goToFields = goToFields;
 
         var init = function () {
-            vm.currentUser = UserService.getCurrentUser();
-            if (!vm.currentUser) {
-                $location.url('/home');
-                return;
-            }
-            vm.currentUserId = vm.currentUser._id;
-            FormService
-                .findAllFormsForUser(vm.currentUserId)
+            UserService
+                .getCurrentUser()
                 .then(function (response) {
-                    vm.forms = response.data;
+                    vm.currentUser = response.data;
+                    if (!vm.currentUser) {
+                        $location.url('/home');
+                        return;
+                    }
+                    FormService
+                        .findAllFormsForUser(vm.currentUserId)
+                        .then(function (response) {
+                            vm.forms = response.data;
+                        });
                 });
+
             //console.log(vm.forms);
         };
         init();
@@ -42,7 +45,7 @@
 
         function addForm(form) {
             FormService
-                .createFormForUser(vm.currentUserId,{
+                .createFormForUser(vm.currentUser._id,{
                     title : form.title,
                     fields: []
             })
@@ -59,7 +62,7 @@
                 .updateFormById(form._id, form)
                 .then(function (response) {
                     FormService
-                        .findAllFormsForUser(vm.currentUserId)
+                        .findAllFormsForUser(vm.currentUser._id)
                         .then(function (response) {
                             vm.forms = response.data;
                         });
@@ -72,7 +75,7 @@
             vm.form = {
                 _id: vm.forms[index]._id,
                 title: vm.forms[index].title,
-                userId: vm.forms[index].userId
+                userId: vm.currentUser._id
             }
         }
 

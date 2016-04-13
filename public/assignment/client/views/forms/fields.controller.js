@@ -20,20 +20,25 @@
         vm.selectField = selectField;
 
         var init = function () {
-            if (!UserService.getCurrentUser()) {
-                $location.url('/home');
-                return;
-            }
-            vm.currentUser = UserService.getCurrentUser();
-            vm.currentUserId = vm.currentUser._id;
+            UserService
+                .getCurrentUser()
+                .then(function (response) {
+                    vm.currentUser = response.data;
+                    if (!vm.currentUser) {
+                        $location.url('/home');
+                        return;
+                    }
+                    vm.currentUserId = vm.currentUser._id;
 
-            vm.formId = $location.path().split("/")[2];
-            FieldService
-                .getFieldsForForm(vm.formId)
-                .then(function(response) {
-                    vm.fields = response.data.fields;
-                    console.log(vm.fields);
+                    vm.formId = $location.path().split("/")[2];
+                    FieldService
+                        .getFieldsForForm(vm.formId)
+                        .then(function(response) {
+                            vm.fields = response.data.fields;
+                            console.log(vm.fields);
+                        });
                 });
+
         };
         init();
 
