@@ -9,112 +9,130 @@
     <div ng-repeat="field in model.fields" ng-switch="field.type">
         <div ng-switch-when="TEXT">
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{field.label}}:</label>
+                <label class="col-sm-2 ">{{field.label}}:</label>
             </div>
-            <div class="row form-group">
-                <div class="col-sm-3">
+            <div class="form-group row">
+                <div class="col-md-4">
                     <input type="text" class="form-control" placeholder="{{field.placeholder}}">
                 </div>
-                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                <div class="col-md-3 field-operations">
+                    <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                    <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                </div>
             </div>
         </div>
 
         <div ng-switch-when="EMAIL">
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{field.label}}:</label>
+                <label class="col-sm-2 ">{{field.label}}:</label>
             </div>
-            <div class="row form-group">
-                <div class="col-sm-3">
+            <div class="form-group row">
+                <div class="col-md-4">
                     <input type="email" class="form-control" placeholder="{{field.placeholder}}">
                 </div>
-                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                <div class="col-md-3 field-operations">
+                    <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                    <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                </div>
             </div>
         </div>
 
         <div ng-switch-when="TEXTAREA">
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{field.label}}:</label>
+                <label class="col-sm-2 ">{{field.label}}:</label>
             </div>
-            <div class="row form-group">
-                <div class="col-sm-3">
+            <div class="form-group row">
+                <div class="col-md-4">
                     <textarea class="form-control" placeholder="{{field.placeholder}}"></textarea>
                 </div>
-                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                <div class="col-md-3 field-operations">
+                    <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                    <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                </div>
             </div>
         </div>
 
         <div ng-switch-when="DATE">
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{field.label}}:</label>
+                <label class="col-sm-2 ">{{field.label}}:</label>
             </div>
             <div class="form-group">
                 <div class="col-sm-3">
                     <input type="date" class="form-control" placeholder="{{field.placeholder}}">
                 </div>
-                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                <div class="col-md-3 field-operations">
+                    <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                    <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                </div>
             </div>
         </div>
 
         <div ng-switch-when="OPTIONS">
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{field.label}}:</label>
+                <label class="col-sm-2 field-label">{{field.label}}:</label>
             </div>
-            <div class="form-group">
-                <div class="col-sm-3">
+            <div class="form-group row">
+                <div class="col-md-3">
                     <select id="full-width">
                         <option ng-repeat="option in field.options" value="{{option.value}}">{{option.label}}</option>
                     </select>
                 </div>
-                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                <div class="col-md-3 field-operations">
+                    <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                    <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                </div>
+
             </div>
         </div>
 
         <div ng-switch-when="CHECKBOXES">
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{field.label}}:</label>
+                <label class="col-sm-2 field-label">{{field.label}}:</label>
             </div>
-            <div class="form-group">
-                <div class="col-sm-3" ng-repeat="option in field.options">
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="option.value">{{option.label}}</label>
-                    </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <ul class="no-bullets-options" ng-repeat="option in field.options">
+                        <li><input type="checkbox" value="option.value"> {{option.label}}</li>
+                    </ul>
+
                 </div>
-                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                <div class="col-md-3 field-operations">
+                    <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                    <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                </div>
+
             </div>
         </div>
 
         <div ng-switch-when="RADIOS">
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{field.label}}:</label>
+                <label class="col-sm-2 ">{{field.label}}:</label>
             </div>
-            <div class="form-group">
-                <div class="col-sm-3" ng-repeat="option in field.options">
-                    <div class="radio">
-                        <label><input type="radio" name="license" value="option.value">{{option.label}}</label>
-                    </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <ul class="no-bullets-options" ng-repeat="option in field.options">
+                        <li><input type="radio" name="license" value="option.value"> {{option.label}}</li>
+                    </ul>
                 </div>
-                <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
-                <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
-                <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                <div class="col-md-3 field-operations">
+                    <a role="button" class="glyphicon glyphicon-align-justify pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.removeField($index)" class="glyphicon glyphicon-remove pull-right" id="big-icon"></a>
+                    <a role="button" class="glyphicon glyphicon-plus pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.selectField($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                </div>
+
             </div>
         </div>
 
@@ -123,7 +141,7 @@
     <hr>
 
     <div class="form-group">
-        <label class="col-sm-2 control-label">Add New Field:</label>
+        <label class="col-sm-2 ">Add New Field:</label>
     </div>
     <div class="form-group">
         <div class="col-sm-3">
@@ -142,40 +160,3 @@
         <a role="button" class="glyphicon glyphicon-pencil pull-right" id="hidden-icon"></a>
     </div>
 </form>
-
-<div ng-show="model.edit">
-    <h3>{{model.editTitle}}</h3>
-    <form role="form" ng-switch="model.field.type">
-        <div class="form-group">
-            <label>Label</label>
-            <input type="text" ng-model="model.editLabel" class="form-control">
-        </div>
-        <div class="form-group" ng-switch-when="TEXT">
-            <label>Placeholder</label>
-            <input ng-model="model.editValue" type="text" class="form-control">
-        </div>
-        <div class="form-group" ng-switch-when="TEXTAREA">
-            <label>Placeholder</label>
-            <textarea ng-model="model.editValue" class="form-control"></textarea>
-        </div>
-        <div class="form-group" ng-switch-when="DATE">
-        </div>
-        <div class="form-group" ng-switch-when="OPTIONS">
-            <label>Placeholder</label>
-            <textarea ng-model="model.editValue" class="form-control"></textarea>
-        </div>
-        <div class="form-group" ng-switch-when="CHECKBOXES">
-            <label>Placeholder</label>
-            <textarea ng-model="model.editValue" class="form-control"></textarea>
-        </div>
-        <div class="form-group" ng-switch-when="RADIOS">
-            <label>Placeholder</label>
-            <textarea ng-model="model.editValue" class="form-control"></textarea>
-        </div>
-        <div>
-            <button type="submit" ng-click="model.cancelEdit()" class="btn btn-default">Cancel</button>
-            <button type="submit" ng-click="model.update(model.editLabel, model.editValue, model.field.type)" class="btn btn-primary">Ok</button>
-        </div>
-
-    </form>
-</div>

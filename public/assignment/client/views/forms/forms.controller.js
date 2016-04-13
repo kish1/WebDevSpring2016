@@ -43,7 +43,8 @@
         function addForm(form) {
             FormService
                 .createFormForUser(vm.currentUserId,{
-                title : form.title
+                    title : form.title,
+                    fields: []
             })
                 .then(function (response) {
                    if (response.data) {

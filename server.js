@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 app.use(cookieParser());
 app.use(session({
-    secret: 'StarWars',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 }));

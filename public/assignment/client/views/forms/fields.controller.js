@@ -6,7 +6,7 @@
         .module("FormBuilderApp")
         .controller("FieldController", FieldController);
 
-    function FieldController(FieldService, UserService, FormService, $location) {
+    function FieldController(FieldService, UserService, FormService, $location, $uibModal, $log) {
         var vm = this;
 
         vm.currentUser = null;
@@ -14,13 +14,10 @@
         vm.formId = null;
         vm.fields = null;
         vm.field = null;
-        vm.edit = false;
 
         vm.addField = addField;
         vm.removeField = removeField;
         vm.selectField = selectField;
-        vm.cancelEdit = cancelEdit;
-        vm.update = update;
 
         var init = function () {
             if (!UserService.getCurrentUser()) {
@@ -29,21 +26,7 @@
             }
             vm.currentUser = UserService.getCurrentUser();
             vm.currentUserId = vm.currentUser._id;
-            /*
-            FormService
-                .findAllFormsForUser(vm.currentUserId)
-                .then(function (response) {
-                    vm.formId = response.data[0]._id;
-                    //console.log(vm.formId);
-                    FieldService
-                        .getFieldsForForm(vm.formId)
-                        .then(function(response) {
-                            vm.fields = response.data;
-                            console.log(response);
-                            console.log(vm.fields);
-                        });
-                });
-            */
+
             vm.formId = $location.path().split("/")[2];
             FieldService
                 .getFieldsForForm(vm.formId)
@@ -51,8 +34,6 @@
                     vm.fields = response.data.fields;
                     console.log(vm.fields);
                 });
-
-
         };
         init();
 
@@ -60,8 +41,11 @@
             vm.edit = false;
         }
 
-        function update(label, placeholder, type) {
-            console.log(placeholder);
+        function update(result) {
+            var label = result.label;
+            var placeholder = result.value;
+            var type = result.type;
+
             vm.field.label = label;
             if (["TEXT", "TEXTAREA"].indexOf(type) > -1) {
                 vm.field.placeholder = placeholder;
@@ -91,31 +75,8 @@
         }
 
         function selectField(index) {
-            var titleMap = {
-                "TEXT": "Single Line Field",
-                "TEXTAREA": "Multiple Line Field",
-                "DATE": "Date Field",
-                "OPTIONS": "Dropdown Field",
-                "CHECKBOXES": "Checkbox Field",
-                "RADIOS": "Radio Button Field"
-            };
             vm.field = vm.fields[index];
-            vm.edit = true;
-            vm.editTitle = titleMap[vm.field.type];
-            vm.editLabel = vm.field.label;
-            console.log(vm.field.type);
-            if (["TEXT", "TEXTAREA"].indexOf(vm.field.type) > -1) {
-                vm.editValue = vm.field.placeholder;
-            } else if (["OPTIONS", "CHECKBOXES", "RADIOS"].indexOf(vm.field.type) > -1) {
-                var text = "";
-                for(var i in vm.field.options) {
-                    var line = vm.field.options[i].label + ":" + vm.field.options[i].value + "\n";
-                    text = text + line;
-                    //console.log(text);
-                }
-                vm.editValue = text;
-            }
-            //console.log(vm.field);
+            launchSelectModal('md', update);
         }
 
         function removeField(index) {
@@ -143,6 +104,87 @@
                 .then(function (resp) {
                     vm.fields = resp.data;
                 });
+        }
+
+        function launchSelectModal(size, someFunction) {
+            var modalInstance = $uibModal.open({
+                animation: true,//$scope.animationsEnabled,
+                templateUrl: 'views/forms/field-update.modal.view.html',
+                controller: modalController,
+                size: size,
+                resolve: {
+                    field: function () {
+                        return vm.field;
+                    }
+                }
+            });
+
+            modalInstance.result.then(someFunction, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        }
+
+
+        function modalController($scope, $uibModalInstance, field) {
+            $scope.field = field;
+            $scope.titleMap = {
+                "TEXT": "Single Line Field",
+                "TEXTAREA": "Multiple Line Field",
+                "DATE": "Date Field",
+                "OPTIONS": "Dropdown Field",
+                "CHECKBOXES": "Checkbox Field",
+                "RADIOS": "Radio Button Field"
+            };
+            $scope.fieldLabel = $scope.field.label;
+            $scope.fieldValue = extractFieldValue($scope.field);
+
+            $scope.ok = ok;
+            $scope.cancel = cancel;
+            $scope.isSingleLineField = isSingleLineField;
+            $scope.isMultiLineField = isMultiLineField;
+            $scope.isOption = isOption;
+
+            function ok() {
+                $uibModalInstance.close({
+                    label: $scope.fieldLabel,
+                    value: $scope.fieldValue,
+                    type: $scope.field.type
+                });
+            };
+
+            function cancel() {
+                $uibModalInstance.dismiss('cancel');
+            };
+
+            function isSingleLineField() {
+                return field.type === "TEXT";
+            }
+
+            function isMultiLineField() {
+                return field.type === "TEXTAREA";
+            }
+
+            function isOption() {
+                return ["OPTIONS", "CHECKBOXES", "RADIOS"].indexOf($scope.field.type) > -1;
+            }
+
+            function optionsToText(options) {
+                var text = "";
+                for(var i in options) {
+                    text += options[i].label + ":" + options[i].value + "\n";
+                }
+                return text;
+            }
+
+            function extractFieldValue(field) {
+                if (["TEXT", "TEXTAREA"].indexOf(field.type) > -1) {
+                    return field.placeholder;
+                } else if (["OPTIONS", "CHECKBOXES", "RADIOS"].indexOf(field.type) > -1) {
+                    return optionsToText(field.options);
+                }
+                return null;
+            }
+
         }
 
     }

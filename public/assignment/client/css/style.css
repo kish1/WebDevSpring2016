@@ -43,3 +43,24 @@ th
 {
     width: 90%;
 }
+
+.field-operations {
+
+    float: right;
+}
+
+.box {
+    border: 1px red dotted;
+}
+
+.no-bullets-options {
+    list-style: none;
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+
+}
+
+.field-label {
+    margin-bottom: 0px;
+}

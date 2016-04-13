@@ -6,7 +6,7 @@ module.exports = function(mongoose) {
         label: String,
         type: String,
         placeholder: String,
-        options: [{label: String, value: String}]
+        options: [{label: String, value: String, _id: false}]
     });
     return fieldSchema;
 };

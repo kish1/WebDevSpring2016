@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{titleMap[field.type]}}</h3>
+</div>
+<div class="modal-body row">
+    <form class="form form-horizontal">
+        <div class="col-md-8">
+            <label class="control-label">Label</label>
+            <input type="text" ng-model="fieldLabel" class="form-control">
+        </div>
+
+        <div class="col-md-8" ng-if="isSingleLineField()">
+            <label class="control-label">Placeholder</label>
+            <input type="text" ng-model="$parent.fieldValue" class="form-control">
+        </div>
+
+        <div class="col-md-8" ng-if="isMultiLineField()">
+            <label class="control-label">Placeholder</label>
+            <textarea ng-model="$parent.fieldValue" class="form-control"></textarea>
+        </div>
+
+        <div class="col-md-8" ng-if="isOption()">
+            <label class="control-label">Options</label>
+            <textarea ng-model="$parent.fieldValue" class="form-control"></textarea>
+        </div>
+
+    </form>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

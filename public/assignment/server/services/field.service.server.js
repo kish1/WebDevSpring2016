@@ -32,7 +32,7 @@ module.exports = function (app, formModel) {
             .then(function (form) {
                 console.log('create');
                 res.json(form.fields);
-                console.log(form);
+                //console.log(form);
             },
             function (err) {
                 res.status(400).send(err);
