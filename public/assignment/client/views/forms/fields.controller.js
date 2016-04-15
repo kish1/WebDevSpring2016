@@ -18,6 +18,7 @@
         vm.addField = addField;
         vm.removeField = removeField;
         vm.selectField = selectField;
+        vm.sortFields = sortFields;
 
         var init = function () {
             UserService
@@ -42,8 +43,16 @@
         };
         init();
 
-        function cancelEdit() {
-            vm.edit = false;
+        function sortFields(start, end) {
+            FieldService
+                .updateFieldOrderInForm(vm.formId, start, end)
+                .then(
+                    function (respone) {
+                    },
+                    function (err) {
+                        vm.error = err;
+                    }
+                );
         }
 
         function update(result) {
@@ -52,7 +61,7 @@
             var type = result.type;
 
             vm.field.label = label;
-            if (["TEXT", "TEXTAREA"].indexOf(type) > -1) {
+            if (["TEXT", "TEXTAREA", "DATE"].indexOf(type) > -1) {
                 vm.field.placeholder = placeholder;
                 FieldService.updateField(vm.formId, vm.field._id, vm.field)
                     .then(function (resp) {
@@ -182,7 +191,7 @@
             }
 
             function extractFieldValue(field) {
-                if (["TEXT", "TEXTAREA"].indexOf(field.type) > -1) {
+                if (["TEXT", "TEXTAREA", "DATE"].indexOf(field.type) > -1) {
                     return field.placeholder;
                 } else if (["OPTIONS", "CHECKBOXES", "RADIOS"].indexOf(field.type) > -1) {
                     return optionsToText(field.options);

@@ -15,16 +15,34 @@ module.exports = function(db, mongoose) {
         deleteFormById: deleteFormById,
 
         findAllFieldsForForm: findAllFieldsForForm,
-        updateAllFieldsInForm: updateAllFieldsInForm,
         findFieldInForm: findFieldInForm,
         deleteFieldFromForm: deleteFieldFromForm,
         createFieldInForm: createFieldInForm,
-        updateFieldInForm: updateFieldInForm
+        updateFieldInForm: updateFieldInForm,
+        updateFieldOrderInForm: updateFieldOrderInForm
     };
     return api;
 
-    function updateAllFieldsInForm(formId, newFields) {
+    function updateFieldOrderInForm(formId, startIndex, endIndex) {
+        var deferred = q.defer();
+        FormModel
+            .findById(formId)
+            .then(
+                function (form) {
+                    if (form) {
+                        console.log(form);
+                        form.fields.splice(endIndex, 0, form.fields.splice(startIndex, 1)[0]);
+                        form.markModified("fields");
+                        form.save();
+                        console.log("finishes");
+                        deferred.resolve();
+                    } else {
+                        deferred.reject();
+                    }
 
+                }
+            );
+        return deferred.promise;
     }
 
     function updateFieldInForm(formId, fieldId, field) {
@@ -73,7 +91,6 @@ module.exports = function(db, mongoose) {
                 deferred.resolve(form);
             }
         });
-        console.log('exit');
         return deferred.promise;
     }
 

@@ -13,9 +13,14 @@
             getFieldsForForm: getFieldsForForm,
             getFieldForForm: getFieldForForm,
             deleteFieldFromForm: deleteFieldFromForm,
-            updateField: updateField
+            updateField: updateField,
+            updateFieldOrderInForm: updateFieldOrderInForm
         };
         return service;
+
+        function updateFieldOrderInForm(formId, start, end) {
+            return $http.put("/api/assignment/form/" + formId + "/field?start=" + start + "&end=" + end, {});
+        }
 
         function updateField(formId, fieldId, field) {
             return $http.put("/api/assignment/form/" + formId + "/field/" + fieldId, field);
