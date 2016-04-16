@@ -31,9 +31,9 @@ module.exports = function() {
         return null;
     }
 
-    function findUserByCredentials(email, password) {
+    function findUserByCredentials(handle, password) {
         for(var i in users) {
-            if (users[i].email == email && users[i].password == password) {
+            if (users[i].handle == handle && users[i].password == password) {
                 return users[i];
             }
         }

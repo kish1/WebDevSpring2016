@@ -36,12 +36,8 @@ body {
 
 
 .navbar-default {
-    background-color: ##f8f8f8;
+    background-color:#f8f8f8;
     border-bottom: lightgrey solid 1px;
-}
-
-.navbar-fixed-top {
-    border-radius: ;
 }
 
 .navbar-collapse .collapse {
@@ -209,6 +205,11 @@ body {
 
 .post-heading h2{
     margin-bottom: 0px;
+}
+
+.search-result {
+    background-color:#f8f8f8;
+    border: lightgrey solid 1px;
 }
 
 .box {

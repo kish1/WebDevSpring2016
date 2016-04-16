@@ -7,7 +7,7 @@
         .controller("UserController", UserController);
     function UserController(UserService, $routeParams) {
         var vm = this;
-        vm.userId = $routeParams.userId;
+        vm.userHandle = $routeParams.userHandle;
 
     }
 })();

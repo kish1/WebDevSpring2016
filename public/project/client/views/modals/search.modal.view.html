@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">Search YouTube</h3>
+    <img height="50px" width="100px" src="/project/images/logos/youtube_logo.png">
 </div>
 <div class="modal-body">
     <div class="col-xs-8">
@@ -7,20 +7,22 @@
     </div>
     <button class="btn btn-info" ng-click="search(query)">Search</button>
 
-    <form role="form" >
-        <div class="form-group" ng-repeat="result in results">
-            <div class="radio">
-                &nbsp;&nbsp;&nbsp;
-                <input type="radio" name="optradio" ng-model="$parent.selected" ng-value="result.id.videoId">
+    <div ng-repeat="result in results">
+        <br>
+        <div class="row search-result" role="button" ng-click="$parent.ok(result.id.videoId)">
+            <div class="col-md-3">
                 <img ng-src="{{result.snippet.thumbnails.default.url}}">
-                &nbsp;&nbsp;&nbsp;
-                <label>{{result.snippet.title}}</label>
+            </div>
+
+            <div class="col-md-8">
+                <label class="lead">{{result.snippet.title}}</label>
             </div>
         </div>
-    </form>
+    </div>
+
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button ng-disabled="!prev" class="btn btn-success pull-left" type="button" ng-click="search(query, prev)">Previous</button>
+    <button ng-disabled="!next" class="btn btn-primary pull-right" type="button" ng-click="search(query, next)">Next</button>
 </div>

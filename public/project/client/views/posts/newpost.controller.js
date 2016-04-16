@@ -133,36 +133,37 @@
         function modalController($scope, $uibModalInstance) {
             $scope.query = null;
             $scope.results = [];
-            $scope.selected = null;
+            $scope.prev = null;
+            $scope.next = null;
 
-
-            $scope.ok = ok;
-            $scope.cancel = cancel;
             $scope.search = search;
+            $scope.ok = ok;
 
-            function ok() {
+            function ok(videoId) {
                 //console.log($scope.selected);
-                $uibModalInstance.close($scope.selected);
+                $uibModalInstance.close(videoId);
             };
 
             function cancel() {
                 $uibModalInstance.dismiss('cancel');
             };
 
-            function search(query) {
+            function search(query, token) {
                 var request = gapi.client.youtube.search.list({
                     part: "snippet",
                     type: "video",
                     q: encodeURIComponent(query).replace(/%20/g, "+"),
                     videoEmbeddable: true,
+                    pageToken: token,
                     maxResults: 10,
                     order: "viewCount"
                 });
                 request.execute(function (response) {
                     $scope.results = response.items;
                     //$rootScope.results = response.items;
-                    console.log(response);
-                    $scope.selected = $scope.results[0].id.videoId;
+                    //console.log(response);
+                    $scope.prev = response.result.prevPageToken;
+                    $scope.next = response.result.nextPageToken;
                     $scope.$apply();
                 });
             }

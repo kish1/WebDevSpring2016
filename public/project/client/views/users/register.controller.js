@@ -48,7 +48,7 @@
             }
 
             UserService.
-                findUserByCredentials(user.username, user.password)
+                findUserByCredentials(user.handle, user.password)
                 .then(function(response) {
                     console.log(response);
                     if (response.data) {

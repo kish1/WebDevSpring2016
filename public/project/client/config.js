@@ -28,7 +28,7 @@
                 controller: "ProfileController",
                 controllerAs: "model"
             })
-            .when("/user/:userId?", {
+            .when("/user/:userHandle?", {
                 templateUrl: "views/users/user.view.html",
                 controller: "UserController",
                 controllerAs: "model"

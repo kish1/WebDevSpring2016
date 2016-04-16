@@ -41,9 +41,9 @@ module.exports = function (app, userModel) {
     }
 
     function userResolve(req, res) {
-        if (req.query.email == null && req.query.password == null) {
+        if (req.query.handle == null && req.query.password == null) {
             findAllUsers(req, res);
-        } else if (req.query.email != null && req.query.password != null) {
+        } else if (req.query.handle != null && req.query.password != null) {
             findUserByCredentials(req, res);
         } else {
             res.json([]);
@@ -51,9 +51,9 @@ module.exports = function (app, userModel) {
     }
 
     function findUserByCredentials(req, res) {
-        var email = req.query.email;
+        var handle = req.query.handle;
         var password = req.query.password;
-        res.json(userModel.findUserByCredentials(email, password));
+        res.json(userModel.findUserByCredentials(handle, password));
     }
 
     function findAllUsers(req, res) {

@@ -41,7 +41,7 @@
         }
 
         function findUserByCredentials(email, password) {
-            return $http.get("/api/project/user?email=" + email + "&password=" + password);
+            return $http.get("/api/project/user?handle=" + email + "&password=" + password);
         }
 
         function findAllUsers() {
@@ -51,6 +51,7 @@
         function createUser(user) {
             var newUser = {
                 _id:         (new Date).getTime(),
+                handle: user.handle,
                 firstName:   user.firstName,
                 lastName:    user.lastName,
                 email:       user.email,

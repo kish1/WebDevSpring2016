@@ -4,6 +4,9 @@
         <input ng-model="query" type="text" class="form-control" placeholder="Search">
     </div>
     <a ng-click="search(query)" role="button" class="btn btn-info">Submit</a>
+    <button ng-disabled="!previous" class="btn btn-default" ng-click="search(query, previous)">Previous</button>
+    <button ng-disabled="!next" class="btn btn-default" ng-click="search(query, next)">Next</button>
+
 </div>
 <div class="table-responsive">
     <table class="table">
