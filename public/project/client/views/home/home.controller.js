@@ -7,7 +7,8 @@
         .module("BlogApp")
         .controller("HomeController", HomeController);
 
-    function HomeController($scope) {
+    function HomeController(FollowService) {
+
     }
 })();
 

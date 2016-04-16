@@ -10,4 +10,5 @@ module.exports = function(app) {
     var userService = require("./services/user.service.server.js")(app, userModel);
     var postService = require("./services/post.service.server.js")(app, postModel);
     var commentService = require("./services/comment.service.server.js")(app, commentModel);
+    var followService = require("./services/follow.service.server.js")(app, userModel);
 };
