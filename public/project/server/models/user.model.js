@@ -14,21 +14,79 @@ var users = require("./mock.user.json");
 })();
 module.exports = function() {
     var api = {
+        findUserById: findUserById,
+        findAllUsers: findAllUsers,
+        createUser: createUser,
+        updateUserById: updateUserById,
+        deleteUserById: deleteUserById,
+        findUserByCredentials: findUserByCredentials,
+
         createFollowing: createFollowing,
         deleteFollowing: deleteFollowing,
         findFollowCountForUser: findFollowCountForUser,
         findFollowersForUser: findFollowersForUser,
         findFollowingForUser: findFollowingForUser,
 
-
-        findUserById: findUserById,
-        findAllUsers: findAllUsers,
-        createUser: createUser,
-        updateUserById: updateUserById,
-        deleteUserById: deleteUserById,
-        findUserByCredentials: findUserByCredentials
+        createStarForUser: createStarForUser,
+        deleteStarForUser: deleteStarForUser,
+        findAllStarsForUser: findAllStarsForUser,
+        findStarCountForUser: findStarCountForUser
   };
     return api;
+
+    function findStarCountForUser(userId) {
+        var deferred = q.defer();
+        for(var i in users) {
+            if (users[i]._id == userId) {
+                deferred.resolve(users[i].starred.length);
+                break;
+            }
+        }
+        return deferred.promise;
+    }
+
+    function findAllStarsForUser(userId) {
+        var deferred = q.defer();
+        for(var i in users) {
+            if (users[i]._id == userId) {
+                deferred.resolve(users[i].starred);
+                break;
+            }
+        }
+        return deferred.promise;
+    }
+
+    function deleteStarForUser(userId, postId) {
+        var deferred = q.defer();
+        for(var i in users) {
+            if (users[i]._id == userId) {
+                for(var j in users[i].starred) {
+                    if (users[i].starred[j] == postId) {
+                        users[i].starred.splice(j, 1);
+                        deferred.resolve();
+                        return deferred.promise;
+                    }
+                }
+                deferred.reject("post not found in user");
+                return deferred.promise;
+            }
+        }
+        deferred.reject("user not found in user");
+        return deferred.promise;
+    }
+
+    function createStarForUser(userId, postId) {
+        var deferred = q.defer();
+        for(var i in users) {
+            if (users[i]._id == userId && (! users[i].starred.indexOf(postId) > -1)) {
+                users[i].starred.push(postId);
+                deferred.resolve(users[i]);
+                return deferred.promise;
+            }
+        }
+        deferred.reject("user not found");
+        return deferred.promise;
+    }
 
     function findFollowingForUser(userId, start, count) {
         var deferred = q.defer();
@@ -209,10 +267,11 @@ module.exports = function() {
             password: user.password,
             dob: user.dob,
             gender: user.gender,
+            followers: [],
+            following: [],
+            starred: [],
             description: user.description,
             admin: user.admin
-            //question: user.question,
-            //answer: user.answer
         };
         users.push(newUser);
         return newUser;

@@ -59,6 +59,9 @@
                 dob:         user.dob,
                 gender:      user.gender,
                 description: user.description,
+                followers: [],
+                following: [],
+                starred: [],
                 admin:       user.admin != null
             };
             return $http.post("/api/project/user", newUser);

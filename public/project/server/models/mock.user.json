@@ -1,6 +1,6 @@
 [
-  {"_id": "001", "handle": "leo","firstName": "Lionel", "lastName": "Messi", "email":"leo@messi.com", "password": "leo", "dob": ["1987", "5", "24"], "gender": "male", "description": "I'm Leo Messi","followers": ["002", "003"], "following": ["003"], "admin":false},
-  {"_id": "002", "handle": "saina","firstName": "Saina", "lastName": "Nehwal", "email":"saina@nehwal.com", "password": "saina", "dob": ["1990", "2", "17"], "gender": "female", "description": "I'm Saina Nehwal", "followers": ["004"], "following": ["001"], "admin":true},
-  {"_id": "003", "handle": "mesut","firstName": "Mesut", "lastName": "Ozil", "email":"mesut@ozil.com", "password": "mesut", "dob": ["1988", "9", "15"], "gender": "male", "description": "I'm Mesut Ozil", "followers": ["001"], "following":["001"],"admin":false},
-  {"_id": "004", "handle": "bob","firstName": "Bob", "lastName": "Kahn", "email":"bob@robert.com", "password": "bob", "dob": ["1986", "4", "25"], "gender": "male", "description": "I'm Bob", "followers": [], "following":["002"],"admin":false}
+  {"_id": "001", "handle": "leo","firstName": "Lionel", "lastName": "Messi", "email":"leo@messi.com", "password": "leo", "dob": ["1987", "5", "24"], "gender": "male", "description": "I'm Leo Messi","followers": ["002", "003"], "following": ["003"], "starred": ["101", "102"],"admin":false},
+  {"_id": "002", "handle": "saina","firstName": "Saina", "lastName": "Nehwal", "email":"saina@nehwal.com", "password": "saina", "dob": ["1990", "2", "17"], "gender": "female", "description": "I'm Saina Nehwal", "followers": ["004"], "following": ["001"], "starred": ["103"],"admin":true},
+  {"_id": "003", "handle": "mesut","firstName": "Mesut", "lastName": "Ozil", "email":"mesut@ozil.com", "password": "mesut", "dob": ["1988", "9", "15"], "gender": "male", "description": "I'm Mesut Ozil", "followers": ["001"], "following":["001"],"starred": ["102"],"admin":false},
+  {"_id": "004", "handle": "bob","firstName": "Bob", "lastName": "Kahn", "email":"bob@robert.com", "password": "bob", "dob": ["1986", "4", "25"], "gender": "male", "description": "I'm Bob", "followers": [], "following":["002"],"starred": [],"admin":false}
 ]

@@ -7,8 +7,17 @@
         .module("BlogApp")
         .controller("HomeController", HomeController);
 
-    function HomeController(FollowService) {
-
+    function HomeController(StarService) {
+        StarService
+            .deleteStar("002", "101")
+            .then(
+                function (resp) {
+                    console.log(resp);
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
     }
 })();
 
