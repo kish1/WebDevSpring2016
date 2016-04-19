@@ -18,6 +18,7 @@ module.exports = function() {
         findAllUsers: findAllUsers,
         createUser: createUser,
         updateUserById: updateUserById,
+        updateDisplayPictureById: updateDisplayPictureById,
         deleteUserById: deleteUserById,
         findUserByCredentials: findUserByCredentials,
 
@@ -235,6 +236,19 @@ module.exports = function() {
         return users;
     }
 
+    function updateDisplayPictureById(userId, name) {
+        var deferred = q.defer();
+        for(var i in users) {
+            if (users[i]._id == userId) {
+                users[i].displayPicture = name;
+                deferred.resolve(name);
+                return deferred.promise;
+            }
+        }
+        deferred.reject("user not found");
+        return deferred.promise;
+    }
+
     function updateUserById(userId, user) {
         //console.log(user);
         //console.log(userId);
@@ -247,11 +261,6 @@ module.exports = function() {
                 users[i].dob = user.dob;
                 users[i].gender = user.gender;
                 users[i].description = user.description;
-                users[i].followers = user.followers;
-                users[i].following = user.following;
-                users[i].admin = (user.admin != null);
-                //users[i].question = user.question;
-                //users[i].answer = user.answer;
                 return users[i];
             }
         }
@@ -261,6 +270,8 @@ module.exports = function() {
     function createUser(user) {
         var newUser = {
             _id: uuid.v1(),
+            displayPicture: user.displayPicture,
+            handle: user.handle,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,

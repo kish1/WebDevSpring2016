@@ -20,6 +20,7 @@
             findNameByUserId: findNameByUserId,
             createUser: createUser,
             updateUserById: updateUserById,
+            updateDisplayPictureById: updateDisplayPictureById,
             deleteUserById: deleteUserById
         };
         return service;
@@ -51,6 +52,7 @@
         function createUser(user) {
             var newUser = {
                 _id:         (new Date).getTime(),
+                displayPicture: user.displayPicture,
                 handle: user.handle,
                 firstName:   user.firstName,
                 lastName:    user.lastName,
@@ -69,6 +71,21 @@
 
         function updateUserById(userId, user) {
             return $http.put("/api/project/user/" + userId, user);
+        }
+
+
+        function updateDisplayPictureById(userId, displayPicture) {
+            var fd = new FormData();
+            /*
+            for(var i in userData) {
+                fd.append(i, userData[i]);
+            }*/
+            fd.append("displayPicture", displayPicture);
+            return $http.put("/api/project/user/" + userId + "/dp", fd, {
+                transformRequest: angular.identity,
+                headers: {"Content-Type": undefined}
+            });
+
         }
 
         function deleteUserById (userId) {

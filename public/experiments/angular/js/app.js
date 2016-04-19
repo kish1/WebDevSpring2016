@@ -6,7 +6,7 @@
         .module("SomeDBApp", ['ngAnimate', 'ui.bootstrap'])
         .controller("SomeController", SomeController);
 
-    function SomeController() {
+    function SomeController($http) {
         //console.log("Hello World!");
         var vm = this;
         var players = [
@@ -15,11 +15,27 @@
             ];
 
         vm.players = players;
+        vm.myfile = null;
 
         vm.addPlayer = addPlayer;
         vm.selectPlayer = selectPlayer;
         vm.updatePlayer = updatePlayer;
         vm.removePlayer = removePlayer;
+
+        vm.upload = upload;
+
+        function upload(data) {
+            var fd = new FormData();
+            for(var i in data) {
+                fd.append(i, data[i]);
+            }
+            fd.append("myFile", data);
+            fd.append("userId", "1234");
+            $http.post("/api/project/user/img", fd, {
+                transformRequest: angular.identity,
+                headers: {"Content-Type": undefined}
+            });
+        }
 
         function addPlayer (player) {
         //console.log("Add player:" + vm.name);

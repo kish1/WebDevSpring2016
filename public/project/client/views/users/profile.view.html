@@ -1,52 +1,88 @@
-<h1 class="page-header text-center">Profile</h1>
-<div class="row text-center">
-    <ul class="nav nav-pills">
-        <li><a href="#/post">Posts</a></li>
-        <li><a href="">Followed By</a></li>
-        <li><a href="">Followers</a></li>
-    </ul>
-</div>
-<div class="row text-center">
-    <img class="img-responsive img-thumbnail" src="/project/images/envelope.png">
-</div>
-<br><br>
-<h5 class="page-header"></h5>
+<div class="container view-container">
 
-<form class="form-horizontal">
-    <div class="form-group">
-        <label class="big-font col-sm-2">First Name</label>
-        <div class="col-sm-10">
-            <input ng-model="model.currentUser.firstName" type="text" class="form-control">
+    <div class="container">
+        <div class="row text-center">
+            <ul class="nav nav-pills">
+                <li><a role="button" class="btn btn-primary" href="#/post">Posts</a></li>
+                <li><a role="button" class="btn btn-success" href="">Following</a></li>
+                <li><a role="button" class="btn btn-info" href="">Followers</a></li>
+            </ul>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="big-font col-sm-2">Last Name</label>
-        <div class="col-sm-10">
-            <input ng-model="model.currentUser.lastName" type="text" class="form-control">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="big-font col-sm-2">Gender</label>
-        <div class="col-sm-10">
-            <input ng-model="model.currentUser.gender" type="text" class="form-control">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="big-font col-sm-2">Email</label>
-        <div class="col-sm-10">
-            <input ng-model="model.currentUser.email" type="text" class="form-control">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="big-font col-sm-2">Intro</label>
-        <div class="col-sm-10">
-            <textarea class="form-control" ng-model="model.currentUser.description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            </textarea>
-        </div>
-    </div>
-</form>
+        <br><br>
+        <div class="row">
+            <img class="img-responsive img-circle img-100-100 center-block" ng-src="{{model.dp}}">
+            <input type="file" class="center-block" file-model="model.pictureFile">
+            <button class="btn btn-primary btn-sm center-block" ng-click="model.updateDisplayPicture(model.pictureFile)">Update</button>
 
-<!input type="file">
+        </div>
+
+        <br><br><br>
+        <form class="form">
+            <div ng-hide="model.success === null" class="alert alert-success" role="alert">{{model.success}}</div>
+            <div ng-hide="model.error === null" class="alert alert-danger" role="alert">{{model.error}}</div>
+            <div class="form-group row">
+                <div class="col-md-3"></div>
+                <label class="big-font col-md-2">First Name</label>
+                <div class="col-md-4">
+                    <input ng-model="model.currentUser.firstName" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3"></div>
+                <label class="big-font col-md-2">Last Name</label>
+                <div class="col-md-4">
+                    <input ng-model="model.currentUser.lastName" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3"></div>
+                <label class="big-font col-md-2">Password</label>
+                <div class="col-md-4">
+                    <input ng-model="model.currentUser.password" type="password" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3"></div>
+                <label class="big-font col-md-2">Gender</label>
+                <div class="col-md-4">
+                    <select class="form-control" ng-model="model.currentUser.gender">
+                        <option ng-selected="model.currentUser.gender === 'male'" value="male">Male</option>
+                        <option ng-selected="model.currentUser.gender === 'female'" value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3"></div>
+                <label class="big-font col-md-2">DOB</label>
+                <div class="col-md-4">
+                    <input ng-model="model.currentUser.dob" type="date" value="{{model.date(model.currentUser.dob)}}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3"></div>
+                <label class="big-font col-md-2">Email</label>
+                <div class="col-md-4">
+                    <input ng-model="model.currentUser.email" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3"></div>
+                <label class="big-font col-md-2">Short Bio</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="model.currentUser.description">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="model.updateUser(model.currentUser)">Update</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
 
 

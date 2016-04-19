@@ -2,6 +2,22 @@
  * Created by kishore on 3/23/16.
  */
 "use strict";
+
+var multer = require("multer");
+var dpDestination = '/home/kishore/WebstormProjects/webdev2016/public/project/server/images/dp'
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, dpDestination)
+    },
+    filename: function (req, file, cb) {
+        var datetimestamp = Date.now();
+        var imageName = req.params.id + '-' + datetimestamp + '-' + file.originalname.split(/\W+/).join("").toLowerCase();
+        req.imageName = imageName;
+        cb(null, imageName);
+    }
+});
+var dpUpload = multer({storage: storage});
+
 module.exports = function (app, userModel) {
     app.get("/api/project/user", userResolve);
     app.get("/api/project/user/:id", findUserById);
@@ -9,6 +25,21 @@ module.exports = function (app, userModel) {
     app.post("/api/project/user", createUser);
     app.put("/api/project/user/:id", updateUserById);
     app.delete("/api/project/user/:id", deleteUserById);
+    app.put("/api/project/user/:id/dp", dpUpload.single("displayPicture"), updateDisplayPictureById);
+
+    function updateDisplayPictureById(req, res) {
+        var userId = req.params.id;
+        userModel
+            .updateDisplayPictureById(userId, req.imageName)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
     function findNameByUserId(req, res) {
         var userId = req.params.id;

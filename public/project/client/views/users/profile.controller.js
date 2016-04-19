@@ -9,6 +9,14 @@
     function ProfileController(UserService, $location) {
         var vm = this;
         vm.currentUser = null;
+        vm.error = null;
+        vm.success = null;
+        vm.dp = "/project/images/envelope.png";
+        vm.pictureFile = null;
+
+        vm.updateUser = updateUser;
+        vm.updateDisplayPicture = updateDisplayPicture;
+        vm.date = date;
 
         var init = function() {
             if (!UserService.getCurrentUser()) {
@@ -16,9 +24,45 @@
                 return;
             } else {
                 vm.currentUser = UserService.getCurrentUser();
+                if (vm.currentUser.displayPicture) {
+                    vm.dp = imageUrl(vm.currentUser.displayPicture);
+                }
             }
         };
         init();
+
+        function date(dateObject) {
+            return [dateObject.getMonth()+1, dateObject.getDate(), dateObject.getFullYear()].join('/');
+        }
+
+        function updateDisplayPicture(picture) {
+            UserService
+                .updateDisplayPictureById(vm.currentUser._id, picture)
+                .then(function(resp) {
+                    if(resp.data) {
+                        vm.dp = imageUrl(resp.data);
+                    }
+                });
+        }
+
+        function updateUser(user) {
+            vm.error = null;
+            vm.success = null;
+            UserService
+                .updateUserById(vm.currentUser._id, user)
+                .then(function (resp) {
+                    if(resp.data) {
+                        vm.currentUser = resp.data;
+                        vm.success = "User details updated successfully";
+                    } else {
+                        vm.message = "Could not update user details";
+                    }
+                })
+        }
+
+        function imageUrl(imageName) {
+            return "http://" +  location.host +  "/project/server/images/dp/" + imageName;
+        }
 
     }
 })();

@@ -7,7 +7,7 @@
     <script src="ui-bootstrap-tpls-1.2.4.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/modal.controller.js"></script>
-
+    <script src="js/fileModel.directive.js"></script>
     <meta charset="UTF-8">
     <title>Angular JS</title>
 
@@ -44,8 +44,11 @@
         <div ng-controller="ModalController as mc">
             <button class="btn btn-primary" ng-click="mc.open('lg', sc.players)">Search</button>
         </div>
+
+        <input type="file" file-model="sc.myfile">
+        <button class="btn" ng-click="sc.upload(sc.myfile)">Upload</button>
     </div>
-    <input type="file">
+
 
 
 
