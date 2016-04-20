@@ -32,8 +32,8 @@
             return $http.get("/api/project/post?userId=" + userId);
         }
 
-        function createPost(userId, post) {
-            return $http.post("/api/project/post?userId=" + userId, post);
+        function createPost(post) {
+            return $http.post("/api/project/post", post);
         }
 
         function updatePostById(postId, post) {

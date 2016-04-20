@@ -29,7 +29,13 @@
         vm.removeVideo = removeVideo;
 
         vm.updatePost = updatePost;
-
+(function() {
+    for(var i in users) {
+        var d = users[i].dob;
+        users[i].dob = new Date(d[0], d[1], d[2]);
+    }
+    //console.log(users);
+})();
         var init = function () {
             vm.currentUser = UserService.getCurrentUser();
             if (!vm.currentUser) {
@@ -50,6 +56,8 @@
         init();
 
         function updatePost(post) {
+            post.tags = post.tags.split(" ");
+            post.content = post.content.map(function(x) {return {type: x.type, value: x.value};});
             PostService.updatePostById(post._id, post)
                 .then(function (response) {
                     $location.path("/post");

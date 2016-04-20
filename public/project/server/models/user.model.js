@@ -3,15 +3,9 @@
  */
 "use strict";
 var q = require("q");
-var uuid = require("node-uuid");
-var users = require("./mock.user.json");
-(function() {
-    for(var i in users) {
-        var d = users[i].dob;
-        users[i].dob = new Date(d[0], d[1], d[2]);
-    }
-    //console.log(users);
-})();
+//var uuid = require("node-uuid");
+//var users = require("./mock.user.json");
+
 module.exports = function(db, mongoose) {
     var UserSchema = require("./user.schema.server.js")(mongoose);
     var UserModel = mongoose.model('user', UserSchema);
@@ -24,12 +18,14 @@ module.exports = function(db, mongoose) {
         updateDisplayPictureById: updateDisplayPictureById,
         deleteUserById: deleteUserById,
         findUserByCredentials: findUserByCredentials,
+        findUserByHandle: findUserByHandle,
 
         createFollowing: createFollowing,
         deleteFollowing: deleteFollowing,
         findFollowCountForUser: findFollowCountForUser,
         findFollowersForUser: findFollowersForUser,
         findFollowingForUser: findFollowingForUser,
+        checkFollows: checkFollows,
 
         createStarForUser: createStarForUser,
         deleteStarForUser: deleteStarForUser,
@@ -42,7 +38,7 @@ module.exports = function(db, mongoose) {
         return UserModel.aggregate([
             {$match: {"_id": userId}},
             {$project: {
-                "starrersCount": {$size: '$starrers'}
+                "starredCount": {$size: '$starred'}
             }
             }]);
     }
@@ -104,7 +100,8 @@ module.exports = function(db, mongoose) {
     }
 
     function findUserByHandle(userHandle) {
-        return UserModel.aggregate([
+        var deferred = q.defer();
+        UserModel.aggregate([
             {$match: {"handle": userHandle}},
             {$project: {
                 "displayPicture": 1,
@@ -114,9 +111,18 @@ module.exports = function(db, mongoose) {
                 "description": 1,
                 "followersCount": {$size: '$followers'},
                 "followingCount": {$size: '$following'},
-                "starrersCount": {$size: '$starrers'}
+                "starredCount": {$size: '$starred'}
             }
-            }]);
+            }], function (err, val) {
+            if (err) {
+                deferred.reject(err);
+                console.log(err);
+            } else {
+                deferred.resolve(val[0]);
+                console.log(val);
+            }
+        });
+        return deferred.promise;
     }
 
     function findUserById(userId) {

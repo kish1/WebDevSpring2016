@@ -13,6 +13,7 @@
         vm.myposts = null;
 
         vm.readPost = readPost;
+        vm.deletePost = deletePost;
 
         var init = function() {
             vm.currentUser = UserService.getCurrentUser();
@@ -26,6 +27,14 @@
                 });
         };
         init();
+
+        function deletePost(postId, $index) {
+            PostService
+                .deletePostById(postId)
+                .then(function (resp) {
+                    vm.myposts.splice($index, 1);
+                });
+        }
 
         function readPost(postId) {
             $location.search("postId", postId).path("/readpost");

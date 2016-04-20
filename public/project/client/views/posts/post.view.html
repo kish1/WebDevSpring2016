@@ -1,13 +1,25 @@
-<h1 class="page-header">Posts</h1>
-<div>
-    <ul class="nav nav-pills">
-        <li><a href="#/newpost">Write</a></li>
-        <li><a href="#/profile">Profile</a></li>
-    </ul>
-</div>
+<div class="container view-container">
+    <h1 class="page-header">Posts</h1>
+    <div>
+        <ul class="nav nav-pills">
+            <li><a href="#/newpost">Write</a></li>
+            <li><a href="#/profile">Profile</a></li>
+        </ul>
+    </div>
 
-<h3>My Posts</h3>
-<div ng-repeat="post in model.myposts">
-    <h4><a role="button" ng-click="model.readPost(post._id)">{{post.name}}</a></h4>
+    <h3>My Posts</h3>
+    <div class="container" ng-repeat="post in model.myposts">
+        <div class="row">
+            <div class="col-xs-3">
+                <h4><a role="button" ng-click="model.readPost(post._id)">{{post.name}}</a></h4>
+            </div>
+            <div class="col-xs-2">
+                <button class="btn btn-danger btn-sm" ng-click="model.deletePost(post._id, $index)">Delete</button>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 

@@ -34,6 +34,12 @@
             if (!vm.currentUser) {
                 $location.url("/login");
                 return;
+            } else {
+                UserService
+                    .findUserById(vm.currentUser._id)
+                    .then(function (resp) {
+                        vm.currentUser = resp.data;
+                    });
             }
 
         };
@@ -41,11 +47,15 @@
 
         function addPost(post) {
             var newPost = {
+                userId: vm.currentUser._id,
                 name: post.name,
+                tags: post.tags.split(" "),
                 createdOn: new Date(),
                 content: post.content
             };
-            PostService.createPost(vm.currentUser._id, post)
+            newPost.content = newPost.content.map(function(x) {return {type: x.type, value: x.value};});
+            console.log(newPost);
+            PostService.createPost(newPost)
                 .then(function(response) {
                     $location.url("/post");
                 });

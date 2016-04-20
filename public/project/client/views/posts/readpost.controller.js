@@ -29,19 +29,19 @@
         var init = function() {
             vm.postId = $location.search().postId;
 
-            vm.currentUser = UserService.getCurrentUser();
-
             PostService.findPostById(vm.postId)
                 .then(function(response) {
                     //console.log(response);
                     vm.post = response.data;
-                    vm.post.createdOn = new Date(vm.post.createdOn[0], vm.post.createdOn[1], vm.post.createdOn[2]);
-
+                    vm.post.createdOn = new Date(vm.post.createdOn);
+                    //console.log(vm.post);
                     UserService.findNameByUserId(vm.post.userId)
                         .then(function (response) {
                             var data = response.data;
                             vm.postOwnerName = data.firstName + " " + data.lastName;
-                            console.log(vm.post);
+                            vm.postOwnerHandle = data.handle;
+                            vm.postOwnerDP = imageUrl(data.displayPicture);
+                            console.log(vm.postOwnerHandle);
                         });
                 });
 
@@ -76,7 +76,7 @@
         }
 
         function postOwner() {
-            $location.search("userId", vm.post.userId).path("/user")
+            $location.search("postId", null).path("/user/" + vm.postOwnerHandle);
         }
 
         function removeComment(commentId,$index) {
@@ -118,6 +118,10 @@
 
         function isOwnerOrCommenter(userId) {
             return (vm.currentUser != null) && (vm.isOwnPost() || (userId == vm.currentUser._id));
+        }
+
+        function imageUrl(imageName) {
+            return "http://" +  location.host +  "/project/server/images/dp/" + imageName;
         }
     }
 })();

@@ -27,7 +27,7 @@ module.exports = function (app, userModel) {
     app.get("/api/project/user", userResolve);
     app.get("/api/project/user/:id", findUserById);
     app.get("/api/project/user/name/:id", findNameByUserId);
-    app.get("/api/project/user/:handle", findUserByHandle);
+    app.get("/api/project/user/handle/:handle", findUserByHandle);
     app.post("/api/project/user", createUser);
     app.put("/api/project/user/:id", updateUserById);
     app.delete("/api/project/user/:id", deleteUserById);
@@ -49,11 +49,22 @@ module.exports = function (app, userModel) {
 
     function findNameByUserId(req, res) {
         var userId = req.params.id;
-        var user = userModel.findUserById(userId);
-        res.json({
-            firstName: user.firstName,
-            lastName: user.lastName
-        });
+        userModel
+            .findUserById(userId)
+            .then(
+                function (resp) {
+                    var user = resp;
+                    res.json({
+                        displayPicture: user.displayPicture,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        handle: user.handle
+                    });
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function findUserByHandle(req, res) {

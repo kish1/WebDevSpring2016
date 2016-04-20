@@ -10,26 +10,71 @@ module.exports = function(app, commentModel) {
 
     function deleteCommentById(req, res) {
         var commentId = req.params.id;
-        res.json(commentModel.deleteCommentById(commentId));
+        commentModel
+            .deleteCommentById(commentId)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function updateCommentById(req, res) {
         var commentId = req.params.id;
         var comment = req.body;
-        res.json(commentModel.updateCommentById(commentId, comment));
+        commentModel
+            .updateCommentById(commentId, comment)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function createComment(req, res) {
         var comment = req.body;
-        res.json(commentModel.createComment(comment));
+        commentModel
+            .createComment(comment)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function findAllCommentsForPost(req, res) {
         var postId = req.params.id;
-        res.json(commentModel.findAllCommentsForPost(postId));
+        commentModel
+            .findAllCommentsForPost(postId)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function findAllComments(req, res) {
-        res.json(commentModel.findAllComments());
+        commentModel
+            .findAllComments()
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 }

@@ -17,6 +17,7 @@
             findUserByCredentials: findUserByCredentials,
             findAllUsers: findAllUsers,
             findUserById: findUserById,
+            findUserByHandle: findUserByHandle,
             findNameByUserId: findNameByUserId,
             createUser: createUser,
             updateUserById: updateUserById,
@@ -24,6 +25,10 @@
             deleteUserById: deleteUserById
         };
         return service;
+
+        function findUserByHandle(handle) {
+            return $http.get("/api/project/user/handle/" + handle);
+        }
 
         function findNameByUserId(userId) {
             return $http.get("/api/project/user/name/" + userId);

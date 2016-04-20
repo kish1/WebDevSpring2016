@@ -11,24 +11,63 @@ module.exports = function(app, postModel) {
 
     function deletePostById(req, res) {
         var postId = req.params.id;
-        res.json(postModel.deletePostById(postId));
+        postModel
+            .deletePostById(postId)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function updatePostById(req, res) {
         var postId = req.params.id;
         var post = req.body;
-        res.json(postModel.updatePostById(postId, post));
+        postModel
+            .updatePostById(postId, post)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function createPost(req, res) {
-        var userId = req.query.userId;
+        var userId = req.body.userId;
         var post = req.body;
-        res.json(postModel.createPost(userId, post));
+        postModel
+            .createPost(userId, post)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function findPostById(req, res) {
         var postId = req.params.id;
-        res.json(postModel.findPostById(postId));
+        var val = postModel
+            .findPostById(postId)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
+            );
+
     }
 
     function postResolver(req, res) {
@@ -41,11 +80,28 @@ module.exports = function(app, postModel) {
 
     function findAllPostsForUser(req, res) {
         var userId = req.query.userId;
-        res.json(postModel.findAllPostsForUser(userId));
+        postModel
+            .findAllPostsForUser(userId)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function findAllPosts(req, res) {
-        res.json(postModel.findAllPosts());
+        postModel
+            .findAllPosts()
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
-
 };

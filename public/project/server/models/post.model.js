@@ -1,10 +1,12 @@
 /**
  * Created by kishore on 3/25/16.
  */
-module.exports = function() {
+module.exports = function(db, mongoose) {
     var q = require("q");
-    var uuid = require("node-uuid");
-    var mock = require("./mock.post.json");
+//    var uuid = require("node-uuid");
+//    var mock = require("./mock.post.json");
+    var PostSchema = require("./post.schema.server.js")(mongoose);
+    var PostModel = mongoose.model('post', PostSchema);
     var api = {
         findAllPosts: findAllPosts,
         findPostById: findPostById,
@@ -21,119 +23,62 @@ module.exports = function() {
     return api;
 
     function findStarCountForPost(postId) {
-        var deferred = q.defer();
-        for(var i in mock) {
-            if (mock[i]._id == postId) {
-                deferred.resolve(mock[i].starrers.length);
-                return deferred.promise;
-            }
-        }
-        deferred.reject("post not found");
-        return deferred.promise;
+        return PostModel.aggregate([{$match: {"_id": postId}}, {$project: {"starrersCount": {$size: '$starrers'}}}]);
     }
 
     function findStarsForPost(postId, start, count) {
-        var deferred = q.defer();
-        for(var i in mock) {
-            if (mock[i]._id == postId) {
-                deferred.resolve(mock[i].starrers.slice(start, start+count));
-                return deferred.promise;
-            }
-        }
-        deferred.reject("post not found");
-        return deferred.promise;
+        return PostModel.findById(postId, {starrers: {$slice: [start, start+count]}});
     }
 
     function deleteStarForPost(postId, userId) {
-        //console.log("userId: " + userId);
-        var deferred = q.defer();
-        for(var i in mock) {
-            if (mock[i]._id == postId) {
-                for(var j in mock[i].starrers) {
-                    console.log(mock[i].starrers[j] + " " + userId);
-                    if (mock[i].starrers[j] == userId) {
-                        mock[i].starrers.splice(j, 1);
-                        deferred.resolve();
-                        return deferred.promise;
-                    }
-                }
-                deferred.reject("user not found in post")
-            }
-        }
-        deferred.reject("post not found in post");
-        return deferred.promise;
+        return PostModel.findByIdAndUpdate(postId, {$pull: {"starrers": userId}});
     }
 
     function createStarForPost(postId, userId) {
-        var deferred = q.defer();
-        for(var i in mock) {
-            if (mock[i]._id == postId) {
-                mock[i].starrers.push(userId);
-                deferred.resolve(mock[i]);
-                return deferred.promise;
-            }
-        }
-        deferred.reject("post not found");
-        return deferred.promise;
+        return PostModel.findByIdAndUpdate(postId, {$push: {"starrers": userId}});
     }
 
     function findAllPosts() {
-        return mock;
+        return PostModel.find();
     }
 
     function deletePostById(postId) {
-        for(var i in mock) {
-            if (mock[i]._id == postId) {
-                mock.splice(i, 1);
-                break;
-            }
-        }
-        return mock;
+        return PostModel.findByIdAndRemove(postId);
     }
 
     function updatePostById(postId, post) {
-        for(var i in mock) {
-            if (mock[i]._id == postId) {
-                mock[i].name = post.name;
-                mock[i].content = post.content;
-                return mock[i];
-            }
-        }
-        return null;
+        return PostModel.findByIdAndUpdate(postId, {$set: post}, {"starrers": 0});
     }
 
-    function createPost(uId, post) {
-        console.log(post.createdOn);
-        var date = new Date(post.createdOn);
+    function createPost(userId, post) {
         var newPost = {
-            _id: uuid.v1(),
-            userId: uId,
+            userId: userId,
             name: post.name,
-            createdOn: [date.getFullYear().toString(), date.getMonth().toString(), date.getDate().toString()],
+            tags: post.tags,
+            createdOn: post.createdOn,
             content: post.content,
             starrers: []
         };
-        console.log(newPost.createdOn);
-        mock.push(newPost);
-        return newPost;
+        console.log(newPost);
+        return PostModel.create(newPost);
     }
 
     function findPostById(postId) {
-        for(var i in mock) {
-            if (mock[i]._id == postId) {
-                return mock[i];
-            }
-        }
-        return null;
+        var deferred = q.defer();
+        PostModel.aggregate([{$match: {"_id": mongoose.Types.ObjectId(postId)}}, {$project: {
+            "userId": 1,
+            "name": 1,
+            "tags": 1,
+            "createdOn": 1,
+            "content": 1,
+            "starrersCount": {$size: '$starrers'}
+        }}], function(err, val) {
+            deferred.resolve(val[0]);
+        });
+        return deferred.promise;
     }
 
     function findAllPostsForUser(userId) {
-        var posts = [];
-        for(var i in mock) {
-            if (mock[i].userId == userId) {
-                posts.push(mock[i]);
-            }
-        }
-        return posts;
+        return PostModel.find({"userId": userId}, {"name": 1});
     }
 };

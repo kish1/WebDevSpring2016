@@ -44,7 +44,7 @@
                 .then(function(response) {
                     //console.log(response);
                     if (response.data) {
-                        vm.message = "User already exists";
+                        vm.message = "'" + user.handle + "'" + " is already in use. Choose a different handle.";
                     } else {
                         UserService.
                             createUser(user)

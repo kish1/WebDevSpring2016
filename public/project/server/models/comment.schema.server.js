@@ -3,8 +3,8 @@
  */
 module.exports = function (mongoose) {
     var commentSchema = mongoose.Schema({
-        userId: Schema.ObjectId,
-        postId: Schema.ObjectId,
+        userId: mongoose.Schema.ObjectId,
+        postId: mongoose.Schema.ObjectId,
         timestamp: {type: Date, default:Date.now},
         content: String
 
