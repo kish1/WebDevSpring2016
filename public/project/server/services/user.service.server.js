@@ -11,7 +11,12 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         var datetimestamp = Date.now();
-        var imageName = req.params.id + '-' + datetimestamp + '-' + file.originalname.split(/\W+/).join("").toLowerCase();
+        var imageName = (req.params.id + '-' + datetimestamp + '-' + file.originalname).split(/\W+/);
+        var extension = imageName[imageName.length-1];
+        imageName = imageName.slice(0, imageName.length-1)
+        imageName.push("." + extension);
+        imageName = imageName.join("").toLowerCase();
+        console.log(imageName);
         req.imageName = imageName;
         cb(null, imageName);
     }
@@ -22,6 +27,7 @@ module.exports = function (app, userModel) {
     app.get("/api/project/user", userResolve);
     app.get("/api/project/user/:id", findUserById);
     app.get("/api/project/user/name/:id", findNameByUserId);
+    app.get("/api/project/user/:handle", findUserByHandle);
     app.post("/api/project/user", createUser);
     app.put("/api/project/user/:id", updateUserById);
     app.delete("/api/project/user/:id", deleteUserById);
@@ -50,25 +56,75 @@ module.exports = function (app, userModel) {
         });
     }
 
+    function findUserByHandle(req, res) {
+        var handle = req.params.handle;
+        userModel
+            .findUserByHandle(handle)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
     function findUserById(req, res) {
         var userId = req.params.id;
-        res.json(userModel.findUserById(userId));
+        userModel
+            .findUserById(userId)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function deleteUserById(req, res) {
         var userId = req.params.id;
-        res.json(userModel.deleteUserById(userId));
+        userModel
+            .deleteUserById(userId)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function updateUserById(req, res) {
         var userId = req.params.id;
         var user = req.body;
-        res.json(userModel.updateUserById(userId, user));
+        userModel
+            .updateUserById(userId, user)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function createUser(req, res) {
         var user = req.body;
-        res.json(userModel.createUser(user));
+        userModel
+            .createUser(user)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function userResolve(req, res) {
@@ -77,17 +133,37 @@ module.exports = function (app, userModel) {
         } else if (req.query.handle != null && req.query.password != null) {
             findUserByCredentials(req, res);
         } else {
-            res.json([]);
+            res.status(400).send("can't resolve");
         }
     }
 
     function findUserByCredentials(req, res) {
-        var handle = req.query.handle;
-        var password = req.query.password;
-        res.json(userModel.findUserByCredentials(handle, password));
+        var credentials = {
+            handle: req.query.handle,
+            password: req.query.password
+        };
+        userModel
+            .findUserByCredentials(credentials)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function findAllUsers(req, res) {
-        res.json(userModel.findAllUsers());
+        userModel
+            .findAllUsers()
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 };

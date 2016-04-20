@@ -12,6 +12,7 @@
             findFollowCountForUser: findFollowCountForUser,
             findFollowersForUser: findFollowersForUser,
             findFollowingForUser: findFollowingForUser,
+            checkFollows: checkFollows,
             deleteFollowing: deleteFollowing
         };
         return api;
@@ -30,6 +31,10 @@
 
         function findFollowCountForUser(userId) {
             return $http.get("/api/project/follow/count/user/" + count);
+        }
+
+        function checkFollows(userId1, userId2) {
+            return $http.get("/api/project/follow/check?userId1=" + userId1 + "&userId2=" + userId2);
         }
 
         function createFollowing(followerId, followeeId) {

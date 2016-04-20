@@ -26,8 +26,8 @@
                 vm.message = "Please fill in the fields";
                 return;
             }
-            if (!user.username) {
-                vm.message = "Please enter a username";
+            if (!user.handle) {
+                vm.message = "Please enter a handle";
                 return;
             }
             if (!user.password || !user.verify) {
@@ -38,19 +38,11 @@
                 vm.message = "The passwords do not match";
                 return;
             }
-            if (!user.question) {
-                vm.message = "Please enter a secret question";
-                return;
-            }
-            if (!user.answer) {
-                vm.message = "Please enter an answer to your question";
-                return;
-            }
 
             UserService.
                 findUserByCredentials(user.handle, user.password)
                 .then(function(response) {
-                    console.log(response);
+                    //console.log(response);
                     if (response.data) {
                         vm.message = "User already exists";
                     } else {

@@ -6,7 +6,23 @@ module.exports = function (app, userModel) {
     app.get("/api/project/follow/count/user/:userId", findFollowCountForUser);
     app.get("/api/project/follow/followers/user/:userId", findFollowersForUser);
     app.get("/api/project/follow/following/user/:userId", findFollowingForUser);
+    app.get("/api/project/follow/check", checkFollows);
     app.delete("/api/project/follow", deleteFollowing);
+
+    function checkFollows(req, res) {
+        var userId1 = req.query.userId1;
+        var userId2 = req.query.userId2;
+        userModel
+            .checkFollows(userId1, userId2)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
     function deleteFollowing(req, res) {
         var followerId = req.query.followerId;

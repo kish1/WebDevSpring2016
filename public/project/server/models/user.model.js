@@ -12,7 +12,10 @@ var users = require("./mock.user.json");
     }
     //console.log(users);
 })();
-module.exports = function() {
+module.exports = function(db, mongoose) {
+    var UserSchema = require("./user.schema.server.js")(mongoose);
+    var UserModel = mongoose.model('user', UserSchema);
+
     var api = {
         findUserById: findUserById,
         findAllUsers: findAllUsers,
@@ -36,240 +39,108 @@ module.exports = function() {
     return api;
 
     function findStarCountForUser(userId) {
-        var deferred = q.defer();
-        for(var i in users) {
-            if (users[i]._id == userId) {
-                deferred.resolve(users[i].starred.length);
-                break;
+        return UserModel.aggregate([
+            {$match: {"_id": userId}},
+            {$project: {
+                "starrersCount": {$size: '$starrers'}
             }
-        }
-        return deferred.promise;
+            }]);
     }
 
     function findAllStarsForUser(userId) {
-        var deferred = q.defer();
-        for(var i in users) {
-            if (users[i]._id == userId) {
-                deferred.resolve(users[i].starred);
-                break;
-            }
-        }
-        return deferred.promise;
+        return UserModel.findById(userId, {starred: 1});
     }
 
     function deleteStarForUser(userId, postId) {
-        var deferred = q.defer();
-        for(var i in users) {
-            if (users[i]._id == userId) {
-                for(var j in users[i].starred) {
-                    if (users[i].starred[j] == postId) {
-                        users[i].starred.splice(j, 1);
-                        deferred.resolve();
-                        return deferred.promise;
-                    }
-                }
-                deferred.reject("post not found in user");
-                return deferred.promise;
-            }
-        }
-        deferred.reject("user not found in user");
-        return deferred.promise;
+        return UserModel.findByIdAndUpdate(userId, {$pull: {starred: postId}}, {_id: 1});
     }
 
     function createStarForUser(userId, postId) {
-        var deferred = q.defer();
-        for(var i in users) {
-            if (users[i]._id == userId && (! users[i].starred.indexOf(postId) > -1)) {
-                users[i].starred.push(postId);
-                deferred.resolve(users[i]);
-                return deferred.promise;
-            }
-        }
-        deferred.reject("user not found");
-        return deferred.promise;
+        return UserModel.findByIdAndUpdate(userId, {$push: {starred: postId}}, {_id: 1});
+    }
+
+    function checkFollows(userId1, userId2) {
+        return UserModel.findById(user1, {following: {$in: [userId2]}}, {_id: 1});
     }
 
     function findFollowingForUser(userId, start, count) {
-        var deferred = q.defer();
-        if (start && count) {
-            for(var i in users) {
-                if (users[i]._id == userId) {
-                    deferred.resolve(users[i].following.slice(start, start+count));
-                    return deferred.promise;
-                }
-            }
-            deferred.reject("user not found");
-        } else {
-            deferred.reject("Unclear start and count");
-        }
-        return deferred.promise;
+        return UserModel.findById(userId, {following: {$slice: [start, start+count]}});
     }
 
     function findFollowersForUser(userId, start, count) {
-        var deferred = q.defer();
-        if (start && count) {
-            for(var i in users) {
-                if (users[i]._id == userId) {
-                    deferred.resolve(users[i].followers.slice(start, count));
-                    return deferred.promise;
-                }
-            }
-            deferred.reject("user not found");
-        } else {
-            deferred.reject("Unclear start and count");
-        }
-
-        return deferred.promise;
+        return UserModel.findById(userId, {followers: {$slice: [start, start+count]}});
     }
 
     function findFollowCountForUser(userId) {
-        var deferred = q.defer();
-        for(var i in users) {
-            if (users[i]._id == userId) {
-                var ret = {
-                    followersCount: users[i].followers.length,
-                    followingCount: users[i].following.length
-                };
-                deferred.resolve(ret);
-                return deferred.promise;
+        return UserModel.aggregate([
+            {$match: {"_id": userId}},
+            {$project: {
+                "followersCount": {$size: '$followers'},
+                "followingCount": {$size: '$following'}
             }
-        }
-        deferred.reject("user not found");
-        return deferred.promise;
+            }]);
     }
 
     function deleteFollowing(followerId, followeeId) {
-        //console.log(followerId + " "  + followeeId);
-        var deferred = q.defer();
-        var ret = {
-            follower: null,
-            followee: null
-        };
-
-        if (followerId === followeeId) {
-            deferred.resolve(ret);
-            return deferred.promise;
-        }
-        for(var i in users) {
-            if (users[i]._id == followerId) {
-                for(var j in users[i].following) {
-                    if (users[i].following[j] == followeeId) {
-                        users[i].following.splice(j, 1);
-                        ret.follower = users[i];
-                        break;
-                    }
+        UserModel
+            .findByIdAndUpdate(followerId, {$pull: {"following": followeeId}}, function (err, follower) {
+                if (err) {
+                    return q.defer().reject(err).promise;
+                } else {
+                    return UserModel.findByIdAndUpdate(followeeId, {$pull: {"followers": followerId}});
                 }
-                break;
-            }
-        }
-        for(var i in users) {
-            if (users[i]._id == followeeId) {
-                for(var j in users[i].followers) {
-                    if (users[i].followers[j] == followerId) {
-                        users[i].followers.splice(j, 1);
-                        ret.followee = users[i];
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-        deferred.resolve(ret);
-        return deferred.promise;
+            });
     }
 
     function createFollowing(followerId, followeeId) {
-        //console.log(followerId + " "  + followeeId);
-        var deferred = q.defer();
-        var ret = {
-            follower: null,
-            followee: null
-        };
+        UserModel
+            .findByIdAndUpdate(followerId, {$push: {"following": followeeId}}, function(err, follower) {
+               if (err) {
+                   return q.defer().reject(err).promise;
+               } else {
+                   return UserModel.findByIdAndUpdate(followeeId, {$push: {"followers": followerId}});
+               }
+            });
+    }
 
-        if (followerId === followeeId) {
-            deferred.resolve(ret);
-            return deferred.promise;
-        }
-        for(var i in users) {
-            if (users[i]._id == followerId && (!users[i].following.indexOf(followeeId) > -1)) {
-                users[i].following.push(followeeId);
-                ret.follower = users[i];
-                break;
+    function findUserByHandle(userHandle) {
+        return UserModel.aggregate([
+            {$match: {"handle": userHandle}},
+            {$project: {
+                "displayPicture": 1,
+                "handle": 1,
+                "firstName": 1,
+                "lastName": 1,
+                "description": 1,
+                "followersCount": {$size: '$followers'},
+                "followingCount": {$size: '$following'},
+                "starrersCount": {$size: '$starrers'}
             }
-        }
-        for(var i in users) {
-            if (users[i]._id == followeeId && (!users[i].followers.indexOf(followerId) > -1)) {
-                users[i].followers.push(followerId);
-                ret.followee = users[i];
-                break;
-            }
-        }
-        deferred.resolve(ret);
-        return deferred.promise;
+            }]);
     }
 
     function findUserById(userId) {
-        for(var i in users) {
-            if (users[i]._id == userId) {
-                return users[i];
-            }
-        }
-        return null;
+        return UserModel.findById(userId, "displayPicture handle email password gender dob firstName lastName description");
     }
 
-    function findUserByCredentials(handle, password) {
-        for(var i in users) {
-            if (users[i].handle == handle && users[i].password == password) {
-                return users[i];
-            }
-        }
-        return null;
+    function findUserByCredentials(credentials) {
+        return UserModel.findOne({handle: credentials.handle, password: credentials.password}, "handle firstName lastName description");
     }
 
     function deleteUserById(userId) {
-        for(var i in users) {
-            if(users[i]._id == userId) {
-                users.splice(i, 1);
-                break;
-            }
-        }
-        return users;
+        return UserModel.findByIdAndRemove(userId);
     }
 
     function updateDisplayPictureById(userId, name) {
-        var deferred = q.defer();
-        for(var i in users) {
-            if (users[i]._id == userId) {
-                users[i].displayPicture = name;
-                deferred.resolve(name);
-                return deferred.promise;
-            }
-        }
-        deferred.reject("user not found");
-        return deferred.promise;
+        return UserModel.findByIdAndUpdate(userId, {$set: {displayPicture: name.toString()}}, {new: true, upsert: true, select: "displayPicture"});
     }
 
     function updateUserById(userId, user) {
-        //console.log(user);
-        //console.log(userId);
-        for(var i in users) {
-            if (users[i]._id == userId) {
-                users[i].firstName = user.firstName;
-                users[i].lastName = user.lastName;
-                users[i].email = user.email;
-                users[i].password = user.password;
-                users[i].dob = user.dob;
-                users[i].gender = user.gender;
-                users[i].description = user.description;
-                return users[i];
-            }
-        }
-        return null;
+        return UserModel.findByIdAndUpdate(userId, {$set: user}, {new: true, upsert: true, select: "handle firstName lastName email password dob gender description"});
     }
 
     function createUser(user) {
         var newUser = {
-            _id: uuid.v1(),
             displayPicture: user.displayPicture,
             handle: user.handle,
             firstName: user.firstName,
@@ -284,11 +155,10 @@ module.exports = function() {
             description: user.description,
             admin: user.admin
         };
-        users.push(newUser);
-        return newUser;
+        return UserModel.create(newUser);
     }
 
     function findAllUsers() {
-        return users;
+        return UserModel.find();
     }
 };

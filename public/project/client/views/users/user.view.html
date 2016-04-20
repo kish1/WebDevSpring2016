@@ -4,16 +4,19 @@
             <aside>
                 <div class="profile-content">
                     <div class="display-picture">
-                        <img class="img-responsive img-circle" src="/project/images/messi.jpg">
+                        <img class="img-responsive img-circle" ng-src="{{model.dp}}">
                     </div>
                     <h4 class="profile-name">Lionel Messi</h4>
                     <p>Football superstar at Barca</p>
                     <div class="follow">
-                        <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Starred (12)</button>
+                        <button class="btn btn-success btn-sm"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Following (36)</button>
                         <button class="btn btn-info btn-sm"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Followers (68)</button>
                     </div>
                     <br><br>
-                    <button role="button" class="btn btn-primary btn-xs">Edit Profile</button>
+                    <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Starred (12)</button>
+                    <button ng-show="model.isHomePage" role="button" class="btn btn-primary btn-xs" href="#/profile">Edit Profile</button>
+                    <button ng-hide="model.isFollowing" role="button" class="btn btn-primary btn-xs" href=""><span class="glyphicon glyphicon-plus" aria-hidden="true"> Follow</button>
+                    <button ng-show="model.isFollowing" role="button" class="btn btn-primary btn-xs" href=""><span class="glyphicon glyphicon-tick" aria-hidden="true"> Following</button>
                     <div class="social-icons">
                         <p>Share this page:</p>
                         <ul class="clearfix">
