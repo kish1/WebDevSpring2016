@@ -12,10 +12,10 @@
         <div id="navbar" class="navbar-collapse collapse">
 
             <ul class="nav navbar-nav navbar-right">
-                <li ng-hide="model.isLoggedIn()" ng-class="{ active : model.$location.path() === '/register'}"><a role="button" ng-class="{ 'inactive-link' : model.$location.path() === '/register'}" href="#/register">Register</a></li>
-                <li ng-hide="model.isLoggedIn()" ng-class="{ active : model.$location.path() === '/login'}"><a role="button" ng-class="{ 'inactive-link' : model.$location.path() === '/login'}" href="#/login">Sign In</a></li>
-                <li ng-show="model.isLoggedIn()" ng-class="{ active : model.$location.path() === '/profile'}"><a role="button" ng-class="{ 'inactive-link' : model.$location.path() === '/profile'}" href="#/profile">{{model.currentUser.handle}}</a></li>
-                <li ng-show="model.isLoggedIn()"><a role="button" ng-click="model.signOut()">Sign Out</a></li>
+                <li ng-hide="currentUser" ng-class="{ active : model.$location.path() === '/register'}"><a role="button" ng-class="{ 'inactive-link' : model.$location.path() === '/register'}" href="#/register">Register</a></li>
+                <li ng-hide="currentUser" ng-class="{ active : model.$location.path() === '/login'}"><a role="button" ng-class="{ 'inactive-link' : model.$location.path() === '/login'}" href="#/login">Sign In</a></li>
+                <li ng-show="currentUser" ng-class="{ active : model.$location.path() === '/profile'}"><a role="button" ng-class="{ 'inactive-link' : model.$location.path() === '/profile'}" href="#/profile">{{currentUser.handle}}</a></li>
+                <li ng-show="currentUser"><a role="button" ng-click="model.signOut()">Sign Out</a></li>
             </ul>
 
         </div>

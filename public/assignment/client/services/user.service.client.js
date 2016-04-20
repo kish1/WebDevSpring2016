@@ -44,7 +44,7 @@
         }
 
         function getLoggedIn() {
-            return $http.post("/api/assignment/loggedin", {});
+            return $http.get("/api/assignment/loggedin", {});
         }
 
         function findUserByUsername(username) {

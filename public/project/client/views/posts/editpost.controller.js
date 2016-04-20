@@ -37,20 +37,29 @@
     //console.log(users);
 })();
         var init = function () {
-            vm.currentUser = UserService.getCurrentUser();
-            if (!vm.currentUser) {
-                $location.url("/login");
-                return;
-            }
-            vm.postId = $location.search().postId;
-            console.log(vm.postId);
-            PostService.findPostById(vm.postId)
-                .then(function (response) {
-                    if (response.data) {
-                        vm.post = response.data;
-                        console.log(vm.post);
+
+            UserService
+                .getCurrentUser()
+                .then(
+                    function (resp) {
+                        vm.currentUser = resp.data;
+                        if (!vm.currentUser) {
+                            $location.url("/login");
+                            return;
+                        }
+
+                        vm.postId = $location.search().postId;
+                        console.log(vm.postId);
+                        PostService.findPostById(vm.postId)
+                            .then(function (response) {
+                                if (response.data) {
+                                    vm.post = response.data;
+                                    console.log(vm.post);
+                                }
+                            });
                     }
-                });
+                );
+
 
         };
         init();

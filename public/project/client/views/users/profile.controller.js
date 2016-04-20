@@ -19,22 +19,18 @@
         vm.date = date;
 
         var init = function() {
-            if (!UserService.getCurrentUser()) {
-                $location.url("/login");
-                return;
-            } else {
-                UserService
-                    .findUserById(UserService.getCurrentUser()._id)
-                    .then(function (resp) {
-                        console.log(resp);
-                        vm.currentUser = resp.data;
-                        vm.currentUser.dob = new Date(vm.currentUser.dob);
+            UserService
+                .getCurrentUser()
+                .then(function (resp) {
+                    console.log(resp);
+                    vm.currentUser = resp.data;
 
-                        if (vm.currentUser.displayPicture) {
-                            vm.dp = imageUrl(vm.currentUser.displayPicture);
-                        }
-                    });
-            }
+                    vm.currentUser.dob = new Date(vm.currentUser.dob);
+
+                    if (vm.currentUser.displayPicture) {
+                        vm.dp = imageUrl(vm.currentUser.displayPicture);
+                    }
+                });
         };
         init();
 

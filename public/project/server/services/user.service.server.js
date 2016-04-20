@@ -24,6 +24,7 @@ var storage = multer.diskStorage({
 var dpUpload = multer({storage: storage});
 
 module.exports = function (app, userModel) {
+    var auth = authorized;
     app.get("/api/project/user", userResolve);
     app.get("/api/project/user/:id", findUserById);
     app.get("/api/project/user/name/:id", findNameByUserId);
@@ -176,5 +177,20 @@ module.exports = function (app, userModel) {
                     res.status(400).send(err);
                 }
             );
+    }
+
+    function isAdmin(user) {
+        if(user.isAdmin) {
+            return true
+        }
+        return false;
+    }
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
     }
 };

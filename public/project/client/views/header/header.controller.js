@@ -13,10 +13,10 @@
         vm.isLoggedIn = isLoggedIn;
         vm.signOut = signOut;
         vm.currentUser = null;
-        vm.$location = $location;
+
 
         var init = function() {
-            vm.currentUser = UserService.getCurrentUser();
+            vm.$location = $location;
         };
         init();
 
@@ -27,10 +27,15 @@
         }
 
         function signOut() {
-            console.log("sign out");
             vm.currentUser = null;
-            UserService.setCurrentUser(null);
-            $location.url("/home");
+            UserService.logout()
+                .then(function (res) {
+                        UserService.setCurrentUser(null);
+                        $location.url('/login');
+                    },
+                    function (err) {
+                        vm.error = err;
+                    });
         }
     }
 

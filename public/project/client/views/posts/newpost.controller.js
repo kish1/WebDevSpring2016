@@ -30,17 +30,16 @@
         vm.addPost = addPost;
 
         var init = function () {
-            vm.currentUser = UserService.getCurrentUser();
-            if (!vm.currentUser) {
-                $location.url("/login");
-                return;
-            } else {
-                UserService
-                    .findUserById(vm.currentUser._id)
-                    .then(function (resp) {
-                        vm.currentUser = resp.data;
-                    });
-            }
+            UserService
+                .getCurrentUser()
+                .then(function (resp) {
+                    vm.currentUser = resp.data;
+                    if (!vm.currentUser) {
+                        $location.url("/login");
+                        return;
+                    }
+                });
+
 
         };
         init();

@@ -1,21 +1,22 @@
 /**
  * Created by kishore on 3/17/16.
  */
-var passport      = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+//var passport      = require('passport');
+//var LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(app, userModel) {
 
     var auth = authorized;
-    app.post  ('/api/assignment/login', passport.authenticate('local'), login);
-    app.post  ('/api/assignment/logout',         logout);
-    app.post  ('/api/assignment/register',       register);
+    //app.post  ('/api/assignment/login', passport.authenticate('local'), login);
+    //app.post  ('/api/assignment/logout',         logout);
+    //app.post  ('/api/assignment/register',       register);
     app.post  ('/api/assignment/user',     auth, createUser);
-    app.get   ('/api/assignment/loggedin',       loggedin);
+    //app.get   ('/api/assignment/loggedin',       loggedin);
     app.get   ('/api/assignment/user',     auth, findAllUsers);
     app.put   ('/api/assignment/user/:id', auth, updateUserById);
     app.delete('/api/assignment/user/:id', auth, deleteUserById);
 
+/*
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
@@ -100,7 +101,7 @@ module.exports = function(app, userModel) {
                 }
             );
     }
-
+*/
     function findAllUsers(req, res) {
         if(isAdmin(req.user)) {
             userModel
@@ -231,5 +232,5 @@ module.exports = function(app, userModel) {
         } else {
             next();
         }
-    };
-}
+    }
+};

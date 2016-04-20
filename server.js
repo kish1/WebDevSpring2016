@@ -35,7 +35,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./public/assignment/server/app.js")(app, db, mongoose);
-require("./public/project/server/app.js")(app, db, mongoose);
+var assignUserModel = require("./public/assignment/server/models/user.model.js")(db, mongoose);
+var projectUserModel = require("./public/project/server/models/user.model.js")(db, mongoose);
+require("./public/security.js")(app, assignUserModel, projectUserModel);
 
+require("./public/assignment/server/app.js")(app, db, mongoose, assignUserModel);
+require("./public/project/server/app.js")(app, db, mongoose, projectUserModel);
+
+//console.log(app.routes);
 app.listen(port, ipaddress);

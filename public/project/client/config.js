@@ -12,7 +12,7 @@
             .when("/home", {
                 templateUrl: "views/home/home.view.html",
                 controller: "HomeController",
-                controllerAs: "model"
+                controllerAs: "model",
             })
             .when("/login", {
                 templateUrl: "views/users/login.view.html",
@@ -27,7 +27,10 @@
             .when("/profile", {
                 templateUrl: "views/users/profile.view.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
             })
             .when("/user/:userHandle?", {
                 templateUrl: "views/users/user.view.html",
@@ -37,7 +40,10 @@
             .when("/users", {
                 templateUrl: "views/users/users.view.html",
                 controller: "UsersController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkAdmin
+                }
             })
             .when("/post", {
                 templateUrl: "views/posts/post.view.html",
@@ -47,7 +53,10 @@
             .when("/newpost", {
                 templateUrl: "views/posts/newpost.view.html",
                 controller: "NewpostController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
             })
             .when("/readpost", {
                 templateUrl: "views/posts/readpost.view.html",
@@ -57,17 +66,26 @@
             .when("/editpost", {
                 templateUrl: "views/posts/editpost.view.html",
                 controller: "EditpostController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
             })
             .when("/posts", {
                 templateUrl: "views/posts/posts.view.html",
                 controller: "PostsController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkAdmin
+                }
             })
             .when("/comments", {
                 templateUrl: "views/comments/comments.view.html",
                 controller: "CommentsController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkAdmin
+                }
             })
             .when("/search", {
                 templateUrl: "views/search/search.view.html",
@@ -78,7 +96,56 @@
                 controller: "DetailsController",
             })
             .otherwise({
-                redirectTo:"/home"
+                redirectTo:"/login"
             });
     }
+
+    function checkLoggedIn ($q, $timeout, $http, $location, $rootScope, UserService)
+    {
+        var deferred = $q.defer();
+
+        $http.get('/api/assignment/loggedin').success(function(user)
+        {
+            console.log(user);
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+
+            if (user !== '0')
+            {
+                //$rootScope.currentUser = user;
+                console.log("valid");
+                UserService.setCurrentUser(user);
+                deferred.resolve();
+            }
+            // User is Not Authenticated
+            else
+            {
+                $rootScope.errorMessage = 'You need to log in.';
+                console.log("checkLoggedIn failed");
+                deferred.reject();
+                $location.url('/login');
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    function checkAdmin ($q, $http, $location, $rootScope)
+    {
+        var deferred = $q.defer();
+
+        $http.get('/api/project/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0' && user.isAdmin)
+            {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            }
+        });
+
+        return deferred.promise;
+    }
+
 })();

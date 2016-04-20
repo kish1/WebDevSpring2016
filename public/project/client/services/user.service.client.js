@@ -22,7 +22,10 @@
             createUser: createUser,
             updateUserById: updateUserById,
             updateDisplayPictureById: updateDisplayPictureById,
-            deleteUserById: deleteUserById
+            deleteUserById: deleteUserById,
+
+            login: login,
+            logout: logout
         };
         return service;
 
@@ -38,8 +41,17 @@
             return $http.get("/api/project/user/" + userId);
         }
 
+        function login(credentials) {
+            return $http.post("/api/project/login", credentials);
+        }
+
+        function logout(user) {
+            return $http.post("/api/project/logout", user);
+        }
+
+
         function getCurrentUser() {
-            return $rootScope.currentUser;
+            return $http.get("/api/project/loggedin");
         }
 
         function setCurrentUser(user) {
@@ -69,7 +81,7 @@
                 followers: [],
                 following: [],
                 starred: [],
-                admin:       user.admin != null
+                isAdmin:     user.isAdmin != null
             };
             return $http.post("/api/project/user", newUser);
         }

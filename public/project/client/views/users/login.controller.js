@@ -14,10 +14,12 @@
         vm.login = login;
 
         var init = function() {
-            if (isLoggedIn()) {
-                $location.url("/profile");
-                return;
-            }
+            UserService
+                .getCurrentUser()
+                .then(function (resp) {
+                    console.log(resp);
+                    vm.currentUser = resp.data;
+                });
         };
         init();
 
@@ -27,11 +29,14 @@
                 vm.message = "Invalid credentials"
             }
             UserService
-                .findUserByCredentials(user.handle, user.password)
+                .login({
+                    handle: user.handle,
+                    password: user.password
+                })
                 .then(function(response) {
                     if (response.data) {
-
                         UserService.setCurrentUser(response.data);
+                        //console.log(response);
                         $location.url('/profile');
                     } else {
                         vm.message = "User not found";
@@ -40,9 +45,6 @@
                 });
         }
 
-        function isLoggedIn() {
-            return UserService.getCurrentUser() != null;
-        }
     }
 })();
 

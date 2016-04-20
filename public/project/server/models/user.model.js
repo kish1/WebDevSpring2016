@@ -109,6 +109,7 @@ module.exports = function(db, mongoose) {
                 "firstName": 1,
                 "lastName": 1,
                 "description": 1,
+                "isAdmin": 1,
                 "followersCount": {$size: '$followers'},
                 "followingCount": {$size: '$following'},
                 "starredCount": {$size: '$starred'}
@@ -126,11 +127,11 @@ module.exports = function(db, mongoose) {
     }
 
     function findUserById(userId) {
-        return UserModel.findById(userId, "displayPicture handle email password gender dob firstName lastName description");
+        return UserModel.findById(userId, "displayPicture handle email password gender dob firstName lastName description isAdmin");
     }
 
     function findUserByCredentials(credentials) {
-        return UserModel.findOne({handle: credentials.handle, password: credentials.password}, "handle firstName lastName description");
+        return UserModel.findOne({handle: credentials.handle, password: credentials.password}, "handle firstName lastName description isAdmin");
     }
 
     function deleteUserById(userId) {
@@ -142,7 +143,7 @@ module.exports = function(db, mongoose) {
     }
 
     function updateUserById(userId, user) {
-        return UserModel.findByIdAndUpdate(userId, {$set: user}, {new: true, upsert: true, select: "handle firstName lastName email password dob gender description"});
+        return UserModel.findByIdAndUpdate(userId, {$set: user}, {new: true, upsert: true, select: "handle firstName lastName email password dob gender description isAdmin"});
     }
 
     function createUser(user) {
@@ -159,7 +160,7 @@ module.exports = function(db, mongoose) {
             following: [],
             starred: [],
             description: user.description,
-            admin: user.admin
+            isAdmin: user.isAdmin
         };
         return UserModel.create(newUser);
     }

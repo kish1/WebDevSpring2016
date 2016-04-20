@@ -87,17 +87,19 @@
     };
 
 
-    function checkLoggedIn ($q, $timeout, $http, $location, $rootScope)
+    function checkLoggedIn ($q, $timeout, $http, $location, $rootScope, UserService)
     {
         var deferred = $q.defer();
 
         $http.get('/api/assignment/loggedin').success(function(user)
         {
+            console.log(user);
             $rootScope.errorMessage = null;
             // User is Authenticated
             if (user !== '0')
             {
-                $rootScope.currentUser = user;
+                //$rootScope.currentUser = user;
+                UserService.setCurrentUser(user);
                 deferred.resolve();
             }
             // User is Not Authenticated
