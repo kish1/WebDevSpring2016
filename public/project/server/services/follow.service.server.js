@@ -16,6 +16,23 @@ module.exports = function (app, userModel) {
             .checkFollows(userId1, userId2)
             .then(
                 function (resp) {
+                    //console.log("cf");
+                    res.json(resp[0].following.length > 0);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function createFollowing(req, res) {
+        var followerId = req.body.followerId;
+        var followeeId = req.body.followeeId;
+        console.log(followerId + " "  + followeeId);
+        userModel
+            .createFollowing(followerId, followeeId)
+            .then(
+                function (resp) {
                     res.json(resp);
                 },
                 function (err) {
@@ -75,22 +92,6 @@ module.exports = function (app, userModel) {
         var userId = req.params.userId;
         userModel
             .findFollowCountForUser(userId)
-            .then(
-                function (resp) {
-                    res.json(resp);
-                },
-                function (err) {
-                    res.status(400).send(err);
-                }
-            );
-    }
-
-    function createFollowing(req, res) {
-        var followerId = req.body.followerId;
-        var followeeId = req.body.followeeId;
-        console.log(followerId + " "  + followeeId);
-        userModel
-            .createFollowing(followerId, followeeId)
             .then(
                 function (resp) {
                     res.json(resp);

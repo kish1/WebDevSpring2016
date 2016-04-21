@@ -13,10 +13,10 @@
                         <button class="btn btn-info btn-sm"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Followers ({{model.pageOwner.followersCount}})</button>
                     </div>
                     <br><br>
-                    <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Starred ({{model.pageOwner.starredCount}})</button>
-                    <button ng-show="model.isHomePage" role="button" class="btn btn-primary btn-xs" href="#/profile">Edit Profile</button>
-                    <button ng-hide="model.isFollowing" role="button" class="btn btn-primary btn-xs" href=""><span class="glyphicon glyphicon-plus" aria-hidden="true" ng-click="model.follow()">Follow</button>
-                    <button ng-show="model.isFollowing" role="button" class="btn btn-primary btn-xs" href=""><span class="glyphicon glyphicon-tick" aria-hidden="true"> Following</button>
+                    <a class="btn btn-default btn-sm" role="button"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Starred ({{model.pageOwner.starredCount}})</a>
+                    <a ng-show="model.isHomePage" role="button" class="btn btn-primary btn-xs" href="#/profile">Edit Profile</a>
+                    <a ng-hide="model.isHomePage || model.isFollowing || (!currentUser)" role="button"  class="btn btn-primary btn-xs" ng-click="model.follow()"><span class="glyphicon glyphicon-plus" aria-hidden="true" >Follow</a>
+                    <a ng-show="currentUser && model.isFollowing && (!model.isHomePage)" role="button" class="btn btn-warning btn-xs" ng-click="model.unfollow()"><span class="glyphicon glyphicon-minus" aria-hidden="true" > Unfollow</a>
                     <div class="social-icons">
                         <p>Share this page:</p>
                         <ul class="clearfix">

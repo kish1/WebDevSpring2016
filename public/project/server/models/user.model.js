@@ -56,7 +56,7 @@ module.exports = function(db, mongoose) {
     }
 
     function checkFollows(userId1, userId2) {
-        return UserModel.findById(user1, {following: {$in: [userId2]}}, {_id: 1});
+        return UserModel.find({"_id": userId1}, {following: {$elemMatch: {$eq: userId2}}});
     }
 
     function findFollowingForUser(userId, start, count) {
@@ -78,25 +78,29 @@ module.exports = function(db, mongoose) {
     }
 
     function deleteFollowing(followerId, followeeId) {
+        var deferred = q.defer();
         UserModel
             .findByIdAndUpdate(followerId, {$pull: {"following": followeeId}}, function (err, follower) {
                 if (err) {
-                    return q.defer().reject(err).promise;
+                    deferred.reject(err);
                 } else {
                     return UserModel.findByIdAndUpdate(followeeId, {$pull: {"followers": followerId}});
                 }
             });
+        return deferred.promise;
     }
 
     function createFollowing(followerId, followeeId) {
+        var deferred = q.defer();
         UserModel
             .findByIdAndUpdate(followerId, {$push: {"following": followeeId}}, function(err, follower) {
                if (err) {
-                   return q.defer().reject(err).promise;
+                   deferred.reject(err);
                } else {
                    return UserModel.findByIdAndUpdate(followeeId, {$push: {"followers": followerId}});
                }
             });
+        return deferred.promise;
     }
 
     function findUserByHandle(userHandle) {
@@ -117,10 +121,9 @@ module.exports = function(db, mongoose) {
             }], function (err, val) {
             if (err) {
                 deferred.reject(err);
-                console.log(err);
+
             } else {
                 deferred.resolve(val[0]);
-                console.log(val);
             }
         });
         return deferred.promise;

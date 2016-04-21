@@ -13,6 +13,9 @@
                 templateUrl: "views/home/home.view.html",
                 controller: "HomeController",
                 controllerAs: "model",
+                resolve: {
+                    loggedIn : checkCurrentUser
+                }
             })
             .when("/login", {
                 templateUrl: "views/users/login.view.html",
@@ -35,7 +38,10 @@
             .when("/user/:userHandle?", {
                 templateUrl: "views/users/user.view.html",
                 controller: "UserController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn : checkCurrentUser
+                }
             })
             .when("/post", {
                 templateUrl: "views/posts/post.view.html",
@@ -56,7 +62,10 @@
             .when("/readpost", {
                 templateUrl: "views/posts/readpost.view.html",
                 controller: "ReadpostController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn : checkCurrentUser
+                }
             })
             .when("/editpost", {
                 templateUrl: "views/posts/editpost.view.html",
@@ -122,7 +131,7 @@
             if (user !== '0')
             {
                 //$rootScope.currentUser = user;
-                console.log("valid");
+                //console.log("valid");
                 UserService.setCurrentUser(user);
                 deferred.resolve();
             }
@@ -152,6 +161,24 @@
                 $rootScope.currentUser = user;
                 deferred.resolve();
             }
+        });
+
+        return deferred.promise;
+    }
+
+    function checkCurrentUser ($q, $http, $location, $rootScope)
+    {
+        var deferred = $q.defer();
+
+        $http.get('/api/assignment/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0')
+            {
+                $rootScope.currentUser = user;
+            }
+            deferred.resolve();
         });
 
         return deferred.promise;
