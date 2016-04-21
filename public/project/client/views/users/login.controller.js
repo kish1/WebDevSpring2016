@@ -17,8 +17,10 @@
             UserService
                 .getCurrentUser()
                 .then(function (resp) {
-                    console.log(resp);
                     vm.currentUser = resp.data;
+                    if (vm.currentUser != '0') {
+                        $location.path('/profile');
+                    }
                 });
         };
         init();

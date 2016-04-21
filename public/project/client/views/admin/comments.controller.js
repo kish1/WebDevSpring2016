@@ -12,6 +12,7 @@
         vm.time = getTime();
         vm.comment = {timestamp: getTime()};
         vm.comments = null;
+        vm.message = null;
 
         vm.addComment = addComment;
         vm.selectComment = selectComment;
@@ -31,28 +32,39 @@
         };
         init();
         function addComment(comment) {
+            vm.message = null;
             CommentService.createComment(comment)
-                .then(function(response) {
-                    var comm = response.data;
-                    //comm.timestamp = new Date(comm.timestamp[0], comm.timestamp[1],comm.timestamp[2], comm.timestamp[3], comm.timestamp[4], comm.timestamp[5], comm.timestamp[6]);
-                    vm.comments.push(comm);
-                    vm.comment = {timestamp: getTime()};
-                });
-
-        }
+                .then(
+                    function (response) {
+                        var comm = response.data;
+                        //comm.timestamp = new Date(comm.timestamp[0], comm.timestamp[1],comm.timestamp[2], comm.timestamp[3], comm.timestamp[4], comm.timestamp[5], comm.timestamp[6]);
+                        vm.comments.push(comm);
+                        vm.comment = {timestamp: getTime()};
+                    },
+                    function (err) {
+                        console.log(JSON.parse(JSON.stringify(err)));
+                        vm.message="Could not update post"
+                    });
+            }
 
         function updateComment(comment) {
+            vm.message = null;
             CommentService.updateCommentById(comment._id, comment)
-                .then(function(response) {
-                    for(var i in vm.comments) {
-                        if (vm.comments[i]._id == comment._id) {
-                            vm.comments[i] = response.data;
-                            break;
+                .then(
+                    function (response) {
+                        for(var i in vm.comments) {
+                            if (vm.comments[i]._id == comment._id) {
+                                vm.comments[i] = response.data;
+                                break;
+                            }
                         }
-                    }
-                    vm.comment = {timestamp: getTime()};
-                });
-        }
+                        vm.comment = {timestamp: getTime()};
+                    },
+                    function (err) {
+                        console.log(JSON.parse(JSON.stringify(err)));
+                        vm.message="Could not update post"
+                    });
+            }
 
         function selectComment(index) {
             vm.comment = {

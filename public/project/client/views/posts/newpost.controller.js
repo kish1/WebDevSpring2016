@@ -34,13 +34,7 @@
                 .getCurrentUser()
                 .then(function (resp) {
                     vm.currentUser = resp.data;
-                    if (!vm.currentUser) {
-                        $location.url("/login");
-                        return;
-                    }
                 });
-
-
         };
         init();
 

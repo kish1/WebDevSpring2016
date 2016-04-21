@@ -1,0 +1,40 @@
+<div class="container view-container">
+    <a class="btn btn-success btn-lg" href="#/admin">Back to Dashboard</a>
+    <h1 class="page-header">Post</h1>
+    <div ng-hide="model.message === null" class="alert alert-danger" role="alert">{{model.message}}</div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Tags</th>
+                <th>Created On</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input class="form-control" ng-model="model.post.userId" type="text"></td>
+                <td><input class="form-control" ng-model="model.post.name" type="text"></td>
+                <td><input class="form-control" ng-model="model.post.tags" type="text"></td>
+                <td><input class="form-control" ng-model="model.post.createdOn" type="date" value="{{model.today}}"></td>
+                <td class="no-wrapping">
+                    <button ng-click="model.addPost(model.post)" class="btn btn-success">Add</button>
+                    <button ng-click="model.updatePost(model.post)" class="btn btn-info">Update</button>
+                </td>
+            </tr>
+            <tr ng-repeat="post in model.posts">
+                <td>{{post.userId}}</td>
+                <td>{{post.name}}</td>
+                <td>{{post.tags.join(", ")}}</td>
+                <td>{{[post.createdOn.getMonth()+1, post.createdOn.getDate(), post.createdOn.getFullYear()].join('/')}}</td>
+                <td class="no-wrapping pull-left">
+                    <button ng-click="model.selectPost($index)" class="btn btn-primary">Select</button>
+                    <button ng-click="model.deletePost($index)" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

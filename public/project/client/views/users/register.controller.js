@@ -13,10 +13,14 @@
         vm.register = register;
 
         var init = function() {
-            if (isLoggedIn()) {
-                $location.url("/profile");
-                return;
-            }
+            UserService
+                .getCurrentUser()
+                .then(function (resp) {
+                    vm.currentUser = resp.data;
+                    if (vm.currentUser) {
+                        $location.path('/profile');
+                    }
+                });
         };
         init();
 
@@ -54,10 +58,6 @@
                             })
                     }
                 });
-        }
-
-        function isLoggedIn() {
-            return UserService.getCurrentUser() != null;
         }
     }
 })();

@@ -29,13 +29,7 @@
         vm.removeVideo = removeVideo;
 
         vm.updatePost = updatePost;
-(function() {
-    for(var i in users) {
-        var d = users[i].dob;
-        users[i].dob = new Date(d[0], d[1], d[2]);
-    }
-    //console.log(users);
-})();
+
         var init = function () {
 
             UserService
@@ -43,10 +37,6 @@
                 .then(
                     function (resp) {
                         vm.currentUser = resp.data;
-                        if (!vm.currentUser) {
-                            $location.url("/login");
-                            return;
-                        }
 
                         vm.postId = $location.search().postId;
                         console.log(vm.postId);
@@ -59,8 +49,6 @@
                             });
                     }
                 );
-
-
         };
         init();
 

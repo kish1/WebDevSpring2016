@@ -16,15 +16,16 @@
         vm.deletePost = deletePost;
 
         var init = function() {
-            vm.currentUser = UserService.getCurrentUser();
-            if (!vm.currentUser) {
-                $location.url("/login");
-                return;
-            }
-            PostService.findAllPostsForUser(vm.currentUser._id)
-                .then(function(response) {
-                    vm.myposts = response.data;
+            UserService
+                .getCurrentUser()
+                .then(function (resp) {
+                    vm.currentUser = resp.data;
+                    PostService.findAllPostsForUser(vm.currentUser._id)
+                        .then(function(response) {
+                            vm.myposts = response.data;
+                        });
                 });
+
         };
         init();
 

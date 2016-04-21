@@ -234,6 +234,16 @@ body {
     text-align: center;
 }
 
+.home-img h3 {
+    z-index: 2;
+    top: 45%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+}
+
 
 .box {
     border: 1px red dotted;

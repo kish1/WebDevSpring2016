@@ -7,7 +7,7 @@
         .controller("UserController", UserController);
     function UserController(UserService, FollowService, $routeParams) {
         var vm = this;
-        vm.ownerHandle = $routeParams.userHandle;
+        vm.pageOwnerHandle = null;
         vm.pageOwner = null;
         vm.currentUser = null;
         vm.isHomePage = false;
@@ -17,43 +17,37 @@
         vm.follow = follow;
 
         function init() {
-            //console.log(vm.ownerHandle);
-            if (UserService.getCurrentUser()) {
-                UserService
-                    .findUserById(UserService.getCurrentUser()._id)
-                    .then(function (resp) {
-                        //console.log(resp);
-                        vm.currentUser = resp.data;
+            vm.pageOwnerHandle = $routeParams.userHandle;
+            UserService
+                .findUserByHandle(vm.pageOwnerHandle)
+                .then(function (resp) {
+                    vm.pageOwner = resp.data;
+                    vm.dp = imageUrl(vm.pageOwner.displayPicture);
+                    //console.log(vm.dp);
+                    //console.log(vm.pageOwner);
 
-                        if (vm.currentUser.handle == vm.ownerHandle) {
-                            vm.isHomePage = true;
-                            vm.dp = imageUrl(vm.currentUser.displayPicture);
-                        } else {
-                            UserService
-                                .findUserByHandle(vm.ownerHandle)
-                                .then(function (resp) {
-                                    vm.pageOwner = resp.data;
-                                    vm.dp = imageUrl(vm.pageOwner.displayPicture);
-                                    //console.log(vm.pageOwner);
+                    UserService
+                        .findUserById(UserService.getCurrentUser()._id)
+                        .then(function (resp) {
+                            //console.log(resp);
+                            vm.currentUser = resp.data;
+                            if (vm.currentUser) {
+                                if (vm.currentUser.handle == vm.pageOwnerHandle) {
+                                    vm.isHomePage = true;
+                                } else {
                                     FollowService
                                         .checkFollows(vm.currentUser._id, vm.pageOwner._id)
                                         .then(function(resp) {
-                                            //console.log(resp);
+                                            console.log(resp);
                                         });
-                                });
+                                }
+                            }
 
-                        }
 
-                    });
-            } else {
-                UserService
-                    .findUserByHandle(vm.ownerHandle)
-                    .then(function (resp) {
-                        vm.pageOwner = resp.data;
-                        vm.dp = imageUrl(vm.pageOwner.displayPicture);
-                        //console.log(vm.pageOwner);
-                    });
-            }
+                        });
+
+                });
+
         }
         init();
 

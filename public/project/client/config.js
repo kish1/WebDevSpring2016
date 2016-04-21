@@ -37,18 +37,13 @@
                 controller: "UserController",
                 controllerAs: "model"
             })
-            .when("/users", {
-                templateUrl: "views/users/users.view.html",
-                controller: "UsersController",
-                controllerAs: "model",
-                resolve: {
-                    loggedIn: checkAdmin
-                }
-            })
             .when("/post", {
                 templateUrl: "views/posts/post.view.html",
                 controller: "PostController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
             })
             .when("/newpost", {
                 templateUrl: "views/posts/newpost.view.html",
@@ -71,8 +66,22 @@
                     loggedIn: checkLoggedIn
                 }
             })
+            .when("/admin", {
+                templateUrl: "views/admin/admin.view.html",
+                resolve: {
+                    loggedIn: checkAdmin
+                }
+            })
+            .when("/users", {
+                templateUrl: "views/admin/users.view.html",
+                controller: "UsersController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkAdmin
+                }
+            })
             .when("/posts", {
-                templateUrl: "views/posts/posts.view.html",
+                templateUrl: "views/admin/posts.view.html",
                 controller: "PostsController",
                 controllerAs: "model",
                 resolve: {
@@ -80,7 +89,7 @@
                 }
             })
             .when("/comments", {
-                templateUrl: "views/comments/comments.view.html",
+                templateUrl: "views/admin/comments.view.html",
                 controller: "CommentsController",
                 controllerAs: "model",
                 resolve: {
@@ -96,7 +105,7 @@
                 controller: "DetailsController",
             })
             .otherwise({
-                redirectTo:"/login"
+                redirectTo:"/home"
             });
     }
 
