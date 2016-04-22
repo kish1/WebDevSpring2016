@@ -71,10 +71,10 @@
             <div class="alert alert-danger" role="alert" ng-show="model.message != null">{{model.message}}</div>
             <div class="form-group row">
                 <div class="col-xs-6">
-            <textarea class="form-control" ng-model="model.comment.content">
-            </textarea>
+                    <textarea class="form-control" ng-model="model.comment.content"></textarea>
                 </div>
-                <button class="btn btn-secondary btn-sm" ng-click="model.addComment(model.comment)">Comment</button>
+                <button class="btn btn-selected btn-sm" ng-hide="model.commentSelected" ng-click="model.addComment(model.comment)">Add Comment</button>
+                <button class="btn btn-info btn-sm" ng-show="model.commentSelected" ng-click="model.updateComment(model.comment)">Update Comment</button>
             </div>
 
             <br><br>
@@ -88,7 +88,7 @@
                             </div>
                             <div class="col-md-6 comment-name">
                                 <a ng-href="#/user/{{comment.handle}}"><h4 class="">{{comment.firstName + " " + comment.lastName + " "}}</h4></a>
-                                <small>{{comment.timestamp.toLocaleDateString()}}</small>
+                                <small>{{comment.timestamp.toLocaleString()}}</small>
                             </div>
                         </div>
                         <div class="row">
@@ -99,14 +99,12 @@
                         </div>
                         <br>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-md-4 no-wrapping">
+                        <button class="btn btn-default" ng-click="model.selectComment(comment._id, $index)" ng-show="model.isCommenter(comment.userId)">Edit</button>
                         <button class="btn btn-danger" ng-click="model.removeComment(comment._id, $index)" ng-show="model.isOwnerOrCommenter(comment.userId)">Remove</button>
                     </div>
                     <br><br>
                 </div>
-
-
-
             </div>
         </div>
     </div>

@@ -56,7 +56,7 @@
             vm.success = null;
             console.log(vm.currentUser.dob);
             UserService
-                .updateUserById(vm.currentUser._id, user)
+                .updateUserById(vm.currentUser._id, JSON.parse(JSON.stringify(user)))
                 .then(function (resp) {
                     if(resp.data) {
                         console.log(resp.data);

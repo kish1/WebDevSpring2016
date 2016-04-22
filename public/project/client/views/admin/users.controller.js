@@ -14,15 +14,15 @@
         vm.user = {dob: getToday()};
         vm.users = [];
         vm.message = null;
+        vm.index = null;
 
         vm.addUser = addUser;
         vm.updateUser = updateUser;
         vm.selectUser = selectUser;
         vm.deleteUser = deleteUser;
-        vm.title = "Hello";
+
 
         var init = function() {
-            //console.log("Hello");
             UserService
                 .findAllUsers()
                 .then(function(response) {
@@ -60,23 +60,15 @@
             vm.message = null;
             delete user.handle;
             UserService
-                .updateUserById(user._id, user)
+                .updateUserById(user._id, JSON.parse(JSON.stringify(user)))
                 .then(
                     function (response) {
-                        var newUser = response.data;
-                        console.log(newUser);
-                        newUser.dob = new Date(newUser.dob);
-                        for (var i in vm.users) {
-                            if (vm.users[i]._id == user._id) {
-                                vm.users[i] = newUser;
-                                //console.log(response);
-                                return;
-                            }
-                        }
+                        user.handle = vm.users[vm.index].handle;
+                        vm.users[vm.index] = user;
+                        vm.index = null;
                     },
                     function (err) {
-                        console.log(JSON.parse(JSON.stringify(err)));
-                        vm.message="Could not update post"
+                        vm.message="Could not update user"
                     });
             vm.user = {dob: getToday()};
         }
@@ -93,6 +85,7 @@
                 description: vm.users[index].description,
                 isAdmin:       vm.users[index].isAdmin
             }
+            vm.index = index;
         }
 
         function deleteUser(index) {

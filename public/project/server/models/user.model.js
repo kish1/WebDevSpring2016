@@ -193,7 +193,7 @@ module.exports = function(db, mongoose) {
     }
 
     function updateUserById(userId, user) {
-        return UserModel.findByIdAndUpdate(userId, {$set: user}, {new: true, upsert: true, select: "handle firstName lastName email password dob gender description isAdmin"});
+        return UserModel.findByIdAndUpdate(userId, {$set: user}, {new: true, select: "handle firstName lastName email password dob gender description isAdmin"});
     }
 
     function createUser(user) {

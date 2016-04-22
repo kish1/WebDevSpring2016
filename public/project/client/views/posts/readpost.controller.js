@@ -20,9 +20,12 @@
         vm.isOwnPost = false;
         vm.hasStarred = false;
         vm.starrersCount = 0;
-        
-        vm.addComment = addComment;
+
         vm.isOwnerOrCommenter = isOwnerOrCommenter;
+        vm.isCommenter = isCommenter;
+        vm.addComment = addComment;
+        vm.selectComment = selectComment;
+        vm.updateComment = updateComment;
         vm.removeComment = removeComment;
         vm.postOwner = postOwner;
         vm.editPost = editPost;
@@ -155,6 +158,36 @@
                 })
         }
 
+        function selectComment(commentId,$index) {
+            vm.comment = {
+                _id: vm.comments[$index]._id,
+                content: vm.comments[$index].content
+            }
+            vm.commentSelected = true;
+        }
+
+        function updateComment(comment) {
+            var newComment = {
+                userId: vm.currentUser._id,
+                postId: vm.postId,
+                timestamp: new Date(),
+                content: comment.content
+            };
+            CommentService
+                .updateCommentById(comment._id, newComment)
+                .then(function (resp) {
+                    for(var i in vm.comments) {
+                        if (vm.comments[i]._id == comment._id) {
+                            vm.comments[i].content = newComment.content;
+                            vm.comments[i].timestamp = newComment.timestamp;
+                            break;
+                        }
+                    }
+                    vm.comment = {};
+                    vm.commentSelected = false;
+                });
+        }
+
         function addComment(comment) {
             console.log("Add");
             if(!vm.currentUser) {
@@ -180,6 +213,10 @@
 
         function isOwnerOrCommenter(userId) {
             return (vm.currentUser != null) && (vm.isOwnPost || (userId == vm.currentUser._id));
+        }
+
+        function isCommenter(userId) {
+            return (vm.currentUser != null) && (userId == vm.currentUser._id);
         }
 
         function imageUrl(imageName) {

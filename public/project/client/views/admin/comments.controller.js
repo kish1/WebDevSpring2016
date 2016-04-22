@@ -13,6 +13,7 @@
         vm.comment = {timestamp: getTime()};
         vm.comments = null;
         vm.message = null;
+        vm.index = null;
 
         vm.addComment = addComment;
         vm.selectComment = selectComment;
@@ -49,16 +50,18 @@
 
         function updateComment(comment) {
             vm.message = null;
-            CommentService.updateCommentById(comment._id, comment)
+            var newComment = {
+                userId: comment.userId,
+                postId: comment.postId,
+                timestamp: comment.timestamp,
+                content: comment.content
+            };
+            CommentService.updateCommentById(comment._id, newComment)
                 .then(
                     function (response) {
-                        for(var i in vm.comments) {
-                            if (vm.comments[i]._id == comment._id) {
-                                vm.comments[i] = response.data;
-                                break;
-                            }
-                        }
+                        vm.comments[vm.index] = comment;
                         vm.comment = {timestamp: getTime()};
+                        vm.index = null;
                     },
                     function (err) {
                         console.log(JSON.parse(JSON.stringify(err)));
@@ -74,6 +77,7 @@
                 timestamp: vm.comments[index].timestamp,
                 content: vm.comments[index].content
             };
+            vm.index = index;
         }
 
         function deleteComment(index) {

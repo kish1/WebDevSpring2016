@@ -10,6 +10,7 @@
         vm.post = {createdOn: getToday()};
         vm.posts = null;
         vm.message = null;
+        vm.index = null;
 
         vm.addPost = addPost;
         vm.updatePost = updatePost;
@@ -50,24 +51,17 @@
 
         function updatePost(post) {
             vm.message = null;
-            post.tags = post.tags.split(" ");
-
+            post.tags = post.tags.split(",");
+            console.log((post));
             PostService
-                .updatePostById(post._id, post)
+                .updatePostById(post._id, JSON.parse(JSON.stringify(post)))
                 .then(
                     function(response) {
-                    var newPost = response.data;
-                    newPost.createdOn = new Date(newPost.createdOn);
-                    for(var i in vm.posts) {
-                        if (vm.posts[i]._id == post._id) {
-                            vm.posts[i] = newPost;
-                            break;
-                        }
-                    }
-                    vm.post = {createdOn: getToday()};
+                        vm.posts[vm.index] = post;
+                        vm.post = {createdOn: getToday()};
+                        vm.index = null;
                 },
                 function (err) {
-                    console.log(JSON.parse(JSON.stringify(err)));
                     vm.message = "Could not add post";
                 });
         }
@@ -77,9 +71,10 @@
                 _id:       vm.posts[index]._id,
                 userId:    vm.posts[index].userId,
                 name:      vm.posts[index].name,
+                tags:      vm.posts[index].tags.join(","),
                 createdOn: vm.posts[index].createdOn,
-                content:   vm.posts[index].content[0].value
             };
+            vm.index = index;
         }
 
         function deletePost(index) {
