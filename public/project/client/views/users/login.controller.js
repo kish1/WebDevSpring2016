@@ -39,7 +39,7 @@
                     if (response.data) {
                         UserService.setCurrentUser(response.data);
                         //console.log(response);
-                        $location.url('/user/' + response.data.handle);
+                        $location.url('/profile');
                     } else {
                         vm.message = "User not found";
 
