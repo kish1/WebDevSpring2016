@@ -4,7 +4,7 @@
 "use strict";
 
 var multer = require("multer");
-var dpDestination = '/home/kishore/WebstormProjects/webdev2016/public/project/server/images/dp'
+var dpDestination = process.env.IMAGES_DIR + '/dp';
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, dpDestination)
