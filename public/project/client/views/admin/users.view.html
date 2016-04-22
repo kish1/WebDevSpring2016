@@ -31,7 +31,7 @@
                     <option ng-selected="model.user.gender === 'female'" value="female">Female</option>
                 </select></td>
                 <td><input class="form-control" ng-model="model.user.description" type="text"></td>
-                <td class="text-center"><label><input  ng-model="model.user.admin" type="checkbox"></label></td>
+                <td class="text-center"><label><input  ng-model="model.user.isAdmin" type="checkbox"></label></td>
                 <td class="no-wrapping">
                     <button ng-click="model.addUser(model.user)" class="btn btn-success">Add</button>
                     <button ng-click="model.updateUser(model.user)" class="btn btn-info">Update</button>

@@ -58,11 +58,13 @@
 
         function updateUser(user) {
             vm.message = null;
+            delete user.handle;
             UserService
                 .updateUserById(user._id, user)
                 .then(
                     function (response) {
                         var newUser = response.data;
+                        console.log(newUser);
                         newUser.dob = new Date(newUser.dob);
                         for (var i in vm.users) {
                             if (vm.users[i]._id == user._id) {
@@ -89,7 +91,7 @@
                 dob:         vm.users[index].dob,
                 gender:      vm.users[index].gender,
                 description: vm.users[index].description,
-                admin:       vm.users[index].admin
+                isAdmin:       vm.users[index].isAdmin
             }
         }
 
