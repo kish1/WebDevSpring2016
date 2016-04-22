@@ -34,7 +34,7 @@
         }
 
         function findAllPostsForUser(userId) {
-            return $http.get("/api/project/post/user/" + userId);
+            return $http.get("/api/project/all/post/user/" + userId);
         }
 
         function createPost(post) {

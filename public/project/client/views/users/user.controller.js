@@ -192,14 +192,14 @@
 
             function makeContent() {
                 console.log($scope.results);
-                var promises = $scope.results.map(function(x) { return PostService.findNameByUserId(x)});
+                var promises = $scope.results.map(function(x) { return PostService.findPostById(x)});
                 var news = [];
                 $q.all(promises)
                     .then(function (resp) {
                         console.log(resp);
                         news = resp.map(function(x) {return x.data;});
-                        //console.log(news);
-                        $scope.results = news.map(function(x) {x.content = x.firstName + " " + x.lastName; return x;});
+                        console.log(news);
+                        $scope.results = news.map(function(x) {x.content = x.name; return x;});
                         //console.log($scope.results);
                     });
             }

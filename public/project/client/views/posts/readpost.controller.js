@@ -36,7 +36,7 @@
 
             PostService.findPostById(vm.postId)
                 .then(function(response) {
-                    //console.log(response);
+                    console.log(response);
                     vm.post = response.data;
                     vm.post.createdOn = new Date(vm.post.createdOn);
                     vm.starrersCount = vm.post.starrersCount;

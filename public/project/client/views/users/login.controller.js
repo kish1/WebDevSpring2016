@@ -19,7 +19,7 @@
                 .then(function (resp) {
                     vm.currentUser = resp.data;
                     if (vm.currentUser != '0') {
-                        $location.path('/profile');
+                        $location.path('/user/' + vm.currentUser.handle);
                     }
                 });
         };
@@ -39,7 +39,7 @@
                     if (response.data) {
                         UserService.setCurrentUser(response.data);
                         //console.log(response);
-                        $location.url('/profile');
+                        $location.url('/user/' + response.data.handle);
                     } else {
                         vm.message = "User not found";
 

@@ -160,6 +160,8 @@
             {
                 $rootScope.currentUser = user;
                 deferred.resolve();
+            } else {
+                deferred.reject();
             }
         });
 

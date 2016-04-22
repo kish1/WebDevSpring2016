@@ -5,7 +5,7 @@
 module.exports = function(app, postModel) {
     app.get("/api/project/post/:id", findPostById);
     app.get("/api/project/post", findAllPosts);
-    app.get("/api/project/post/user/:userId", findAllPostsForUser);
+    app.get("/api/project/post/all/user/:userId", findAllPostsForUser);
     app.get("/api/project/post/user/:userId/lastn/:count", findLastPostsForUser);
     app.post("/api/project/post", createPost);
     app.put("/api/project/post/:id", updatePostById);
@@ -69,7 +69,6 @@ module.exports = function(app, postModel) {
                     res.status(400).send(err);
                 }
             );
-
     }
 
     function findLastPostsForUser(req, res) {
@@ -87,6 +86,7 @@ module.exports = function(app, postModel) {
                 }
             );
     }
+
 
     function postResolver(req, res) {
         if (!req.query.userId) {
