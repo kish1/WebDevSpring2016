@@ -184,7 +184,7 @@
 
         function imageUrl(imageName) {
             if (imageName) {
-                return "http://" +  location.host +  "/project/server/images/dp/" + imageName;
+                return "http://" +  location.host +  "/images/dp/" + imageName;
             }
             return "/project/images/default.jpg";
         }

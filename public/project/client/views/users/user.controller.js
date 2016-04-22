@@ -130,7 +130,7 @@
         }
 
         function imageUrl(imageName) {
-            return "http://" + location.host + "/project/server/images/dp/" + imageName;
+            return "http://" + location.host + "/images/dp/" + imageName;
         }
 
         function findFollowers() {
