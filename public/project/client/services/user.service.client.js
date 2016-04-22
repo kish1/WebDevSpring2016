@@ -81,7 +81,7 @@
                 followers: [],
                 following: [],
                 starred: [],
-                isAdmin:     true//user.isAdmin != null
+                isAdmin:     user.isAdmin != null
             };
             return $http.post("/api/project/user", newUser);
         }
