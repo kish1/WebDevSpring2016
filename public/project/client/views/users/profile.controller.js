@@ -59,6 +59,7 @@
                 .updateUserById(vm.currentUser._id, user)
                 .then(function (resp) {
                     if(resp.data) {
+                        console.log(resp.data);
                         vm.currentUser = resp.data;
                         vm.currentUser.dob = new Date(vm.currentUser.dob);
                         vm.success = "User details updated successfully";

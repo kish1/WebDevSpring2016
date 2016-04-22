@@ -68,7 +68,6 @@
 
         function createUser(user) {
             var newUser = {
-                _id:         (new Date).getTime(),
                 displayPicture: user.displayPicture,
                 handle: user.handle,
                 firstName:   user.firstName,
@@ -87,6 +86,7 @@
         }
 
         function updateUserById(userId, user) {
+            delete user._id;
             return $http.put("/api/project/user/" + userId, user);
         }
 
