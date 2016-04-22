@@ -50,13 +50,7 @@
 
         function updateComment(comment) {
             vm.message = null;
-            var newComment = {
-                userId: comment.userId,
-                postId: comment.postId,
-                timestamp: comment.timestamp,
-                content: comment.content
-            };
-            CommentService.updateCommentById(comment._id, newComment)
+            CommentService.updateCommentById(comment._id, comment)
                 .then(
                     function (response) {
                         vm.comments[vm.index] = comment;

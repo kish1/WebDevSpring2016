@@ -34,7 +34,7 @@
         }
 
         function findAllPostsForUser(userId) {
-            return $http.get("/api/project/all/post/user/" + userId);
+            return $http.get("/api/project/post/all/user/" + userId);
         }
 
         function createPost(post) {
@@ -42,8 +42,9 @@
         }
 
         function updatePostById(postId, post) {
-            delete post._id;
-            return $http.put("/api/project/post/" + postId, post);
+            var newPost = JSON.parse(JSON.stringify(post));
+            delete newPost._id;
+            return $http.put("/api/project/post/" + postId, newPost);
         }
 
         function deletePostById(postId) {

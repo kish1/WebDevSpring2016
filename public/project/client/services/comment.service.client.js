@@ -30,7 +30,9 @@
         }
 
         function updateCommentById(commentId, comment) {
-            return $http.put("/api/project/comment/" + commentId, comment);
+            var newComment = JSON.parse(JSON.stringify(comment));
+            delete newComment._id;
+            return $http.put("/api/project/comment/" + commentId, newComment);
         }
 
         function deleteCommentById(commentId) {

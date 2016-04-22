@@ -60,7 +60,7 @@
             vm.message = null;
             delete user.handle;
             UserService
-                .updateUserById(user._id, JSON.parse(JSON.stringify(user)))
+                .updateUserById(user._id, user)
                 .then(
                     function (response) {
                         user.handle = vm.users[vm.index].handle;

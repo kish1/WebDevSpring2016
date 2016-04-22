@@ -54,7 +54,7 @@
             post.tags = post.tags.split(",");
             console.log((post));
             PostService
-                .updatePostById(post._id, JSON.parse(JSON.stringify(post)))
+                .updatePostById(post._id, post)
                 .then(
                     function(response) {
                         vm.posts[vm.index] = post;

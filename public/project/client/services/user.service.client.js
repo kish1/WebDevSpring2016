@@ -86,8 +86,9 @@
         }
 
         function updateUserById(userId, user) {
-            delete user._id;
-            return $http.put("/api/project/user/" + userId, user);
+            var newUser = JSON.parse(JSON(stringify(user)));
+            delete newUser._id;
+            return $http.put("/api/project/user/" + userId, newUser);
         }
 
 

@@ -1,5 +1,4 @@
 <div class="container view-container">
-    <h1 class="page-header">Posts</h1>
     <div>
         <ul class="nav nav-pills">
             <li><a role="button" class="btn btn-default" ng-href="#/user/{{model.pageOwner.handle}}">{{model.pageOwner.firstName}}'s Homepage</a></li>
@@ -7,20 +6,19 @@
         </ul>
     </div>
     <br><br>
-
-    <h3>My Posts</h3>
-    <div class="container" ng-repeat="post in model.posts">
-        <div class="row">
-            <div class="col-xs-3">
-                <h4><a role="button" ng-click="model.readPost(post._id)">{{post.name}}</a></h4>
+    <div class="container view-container text-center">
+        <h3 class="page-header">{{model.pageOwner.firstName}}'s Posts</h3>
+        <div class="container" ng-repeat="post in model.posts">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 no-wrapping">
+                    <h4><a role="button" class="pull-left" ng-click="model.readPost(post._id)">{{post.name}}</a></h4>
+                    <button ng-show="model.isOwnPage" class="pull-right btn btn-danger btn-sm" ng-click="model.deletePost(post._id, $index)">Delete</button>
+                </div>
+                <div class="col-md-4"></div>
             </div>
-            <div class="col-xs-2">
-                <button ng-show="model.isOwnPage" class="btn btn-danger btn-sm" ng-click="model.deletePost(post._id, $index)">Delete</button>
-            </div>
-
+            <br>
         </div>
-
     </div>
-
 </div>
 
