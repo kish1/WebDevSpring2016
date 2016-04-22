@@ -4,10 +4,28 @@
 module.exports = function (app, userModel, postModel) {
     app.post("/api/project/star", createStar);
     app.delete("/api/project/star", deleteStar);
-    app.get("/api/project/star/user/:userId", findAllStarsForUser);
+    app.get("/api/project/star/all/user/:userId", findAllStarsForUser);
+    app.get("/api/project/star/user/:userId", findStarsForUser);
     app.get("/api/project/star/post/:postId", findStarsForPost);
+    app.get("/api/project/star/check", checkStarred);
     app.get("/api/project/star/count/user/:userId", findStarCountForUser);
     app.get("/api/project/star/count/post/:postId", findStarCountForPost);
+
+    function checkStarred(req, res) {
+        var userId = req.query.userId;
+        var postId = req.query.postId;
+        userModel
+            .checkStarred(userId, postId)
+            .then(
+                function (resp) {
+                    //console.log("cf");
+                    res.json(resp[0].starred.length > 0);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
     function findStarCountForPost(req, res) {
         var postId = req.params.postId;
@@ -53,6 +71,22 @@ module.exports = function (app, userModel, postModel) {
             );
     }
 
+    function findStarsForUser(req, res) {
+        var postId = req.params.userId;
+        var start = req.query.start;
+        var count = req.query.count;
+        userModel
+            .findStarsForUser(postId, start, count)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
     function findAllStarsForUser(req, res) {
         var userId = req.params.userId;
         userModel
@@ -77,8 +111,8 @@ module.exports = function (app, userModel, postModel) {
                     userModel
                         .deleteStarForUser(userId, postId)
                         .then(
-                            function (res) {
-                                res.send(200);
+                            function (resp) {
+                                res.json(resp);
                             },
                             function (err) {
                                 postModel

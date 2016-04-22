@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-xs-8">
             <ul class="nav nav-pills">
-                <li ng-show="model.isOwnPost()"><a class="btn btn-default" href="#/post">Posts</a></li>
-                <li ng-show="model.isOwnPost()"><a class="btn btn-primary" ng-click="model.editPost()"">Edit</a></li>
+                <li ng-show="model.isOwnPost"><a class="btn btn-default" href="#/post">Posts</a></li>
+                <li ng-show="model.isOwnPost"><a class="btn btn-primary" ng-click="model.editPost()"">Edit</a></li>
             </ul>
         </div>
     </div>
@@ -14,6 +14,11 @@
                 <a role="button" ng-href="#/user/{{model.postOwnerHandle}}"><img class="center-block img-responsive img-circle" ng-src="{{model.postOwnerDP}}"></a>
                 <a role="button" ng-href="#/user/{{model.postOwnerHandle}}"><h6>{{model.postOwnerName}}</h6></a>
             </div>
+        </div>
+        <div class="col-xs-2 pull-right no-wrapping btn-group" role="group">
+            <a ng-disabled="!model.currentUser || model.isOwnPost" ng-class="{'btn btn-primary btn-sm': model.hasStarred, 'btn btn-default btn-sm': !model.hasStarred}" role="button" ng-click="model.clickStar()"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star</a>
+            <a  role="button" ng-click="model.findStarrers()" class="btn btn-default btn-sm">{{model.starrersCount}}</a>
+
         </div>
     </div>
 
@@ -55,7 +60,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -80,11 +84,11 @@
                     <div class="col-xs-8 comment comment-thumb-picture">
                         <div class="row">
                             <div class="comment-picture-col">
-                                <a ng-href="#/user/{{comment.userId}}"><img class="pull-right img-responsive img-thumbnail" src="/project/images/default.jpg"></a>
+                                <a ng-href="#/user/{{comment.handle}}"><img class="pull-right img-responsive img-circle" ng-src="{{model.imageUrl(comment.displayPicture)}}"></a>
                             </div>
                             <div class="col-md-6 comment-name">
-                                <a ng-href="#/user/{{comment.userId}}"><h4 class="">{{comment.firstName + " " + comment.lastName + " "}}</h4></a>
-                                <small>{{comment.timestamp.toUTCString()}}</small>
+                                <a ng-href="#/user/{{comment.handle}}"><h4 class="">{{comment.firstName + " " + comment.lastName + " "}}</h4></a>
+                                <small>{{comment.timestamp.toLocaleDateString()}}</small>
                             </div>
                         </div>
                         <div class="row">

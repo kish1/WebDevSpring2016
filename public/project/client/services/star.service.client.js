@@ -11,6 +11,8 @@
         var api = {
             createStar: createStar,
             deleteStar: deleteStar,
+            checkStarred: checkStarred,
+            findStarsForUser: findStarsForUser,
             findAllStarsForUser: findAllStarsForUser,
             findStarsForPost: findStarsForPost,
             findStarCountForUser: findStarCountForUser,
@@ -30,12 +32,20 @@
             return $http.get("/api/project/star/post/" + postId + "?start=" + start + "&count=" + count);
         }
 
+        function findStarsForUser(userId, start, count) {
+            return $http.get("/api/project/star/user/" + userId + "?start=" + start + "&count=" + count);
+        }
+
         function findAllStarsForUser(userId) {
-            return $http.get("/api/project/star/user/" + userId);
+            return $http.get("/api/project/star/all/user/" + userId);
         }
 
         function deleteStar(userId, postId) {
             return $http.delete("/api/project/star?userId=" + userId + "&postId=" + postId);
+        }
+
+        function checkStarred(userId, postId) {
+            return $http.get("/api/project/star/check?userId=" + userId + "&postId=" +postId);
         }
 
         function createStar(userId, postId) {

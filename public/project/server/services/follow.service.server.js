@@ -28,7 +28,6 @@ module.exports = function (app, userModel) {
     function createFollowing(req, res) {
         var followerId = req.body.followerId;
         var followeeId = req.body.followeeId;
-        console.log(followerId + " "  + followeeId);
         userModel
             .createFollowing(followerId, followeeId)
             .then(

@@ -9,14 +9,14 @@
                     <h4 class="profile-name">{{model.pageOwner.firstName + " " + model.pageOwner.lastName}}</h4>
                     <p>{{model.pageOwner.description}}</p>
                     <div class="follow">
-                        <button class="btn btn-success btn-sm"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Following ({{model.pageOwner.followingCount}})</button>
-                        <button class="btn btn-info btn-sm"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Followers ({{model.pageOwner.followersCount}})</button>
+                        <button class="btn btn-success btn-sm" ng-click="model.findFollowing()"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Following ({{model.pageOwner.followingCount}})</button>
+                        <button class="btn btn-info btn-sm" ng-click="model.findFollowers()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Followers ({{model.pageOwner.followersCount}})</button>
                     </div>
                     <br><br>
-                    <a class="btn btn-default btn-sm" role="button"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Starred ({{model.pageOwner.starredCount}})</a>
+                    <a class="btn btn-default btn-sm" role="button" ng-click="model.findStarred()"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Starred ({{model.pageOwner.starredCount}})</a>
                     <a ng-show="model.isHomePage" role="button" class="btn btn-primary btn-xs" href="#/profile">Edit Profile</a>
-                    <a ng-hide="model.isHomePage || model.isFollowing || (!currentUser)" role="button"  class="btn btn-primary btn-xs" ng-click="model.follow()"><span class="glyphicon glyphicon-plus" aria-hidden="true" >Follow</a>
-                    <a ng-show="currentUser && model.isFollowing && (!model.isHomePage)" role="button" class="btn btn-warning btn-xs" ng-click="model.unfollow()"><span class="glyphicon glyphicon-minus" aria-hidden="true" > Unfollow</a>
+                    <a ng-hide="model.isHomePage || model.isFollowing || (!currentUser)" role="button"  class="btn btn-primary btn-xs" ng-click="model.follow()"><span class="glyphicon glyphicon-plus" aria-hidden="true" >Follow</span></a>
+                    <a ng-show="currentUser && model.isFollowing && (!model.isHomePage)" role="button" class="btn btn-warning btn-xs" ng-click="model.unfollow()"><span class="glyphicon glyphicon-minus" aria-hidden="true" > Unfollow</span></a>
                     <div class="social-icons">
                         <p>Share this page:</p>
                         <ul class="clearfix">
@@ -32,45 +32,36 @@
 
             </aside>
         </div>
-        <div class="col-md-8">
-            <article>
+        <div class="col-md-8" >
+            <article ng-repeat="post in model.lastNPosts">
                 <header>
-                    <h2>Lorem Ipsum</h2>
+                    <h2>{{post.name}}</h2>
                 </header>
                 <footer>
-                    <small>Posted on 4th April<span class="glyphicon glyphicon-star pull-right">12</span></small>
+                    <small>Posted on {{post.createdOn.toDateString()}}<span class="glyphicon glyphicon-star pull-right">{{post.starrersCount}}</span></small>
                 </footer>
-                <div class="lead">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. <a href="">Read more</a>
+                <div ng-if="post.content[0].type == 'text'" class="lead">
+                    {{post.content[0].value.slice(0, 400)}}... <a href="" ng-click="model.readPost(post._id)">Read more</a>
                 </div>
-                <footer>
-                    <span class="label label-default">writing</span>
-                    <span class="label label-default">code</span>
-                    <span class="label label-default">html</span>
+                <div ng-if="post.content[0].type == 'video'">
+                    <iframe class="pull-left" ng-src="{{model.trust(post.content[0].value)}}" type="text/html" width="280" frameborder="0"  allowfullscreen></iframe>
+                    <a href="" ng-click="model.readPost(post._id)">Read more</a>
+                </div>
+                <footer ng-repeat="tag in post.tags" class="pull-left">
+                    <span class="label label-default">{{tag}}</span>
+                    &nbsp;
                 </footer>
+                <br>
                 <hr>
             </article>
-            <article>
-                <header>
-                    <h2>Lorem Ipsum</h2>
-                </header>
-                <footer>
-                    <small>Posted on 4th April<span class="glyphicon glyphicon-star pull-right">12</span></small>
-                </footer>
-                <div class="lead">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. <a href="">Read more</a>
-                </div>
-                <footer>
-                    <span class="label label-default">writing</span>
-                    <span class="label label-default">code</span>
-                    <span class="label label-default">html</span>
-                </footer>
-                <hr>
-            </article>
+            <div class="row pull-right">
+                <a ng-show="model.isHomePage" role="button" class="btn btn-primary" href="#/newpost">New Post</a>
+            </div>
+            <br><br>
+            <div class="row">
+                <button role="button" class="btn btn-default btn-block btn-lg" ng-click="model.allPosts()">See all of {{model.pageOwner.firstName}}'s posts</button>
+            </div>
+
         </div>
     </div>
 </div>

@@ -43,12 +43,12 @@
                     loggedIn : checkCurrentUser
                 }
             })
-            .when("/post", {
+            .when("/post/:userHandle?", {
                 templateUrl: "views/posts/post.view.html",
                 controller: "PostController",
                 controllerAs: "model",
                 resolve: {
-                    loggedIn: checkLoggedIn
+                    loggedIn: checkCurrentUser
                 }
             })
             .when("/newpost", {

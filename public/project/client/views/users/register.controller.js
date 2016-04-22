@@ -17,7 +17,7 @@
                 .getCurrentUser()
                 .then(function (resp) {
                     vm.currentUser = resp.data;
-                    if (vm.currentUser) {
+                    if (vm.currentUser != '0') {
                         $location.path('/profile');
                     }
                 });

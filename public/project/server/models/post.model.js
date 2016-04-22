@@ -10,6 +10,7 @@ module.exports = function(db, mongoose) {
     var api = {
         findAllPosts: findAllPosts,
         findPostById: findPostById,
+        findLastPostsForUser: findLastPostsForUser,
         findAllPostsForUser: findAllPostsForUser,
         createPost: createPost,
         updatePostById: updatePostById,
@@ -23,19 +24,34 @@ module.exports = function(db, mongoose) {
     return api;
 
     function findStarCountForPost(postId) {
-        return PostModel.aggregate([{$match: {"_id": postId}}, {$project: {"starrersCount": {$size: '$starrers'}}}]);
+        var deferred = q.defer();
+        return PostModel.aggregate([{$match: {"_id": new mongoose.Types.ObjectId(postId)}}, {$project: {"starrersCount": {$size: '$starrers'}}}],
+        function (err, val) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(val[0]);
+            }
+        });
+        return deferred.promise;
     }
 
     function findStarsForPost(postId, start, count) {
-        return PostModel.findById(postId, {starrers: {$slice: [start, start+count]}});
+        start = parseInt(start);
+        count = parseInt(count);
+        return PostModel.findById(postId, {starrers: {$slice: [start, start+count]}, name: 1});
     }
 
     function deleteStarForPost(postId, userId) {
-        return PostModel.findByIdAndUpdate(postId, {$pull: {"starrers": userId}});
+        return PostModel.findByIdAndUpdate(postId, {$pullAll: {"starrers": [userId]}});
     }
 
     function createStarForPost(postId, userId) {
-        return PostModel.findByIdAndUpdate(postId, {$push: {"starrers": userId}});
+        return PostModel.findByIdAndUpdate(postId, {$addToSet: {"starrers": userId}});
+    }
+
+    function findLastPostsForUser(userId, count) {
+        return PostModel.find({"userId": userId}, {"starrers": 0}).sort({_id: -1}).limit(parseInt(count));
     }
 
     function findAllPosts() {

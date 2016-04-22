@@ -30,7 +30,7 @@
         }
 
         function findFollowCountForUser(userId) {
-            return $http.get("/api/project/follow/count/user/" + count);
+            return $http.get("/api/project/follow/count/user/" + userId);
         }
 
         function checkFollows(userId1, userId2) {

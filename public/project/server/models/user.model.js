@@ -29,18 +29,35 @@ module.exports = function(db, mongoose) {
 
         createStarForUser: createStarForUser,
         deleteStarForUser: deleteStarForUser,
+        checkStarred: checkStarred,
         findAllStarsForUser: findAllStarsForUser,
+        findStarsForUser: findStarsForUser,
         findStarCountForUser: findStarCountForUser
   };
     return api;
 
     function findStarCountForUser(userId) {
+        var deferred = q.defer();
         return UserModel.aggregate([
-            {$match: {"_id": userId}},
+            {$match: {"_id": new mongoose.Types.ObjectId(userId)}},
             {$project: {
                 "starredCount": {$size: '$starred'}
             }
-            }]);
+            }], function (err, val) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(val[0]);
+            }
+        });
+        return deferred.promise;
+    }
+
+    function findStarsForUser(userId, start, count) {
+        start = parseInt(start);
+        count = parseInt(count);
+
+        return UserModel.findById(userId, {starred: {$slice: [start, start+count]}, handle: 1});
     }
 
     function findAllStarsForUser(userId) {
@@ -48,11 +65,15 @@ module.exports = function(db, mongoose) {
     }
 
     function deleteStarForUser(userId, postId) {
-        return UserModel.findByIdAndUpdate(userId, {$pull: {starred: postId}}, {_id: 1});
+        return UserModel.findByIdAndUpdate(userId, {$pullAll: {starred: [postId]}}, {_id: 1});
     }
 
     function createStarForUser(userId, postId) {
-        return UserModel.findByIdAndUpdate(userId, {$push: {starred: postId}}, {_id: 1});
+        return UserModel.findByIdAndUpdate(userId, {$addToSet: {starred: postId}}, {_id: 1});
+    }
+
+    function checkStarred(userId, postId) {
+        return UserModel.find({"_id": userId}, {starred: {$elemMatch: {$eq: postId}}});
     }
 
     function checkFollows(userId1, userId2) {
@@ -60,31 +81,51 @@ module.exports = function(db, mongoose) {
     }
 
     function findFollowingForUser(userId, start, count) {
-        return UserModel.findById(userId, {following: {$slice: [start, start+count]}});
+        start = parseInt(start);
+        count = parseInt(count);
+        return UserModel.findById(userId, {following: {$slice: [start, start+count]}, handle: 1});
     }
 
     function findFollowersForUser(userId, start, count) {
-        return UserModel.findById(userId, {followers: {$slice: [start, start+count]}});
+        start = parseInt(start);
+        count = parseInt(count);
+
+        return UserModel.findById(userId, {followers: {$slice: [start, start+count]}, handle: 1});
     }
 
     function findFollowCountForUser(userId) {
+        var deferred = q.defer();
         return UserModel.aggregate([
-            {$match: {"_id": userId}},
+            {$match: {"_id": new mongoose.Types.ObjectId(userId)}},
             {$project: {
+                "handle": 1,
                 "followersCount": {$size: '$followers'},
                 "followingCount": {$size: '$following'}
             }
-            }]);
+            }], function (err, val) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(val[0]);
+            }
+        });
+        return deferred.promise;
     }
 
     function deleteFollowing(followerId, followeeId) {
         var deferred = q.defer();
         UserModel
-            .findByIdAndUpdate(followerId, {$pull: {"following": followeeId}}, function (err, follower) {
+            .findByIdAndUpdate(followerId, {$pullAll: {"following": [followeeId]}}, function (err, follower) {
                 if (err) {
                     deferred.reject(err);
                 } else {
-                    return UserModel.findByIdAndUpdate(followeeId, {$pull: {"followers": followerId}});
+                    UserModel.findByIdAndUpdate(followeeId, {$pullAll: {"followers": [followerId]}}, {select: {_id: 1}}, function (err, following) {
+                        if (err) {
+                            deferred.reject("inconsistent: " + err);
+                        } else {
+                            deferred.resolve(following);
+                        }
+                    });
                 }
             });
         return deferred.promise;
@@ -93,11 +134,17 @@ module.exports = function(db, mongoose) {
     function createFollowing(followerId, followeeId) {
         var deferred = q.defer();
         UserModel
-            .findByIdAndUpdate(followerId, {$push: {"following": followeeId}}, function(err, follower) {
+            .findByIdAndUpdate(followerId, {$addToSet: {"following": followeeId}}, function(err, follower) {
                if (err) {
                    deferred.reject(err);
                } else {
-                   return UserModel.findByIdAndUpdate(followeeId, {$push: {"followers": followerId}});
+                   UserModel.findByIdAndUpdate(followeeId, {$addToSet: {"followers": followerId}}, {select: {_id: 1}}, function (err, following) {
+                       if (err) {
+                           deferred.reject("inconsistent: " + err);
+                       } else {
+                           deferred.resolve(following);
+                       }
+                   });
                }
             });
         return deferred.promise;

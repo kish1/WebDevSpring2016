@@ -7,24 +7,38 @@
         .module("BlogApp")
         .controller("PostController", PostController);
 
-    function PostController(UserService, PostService, $location) {
+    function PostController(UserService, PostService, $location, $routeParams) {
         var vm = this;
         vm.currentUser = null;
         vm.myposts = null;
+        vm.pageOwnerHandle = null;
+        vm.pageOwner = null;
+        vm.isOwnPage = false;
 
         vm.readPost = readPost;
         vm.deletePost = deletePost;
 
         var init = function() {
+            vm.pageOwnerHandle = $routeParams.userHandle;
             UserService
-                .getCurrentUser()
+                .findUserByHandle(vm.pageOwnerHandle)
                 .then(function (resp) {
-                    vm.currentUser = resp.data;
-                    PostService.findAllPostsForUser(vm.currentUser._id)
+                    vm.pageOwner = resp.data;
+                    console.log(vm.pageOwner);
+                    PostService.findAllPostsForUser(vm.pageOwner._id)
                         .then(function(response) {
-                            vm.myposts = response.data;
+                            //console.log(response);
+                            vm.posts = response.data;
                         });
                 });
+            UserService
+                .getCurrentUser()
+                .then(function(resp) {
+                    vm.currentUser = resp.data;
+                    if (vm.currentUser && (vm.currentUser._id == vm.pageOwner._id)) {
+                        vm.isOwnPage = true;
+                    }
+                })
 
         };
         init();

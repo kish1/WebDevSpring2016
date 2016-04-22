@@ -14,6 +14,7 @@
             findAllPosts: findAllPosts,
             findPostById: findPostById,
             findAllPostsForUser: findAllPostsForUser,
+            findLastPostsForUser: findLastPostsForUser,
             createPost: createPost,
             updatePostById: updatePostById,
             deletePostById: deletePostById
@@ -24,12 +25,16 @@
             return $http.get("/api/project/post");
         }
 
+        function findLastPostsForUser(userId, count) {
+            return $http.get("/api/project/post/user/" + userId + "/lastn/" + count);
+        }
+
         function findPostById(postId) {
             return $http.get("/api/project/post/" + postId);
         }
 
         function findAllPostsForUser(userId) {
-            return $http.get("/api/project/post?userId=" + userId);
+            return $http.get("/api/project/post/user/" + userId);
         }
 
         function createPost(post) {

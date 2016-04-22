@@ -46,6 +46,7 @@ module.exports = function(app, commentModel) {
                     res.json(resp);
                 },
                 function (err) {
+                    console.log(err);
                     res.status(400).send(err);
                 }
             );

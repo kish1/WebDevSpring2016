@@ -4,7 +4,9 @@
 "use strict";
 module.exports = function(app, postModel) {
     app.get("/api/project/post/:id", findPostById);
-    app.get("/api/project/post", postResolver);
+    app.get("/api/project/post", findAllPosts);
+    app.get("/api/project/post/user/:userId", findAllPostsForUser);
+    app.get("/api/project/post/user/:userId/lastn/:count", findLastPostsForUser);
     app.post("/api/project/post", createPost);
     app.put("/api/project/post/:id", updatePostById);
     app.delete("/api/project/post/:id", deletePostById);
@@ -70,6 +72,22 @@ module.exports = function(app, postModel) {
 
     }
 
+    function findLastPostsForUser(req, res) {
+        var userId = req.params.userId;
+        var count = req.params.count;
+        postModel
+            .findLastPostsForUser(userId, count)
+            .then(
+                function (resp) {
+                    res.json(resp);
+                },
+                function (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
+            );
+    }
+
     function postResolver(req, res) {
         if (!req.query.userId) {
             findAllPosts(req, res);
@@ -79,7 +97,7 @@ module.exports = function(app, postModel) {
     }
 
     function findAllPostsForUser(req, res) {
-        var userId = req.query.userId;
+        var userId = req.params.userId;
         postModel
             .findAllPostsForUser(userId)
             .then(

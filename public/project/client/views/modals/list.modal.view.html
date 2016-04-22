@@ -1,0 +1,25 @@
+<div class="modal-header text-center lead">
+    {{heading}}
+</div>
+<div class="modal-body">
+    <div ng-repeat="result in results">
+        <br>
+        <div class="row search-result" role="button" ng-click="$parent.select(result)">
+            <div class="row">
+                <div class="col-xs-1"></div>
+                <div ng-if="$parent.hasPic" class="col-md-2 thumb-picture">
+                    <img class="img-responsive img-circle" ng-src="{{$parent.pic(result)}}""></a>
+                </div>
+                <div class="col-md-6 comment-name">
+                    <h4 class="">{{result.content}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button ng-disabled="!prev" class="btn btn-success pull-left" type="button" ng-click="fetchNext()">Previous</button>
+    <button ng-disabled="!next" class="btn btn-primary pull-right" type="button" ng-click="fetchPrev()">Next</button>
+</div>

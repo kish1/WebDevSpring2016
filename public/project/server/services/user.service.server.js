@@ -56,6 +56,7 @@ module.exports = function (app, userModel) {
                 function (resp) {
                     var user = resp;
                     res.json({
+                        _id: user._id,
                         displayPicture: user.displayPicture,
                         firstName: user.firstName,
                         lastName: user.lastName,

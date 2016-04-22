@@ -29,6 +29,8 @@ module.exports = function(db, mongoose) {
             timestamp: comment.timestamp,//[comment.timestamp.getFullYear(), comment.timestamp.getMonth(), comment.timestamp.getDate(), comment.timestamp.getHours(), comment.timestamp.getMinutes(), comment.timestamp.getSeconds(), comment.timestamp.getMilliseconds()],
             content: comment.content
         };
+        console.log("comm");
+        console.log(newComment);
         return CommentModel.create(newComment);
     }
 

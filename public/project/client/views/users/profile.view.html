@@ -3,14 +3,11 @@
     <div class="container">
         <div class="row text-center">
             <ul class="nav nav-pills">
-                <li><a role="button" class="btn btn-primary" href="#/user/{{model.currentUser.handle}}">Home</a></li>
-                <li><a role="button" class="btn btn-primary" href="#/post">Posts</a></li>
-                <li><a role="button" class="btn btn-success" href="">Following</a></li>
-                <li><a role="button" class="btn btn-info" href="">Followers</a></li>
+                <li><a role="button" class="btn btn-default" ng-href="#/user/{{model.currentUser.handle}}">Home</a></li>
+                <li><a role="button" class="btn btn-default" ng-href="#/post/{{model.currentUser.handle}}">Posts</a></li>
             </ul>
         </div>
-        <br><br>
-        <h3>Update Profile</h3>
+        <h3>User Profile</h3>
         <div class="row">
             <img class="img-responsive img-circle img-100-100 center-block" ng-src="{{model.dp}}">
             <input type="file" class="center-block" file-model="model.pictureFile">
