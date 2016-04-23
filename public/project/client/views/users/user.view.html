@@ -14,17 +14,16 @@
                     </div>
                     <br><br>
                     <a class="btn btn-default btn-sm" role="button" ng-click="model.findStarred()"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Starred ({{model.pageOwner.starredCount}})</a>
-                    <a ng-show="model.isHomePage" role="button" class="btn btn-primary btn-xs" href="#/profile">Edit Profile</a>
                     <a ng-hide="model.isHomePage || model.isFollowing || (!currentUser)" role="button"  class="btn btn-primary btn-xs" ng-click="model.follow()"><span class="glyphicon glyphicon-plus" aria-hidden="true" >Follow</span></a>
                     <a ng-show="currentUser && model.isFollowing && (!model.isHomePage)" role="button" class="btn btn-warning btn-xs" ng-click="model.unfollow()"><span class="glyphicon glyphicon-minus" aria-hidden="true" > Unfollow</span></a>
                     <div class="social-icons">
                         <p>Share this page:</p>
                         <ul class="clearfix">
-                            <li><a href=""><img src="/project/images/icons/fb.png"></a></li>
-                            <li><a href=""><img src="/project/images/icons/twitter.png"></a></li>
-                            <li><a href=""><img src="/project/images/icons/pinterest.png"></a></li>
-                            <li><a href=""><img src="/project/images/icons/gplus.png"></a></li>
-                            <li><a href=""><img src="/project/images/icons/linkedin.png"></a></li>
+                            <li><a href="https://www.facebook.com/"><img src="/project/images/icons/fb.png"></a></li>
+                            <li><a href="https://twitter.com/"><img src="/project/images/icons/twitter.png"></a></li>
+                            <li><a href="https://www.pinterest.com/"><img src="/project/images/icons/pinterest.png"></a></li>
+                            <li><a href="https://plus.google.com/"><img src="/project/images/icons/gplus.png"></a></li>
+                            <li><a href="https://www.linkedin.com/"><img src="/project/images/icons/linkedin.png"></a></li>
                         </ul>
                     </div>
 

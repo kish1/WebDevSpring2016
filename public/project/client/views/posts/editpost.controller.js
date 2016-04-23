@@ -57,7 +57,7 @@
             post.content = post.content.map(function(x) {return {type: x.type, value: x.value};});
             PostService.updatePostById(post._id, post)
                 .then(function (response) {
-                    $location.path("/post");
+                    $location.url("/post/" + vm.currentUser.handle);
                 });
         }
 

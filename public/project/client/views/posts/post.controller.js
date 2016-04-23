@@ -30,16 +30,15 @@
                             //console.log(response);
                             vm.posts = response.data;
                         });
+                    UserService
+                        .getCurrentUser()
+                        .then(function(resp) {
+                            vm.currentUser = resp.data;
+                            if (vm.currentUser && (vm.currentUser._id == vm.pageOwner._id)) {
+                                vm.isOwnPage = true;
+                            }
+                        });
                 });
-            UserService
-                .getCurrentUser()
-                .then(function(resp) {
-                    vm.currentUser = resp.data;
-                    if (vm.currentUser && (vm.currentUser._id == vm.pageOwner._id)) {
-                        vm.isOwnPage = true;
-                    }
-                })
-
         };
         init();
 

@@ -2,7 +2,7 @@
     <div>
         <ul class="nav nav-pills">
             <li><a role="button" class="btn btn-default" ng-href="#/user/{{model.pageOwner.handle}}">{{model.pageOwner.firstName}}'s Homepage</a></li>
-            <li ng-show="vm.isOwnPage"><a role="button" class="btn btn-primary" href="#/newpost">New Post</a></li>
+            <li class="pull-right" ng-show="model.isOwnPage"><a role="button" class="btn btn-primary" href="#/newpost">New Post</a></li>
         </ul>
     </div>
     <br><br>

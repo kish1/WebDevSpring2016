@@ -50,7 +50,7 @@
             console.log(newPost);
             PostService.createPost(newPost)
                 .then(function(response) {
-                    $location.url("/post");
+                    $location.url("/post/" + vm.currentUser.handle);
                 });
         }
 
