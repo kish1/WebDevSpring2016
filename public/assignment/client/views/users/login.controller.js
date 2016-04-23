@@ -30,6 +30,7 @@
                     password: user.password
                 })
                 .then(function(response) {
+                    console.log("here");
                     if (response.data) {
                         UserService.setCurrentUser(response.data);
                         console.log(response);

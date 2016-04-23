@@ -26,6 +26,7 @@
             UserService
                 .findAllUsers()
                 .then(function(response) {
+                    console.log(response);
                     vm.users = response.data;
                     for(var i in vm.users) {
                         vm.users[i].dob = new Date(vm.users[i].dob);

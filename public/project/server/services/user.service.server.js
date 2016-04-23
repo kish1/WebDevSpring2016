@@ -13,7 +13,7 @@ var storage = multer.diskStorage({
         var datetimestamp = Date.now();
         var imageName = (req.params.id + '-' + datetimestamp + '-' + file.originalname).split(/\W+/);
         var extension = imageName[imageName.length-1];
-        imageName = imageName.slice(0, imageName.length-1)
+        imageName = imageName.slice(0, imageName.length-1);
         imageName.push("." + extension);
         imageName = imageName.join("").toLowerCase();
         console.log(imageName);
@@ -24,11 +24,11 @@ var storage = multer.diskStorage({
 var dpUpload = multer({storage: storage});
 
 module.exports = function (app, userModel) {
-    var auth = authorized;
-    app.get("/api/project/user", userResolve);
+    app.get("/api/project/user/handle/:handle", findUserByHandle);
+    app.get("/api/project/user/all", findAllUsers);
+    app.get("/api/project/user", findUserByCredentials);
     app.get("/api/project/user/:id", findUserById);
     app.get("/api/project/user/name/:id", findNameByUserId);
-    app.get("/api/project/user/handle/:handle", findUserByHandle);
     app.post("/api/project/user", createUser);
     app.put("/api/project/user/:id", updateUserById);
     app.delete("/api/project/user/:id", deleteUserById);
@@ -139,7 +139,7 @@ module.exports = function (app, userModel) {
                 }
             );
     }
-
+/*
     function userResolve(req, res) {
         if (req.query.handle == null && req.query.password == null) {
             findAllUsers(req, res);
@@ -149,7 +149,7 @@ module.exports = function (app, userModel) {
             res.status(400).send("can't resolve");
         }
     }
-
+*/
     function findUserByCredentials(req, res) {
         var credentials = {
             handle: req.query.handle,
@@ -168,10 +168,12 @@ module.exports = function (app, userModel) {
     }
 
     function findAllUsers(req, res) {
+        console.log("enters here");
         userModel
             .findAllUsers()
             .then(
                 function (resp) {
+                    console.log(resp);
                     res.json(resp);
                 },
                 function (err) {

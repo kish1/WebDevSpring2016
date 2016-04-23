@@ -63,7 +63,7 @@
         }
 
         function findAllUsers() {
-            return $http.get("/api/project/user");
+            return $http.get("/api/project/user/all");
         }
 
         function createUser(user) {

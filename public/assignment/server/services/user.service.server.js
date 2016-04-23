@@ -11,9 +11,8 @@ module.exports = function(app, userModel) {
     //app.post  ('/api/assignment/logout',         logout);
     //app.post  ('/api/assignment/register',       register);
     //app.get   ('/api/assignment/loggedin',       loggedin);
-    app.get   ("/api/project/user",          auth, findUserByCredentials);
-    app.get   ("/api/project/user/:id",      auth, findUserById);
-    app.get   ("/api/project/user/name/:id", auth, findNameByUserId);
+    app.get   ("/api/assignment/user",          auth, findUserByCredentials);
+    app.get   ("/api/assignment/user/:id",      auth, findUserById);
     app.get   ('/api/assignment/user',            getUserResolver);
     app.put   ('/api/assignment/user/:id',   auth, updateUserById);
 
