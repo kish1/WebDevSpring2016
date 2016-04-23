@@ -3,13 +3,15 @@
  */
 "use strict";
 module.exports = function(app, postModel) {
+    var auth = authorized;
+
     app.get("/api/project/post/:id", findPostById);
     app.get("/api/project/post", findAllPosts);
     app.get("/api/project/post/all/user/:userId", findAllPostsForUser);
     app.get("/api/project/post/user/:userId/lastn/:count", findLastPostsForUser);
     app.post("/api/project/post", createPost);
-    app.put("/api/project/post/:id", updatePostById);
-    app.delete("/api/project/post/:id", deletePostById);
+    app.put("/api/project/post/:id", auth, updatePostById);
+    app.delete("/api/project/post/:id", auth, deletePostById);
 
     function deletePostById(req, res) {
         var postId = req.params.id;
@@ -111,15 +113,32 @@ module.exports = function(app, postModel) {
     }
 
     function findAllPosts(req, res) {
-        postModel
-            .findAllPosts()
-            .then(
-                function (resp) {
-                    res.json(resp);
-                },
-                function (err) {
-                    res.status(400).send(err);
-                }
-            );
+        if(isAdmin(req.user)) {
+            postModel
+                .findAllPosts()
+                .then(
+                    function (resp) {
+                        res.json(resp);
+                    },
+                    function (err) {
+                        res.status(400).send(err);
+                    }
+                );
+        }
+    }
+
+    function isAdmin(user) {
+        if(user.isAdmin) {
+            return true
+        }
+        return false;
+    }
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
     }
 };

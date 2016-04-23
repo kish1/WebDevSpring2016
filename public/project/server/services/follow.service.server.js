@@ -2,12 +2,14 @@
  * Created by kishore on 4/16/16.
  */
 module.exports = function (app, userModel) {
-    app.post("/api/project/follow", createFollowing);
+    var auth = authorized;
+
+    app.post("/api/project/follow", auth, createFollowing);
     app.get("/api/project/follow/count/user/:userId", findFollowCountForUser);
     app.get("/api/project/follow/followers/user/:userId", findFollowersForUser);
     app.get("/api/project/follow/following/user/:userId", findFollowingForUser);
     app.get("/api/project/follow/check", checkFollows);
-    app.delete("/api/project/follow", deleteFollowing);
+    app.delete("/api/project/follow", auth, deleteFollowing);
 
     function checkFollows(req, res) {
         var userId1 = req.query.userId1;
@@ -99,5 +101,13 @@ module.exports = function (app, userModel) {
                     res.status(400).send(err);
                 }
             );
+    }
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
     }
 }

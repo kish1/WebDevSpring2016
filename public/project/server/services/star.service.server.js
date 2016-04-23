@@ -2,8 +2,10 @@
  * Created by kishore on 4/18/16.
  */
 module.exports = function (app, userModel, postModel) {
-    app.post("/api/project/star", createStar);
-    app.delete("/api/project/star", deleteStar);
+    var auth = authorized;
+
+    app.post("/api/project/star", auth, createStar);
+    app.delete("/api/project/star", auth, deleteStar);
     app.get("/api/project/star/all/user/:userId", findAllStarsForUser);
     app.get("/api/project/star/user/:userId", findStarsForUser);
     app.get("/api/project/star/post/:postId", findStarsForPost);
@@ -165,5 +167,13 @@ module.exports = function (app, userModel, postModel) {
                     res.status(400).send("star not created, postModel failed")
                 }
             );
+    }
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
     }
 }

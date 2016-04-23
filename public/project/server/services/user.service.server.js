@@ -24,15 +24,17 @@ var storage = multer.diskStorage({
 var dpUpload = multer({storage: storage});
 
 module.exports = function (app, userModel) {
+    var auth = authorized;
+
     app.get("/api/project/user/handle/:handle", findUserByHandle);
-    app.get("/api/project/user/all", findAllUsers);
+    app.get("/api/project/user/all", auth, findAllUsers);
     app.get("/api/project/user", findUserByCredentials);
     app.get("/api/project/user/:id", findUserById);
     app.get("/api/project/user/name/:id", findNameByUserId);
-    app.post("/api/project/user", createUser);
-    app.put("/api/project/user/:id", updateUserById);
-    app.delete("/api/project/user/:id", deleteUserById);
-    app.put("/api/project/user/:id/dp", dpUpload.single("displayPicture"), updateDisplayPictureById);
+    app.post("/api/project/user", auth, createUser);
+    app.put("/api/project/user/:id", auth, updateUserById);
+    app.delete("/api/project/user/:id", auth, deleteUserById);
+    app.put("/api/project/user/:id/dp", auth, dpUpload.single("displayPicture"), updateDisplayPictureById);
 
     function updateDisplayPictureById(req, res) {
         var userId = req.params.id;
@@ -98,17 +100,21 @@ module.exports = function (app, userModel) {
     }
 
     function deleteUserById(req, res) {
-        var userId = req.params.id;
-        userModel
-            .deleteUserById(userId)
-            .then(
-                function (resp) {
-                    res.json(resp);
-                },
-                function (err) {
-                    res.status(400).send(err);
-                }
-            );
+        if(isAdmin(req.user)) {
+            var userId = req.params.id;
+            userModel
+                .deleteUserById(userId)
+                .then(
+                    function (resp) {
+                        res.json(resp);
+                    },
+                    function (err) {
+                        res.status(400).send(err);
+                    }
+                );
+        } else {
+            res.status(403);
+        }
     }
 
     function updateUserById(req, res) {
@@ -127,17 +133,21 @@ module.exports = function (app, userModel) {
     }
 
     function createUser(req, res) {
-        var user = req.body;
-        userModel
-            .createUser(user)
-            .then(
-                function (resp) {
-                    res.json(resp);
-                },
-                function (err) {
-                    res.status(400).send(err);
-                }
-            );
+        if (isAdmin(req.user)) {
+            var user = req.body;
+            userModel
+                .createUser(user)
+                .then(
+                    function (resp) {
+                        res.json(resp);
+                    },
+                    function (err) {
+                        res.status(400).send(err);
+                    }
+                );
+        } else {
+            res.status(403);
+        }
     }
 /*
     function userResolve(req, res) {
@@ -168,18 +178,21 @@ module.exports = function (app, userModel) {
     }
 
     function findAllUsers(req, res) {
-        console.log("enters here");
-        userModel
-            .findAllUsers()
-            .then(
-                function (resp) {
-                    console.log(resp);
-                    res.json(resp);
-                },
-                function (err) {
-                    res.status(400).send(err);
-                }
-            );
+        if (isAdmin(req.user)) {
+            userModel
+                .findAllUsers()
+                .then(
+                    function (resp) {
+                        console.log(resp);
+                        res.json(resp);
+                    },
+                    function (err) {
+                        res.status(400).send(err);
+                    }
+                );
+        } else {
+            res.status(403);
+        }
     }
 
     function isAdmin(user) {
