@@ -1,57 +1,39 @@
 <h1 class="page-header">Admin</h1>
 <h2 class="sub-header">Users</h2>
+
 <div class="table-responsive">
     <table class="table table-bordered table-striped">
         <thead>
         <tr scope="row">
-            <th id="dark-th"><span class="glyphicon glyphicon-triangle-bottom"></span> Username</th>
-            <th><span class="glyphicon glyphicon-triangle-bottom"></span> Password</th>
-            <th><span class="glyphicon glyphicon-triangle-bottom"></span> Role</th>
+            <th role="button" ng-click="model.sort('username')" id="dark-th"><span ng-show="model.isSortedBy == 'username' && model.sortAsc" class="glyphicon glyphicon-triangle-top"></span><span ng-show="model.isSortedBy == 'username' && (!model.sortAsc)" class="glyphicon glyphicon-triangle-bottom"></span> Username</th>
+            <th>Password</th>
+            <th role="button" ng-click="model.sort('firstName')"><span ng-show="model.isSortedBy == 'firstName' && model.sortAsc" class="glyphicon glyphicon-triangle-top"></span><span ng-show="model.isSortedBy == 'firstName' && (!model.sortAsc)" class="glyphicon glyphicon-triangle-bottom"></span> First Name</th>
+            <th role="button" ng-click="model.sort('lastName')"><span ng-show="model.isSortedBy == 'lastName' && model.sortAsc" class="glyphicon glyphicon-triangle-top"></span><span ng-show="model.isSortedBy == 'lastName' && (!model.sortAsc)" class="glyphicon glyphicon-triangle-bottom"></span> Last Name</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <form>
-                <td><input type="text" placeholder="username" id="full-width"></input></td>
-                <td><input type="password" placeholder="password" id="width-90"></input></td>
-                <td><input type="text" placeholder="role1, role2" id="full-width"></td></input></td>
+                <td><input ng-model="model.user.username" type="text" placeholder="username" id="full-width"></input></td>
+                <td><input ng-model="model.user.password" type="password" placeholder="password" id="width-90"></input></td>
+                <td><input ng-model="model.user.firstName" type="text" placeholder="first name" id="full-width"></input></td>
+                <td><input ng-model="model.user.lastName" type="text" placeholder="last name" id="full-width"></input></td>
                 <td>
-                    <a href="" class="glyphicon glyphicon-plus pull-left" id="big-icon" st></a>
-                    <a href="" class="glyphicon glyphicon-ok pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.createUser(model.user)" class="glyphicon glyphicon-plus pull-left" id="big-icon" st></a>
+                    <a role="button" ng-click="model.updateUser(model.user)" class="glyphicon glyphicon-ok pull-right" id="big-icon"></a>
                 </td>
             </form>
         </tr>
-        <tr>
+        <tr ng-repeat="user in model.users">
             <form>
-                <td><input type="hidden" value="alice">alice</input></td>
-                <td><input type="hidden" value=""></input></td>
-                <td><input type="hidden" value="student">student</input></td>
+                <td>{{user.username}}</td>
+                <td><input type="hidden" ></td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
                 <td>
-                    <a href="" class="glyphicon glyphicon-remove pull-left" id="big-icon"></a>
-                    <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
-                </td>
-            </form>
-        </tr>
-        <tr>
-            <form>
-                <td><input type="hidden" value="bob">bob</input></td>
-                <td><input type="hidden" value=""></input></td>
-                <td><input type="hidden" value="faculty | admin">faculty | admin</input></td>
-                <td>
-                    <a href="" class="glyphicon glyphicon-remove pull-left" id="big-icon"></a>
-                    <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
-                </td>
-            </form>
-        </tr>
-        <tr>
-            <form>
-                <td><input type="hidden" value="charlie">charlie</input></td>
-                <td><input type="hidden" value=""></input></td>
-                <td><input type="hidden" value=""></input></td>
-                <td>
-                    <a href="" class="glyphicon glyphicon-remove pull-left" id="big-icon"></a>
-                    <a href="" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
+                    <a role="button" ng-click="model.deleteUser($index)" class="glyphicon glyphicon-remove pull-left" id="big-icon"></a>
+                    <a role="button" ng-click="model.selectUser($index)" class="glyphicon glyphicon-pencil pull-right" id="big-icon"></a>
                 </td>
             </form>
         </tr>

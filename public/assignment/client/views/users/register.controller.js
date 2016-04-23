@@ -48,7 +48,7 @@
                         vm.message = "User already exists";
                     } else {
                         UserService.
-                        createUser(user)
+                        register(user)
                             .then(function(response) {
                                 UserService.setCurrentUser(response.data);
                                 $location.url("/profile");
@@ -63,8 +63,11 @@
         function isLoggedIn() {
             UserService.getCurrentUser()
                 .then(function (resp) {
+                    if (resp.data == "0") {
+                        return false;
+                    }
                 UserService.setCurrentUser(resp.data);
-                return resp.data != "";
+                return true;
             });
         }
     }

@@ -91,9 +91,9 @@
         function deleteUser(index) {
             UserService.deleteUserById(vm.users[index]._id)
                 .then(function(response) {
-                    vm.users = response.data;
+                    vm.users.splice(index, 1);
                 });
-            //vm.users.splice(index, 1);
+
         }
 
         function getToday() {

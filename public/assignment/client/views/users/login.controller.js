@@ -19,6 +19,7 @@
         init();
 
         function login(user) {
+            console.log("reaches");
             vm.message = null;
             if (!user) {
                 vm.message = "Invalid credentials"

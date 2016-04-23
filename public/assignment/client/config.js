@@ -35,6 +35,7 @@
             .when("/admin", {
                 templateUrl: "views/admin/admin.view.html",
                 controller: "AdminController",
+                controllerAs: "model",
                 resolve: {
                     loggedIn: checkAdmin
                 }
@@ -76,7 +77,7 @@
         {
             $rootScope.errorMessage = null;
             // User is Authenticated
-            if (user !== '0' && user.roles.indexOf('admin') > -1)
+            if (user !== '0' && user.username == "admin")
             {
                 $rootScope.currentUser = user;
                 deferred.resolve();

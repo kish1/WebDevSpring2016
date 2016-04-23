@@ -29,7 +29,9 @@
             return $http.delete("/api/assignment/form/" + formId);
         }
 
-        function updateFormById(formId, newForm) {
+        function updateFormById(formId, form) {
+            var newForm = JSON.parse(JSON.stringify(form));
+            delete newForm._id;
             return $http.put("/api/assignment/form/" + formId, newForm)
         }
     }

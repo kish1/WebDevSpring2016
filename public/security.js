@@ -113,7 +113,6 @@ module.exports = function (app, assignUserModel, projectUserModel) {
 
     function assignRegister(req, res) {
         var newUser = req.body;
-        newUser.roles = ['student'];
 
         assignUserModel
             .findUserByUsername(newUser.username)
