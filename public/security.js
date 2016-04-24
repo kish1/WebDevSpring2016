@@ -10,12 +10,12 @@ module.exports = function (app, assignUserModel, projectUserModel) {
 
     app.post  ('/api/assignment/login', passport.authenticate('assign'), login);
     app.post  ('/api/assignment/logout',         logout);
-    app.post  ('/api/assignment/register',       assignRegister);
+    app.post  ('/api/assignment/register',       assignRegister, passport.authenticate('assign'), login);
     app.get   ('/api/assignment/loggedin',       loggedin);
 
     app.post  ('/api/project/login', passport.authenticate('project'), login);
     app.post  ('/api/project/logout',         logout);
-    app.post  ('/api/project/register',       projectRegister);
+    app.post  ('/api/project/register',       projectRegister, passport.authenticate('project'), login);
     app.get   ('/api/project/loggedin',       loggedin);
 
     passport.use('assign',   new LocalStrategy(assignLocalStrategy));
@@ -34,7 +34,6 @@ module.exports = function (app, assignUserModel, projectUserModel) {
     }
 
     function loggedin(req, res) {
-        //console.log("checks");
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
@@ -111,7 +110,7 @@ module.exports = function (app, assignUserModel, projectUserModel) {
     }
 
 
-    function assignRegister(req, res) {
+    function assignRegister(req, res, next) {
         var newUser = req.body;
 
         assignUserModel
@@ -135,7 +134,7 @@ module.exports = function (app, assignUserModel, projectUserModel) {
                             if(err) {
                                 res.status(400).send(err);
                             } else {
-                                res.json(user);
+                                next();
                             }
                         });
                     }
@@ -146,7 +145,7 @@ module.exports = function (app, assignUserModel, projectUserModel) {
             );
     }
 
-    function projectRegister(req, res) {
+    function projectRegister(req, res, next) {
         var newUser = req.body;
         newUser.admin = false;
 
@@ -171,7 +170,7 @@ module.exports = function (app, assignUserModel, projectUserModel) {
                             if(err) {
                                 res.status(400).send(err);
                             } else {
-                                res.json(user);
+                                next();
                             }
                         });
                     }
