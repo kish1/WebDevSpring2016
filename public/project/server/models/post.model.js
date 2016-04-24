@@ -69,7 +69,7 @@ module.exports = function(db, mongoose) {
     }
 
     function updatePostById(postId, post) {
-        return PostModel.findByIdAndUpdate(postId, {$set: post}, {"starrers": 0});
+        return PostModel.findByIdAndUpdate(postId, {$set: post}, {new:true}).select({"starrers": 0});
     }
 
     function createPost(userId, post) {

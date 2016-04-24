@@ -182,8 +182,8 @@
                 .then(function (resp) {
                     for(var i in vm.comments) {
                         if (vm.comments[i]._id == comment._id) {
-                            vm.comments[i].content = newComment.content;
-                            vm.comments[i].timestamp = newComment.timestamp;
+                            vm.comments[i].content = resp.data.content;
+                            vm.comments[i].timestamp = resp.data.timestamp;
                             break;
                         }
                     }

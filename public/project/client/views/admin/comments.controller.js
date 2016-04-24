@@ -53,7 +53,8 @@
             CommentService.updateCommentById(comment._id, comment)
                 .then(
                     function (response) {
-                        vm.comments[vm.index] = comment;
+                        //console.log(response);
+                        vm.comments[vm.index] = response.data;
                         vm.comment = {timestamp: getTime()};
                         vm.index = null;
                     },

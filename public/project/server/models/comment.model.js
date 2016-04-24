@@ -35,7 +35,7 @@ module.exports = function(db, mongoose) {
     }
 
     function updateCommentById(commentId, comment) {
-        return CommentModel.findByIdAndUpdate(commentId, {$set: comment});
+        return CommentModel.findByIdAndUpdate(commentId, {$set: comment}, {new:true});
     }
 
     function deleteCommentById(commentId) {

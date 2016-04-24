@@ -202,11 +202,11 @@ module.exports = function(db, mongoose) {
     }
 
     function updateDisplayPictureById(userId, name) {
-        return UserModel.findByIdAndUpdate(userId, {$set: {displayPicture: name.toString()}}, {new: true, upsert: true, select: "displayPicture"});
+        return UserModel.findByIdAndUpdate(userId, {$set: {displayPicture: name.toString()}}, {upsert: true, select: "displayPicture"});
     }
 
     function updateUserById(userId, user) {
-        return UserModel.findByIdAndUpdate(userId, {$set: user}, {select: "handle firstName lastName email password dob gender description isAdmin"});
+        return UserModel.findByIdAndUpdate(userId, {$set: user}, {new: true}).select("handle firstName lastName email password dob gender description isAdmin");
     }
 
     function createUser(user) {

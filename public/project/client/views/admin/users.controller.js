@@ -64,8 +64,9 @@
                 .updateUserById(user._id, user)
                 .then(
                     function (response) {
-                        user.handle = vm.users[vm.index].handle;
-                        vm.users[vm.index] = user;
+                        var newUser = response.data;
+                        newUser.handle = vm.users[vm.index].handle;
+                        vm.users[vm.index] = newUser;
                         vm.index = null;
                     },
                     function (err) {

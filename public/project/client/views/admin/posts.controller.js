@@ -57,7 +57,7 @@
                 .updatePostById(post._id, post)
                 .then(
                     function(response) {
-                        vm.posts[vm.index] = post;
+                        vm.posts[vm.index] = response.data;
                         vm.post = {createdOn: getToday()};
                         vm.index = null;
                 },
