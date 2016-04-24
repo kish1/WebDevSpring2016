@@ -21,7 +21,7 @@ module.exports = function (app, userModel, postModel) {
             .then(
                 function (resp) {
                     //console.log("cf");
-                    res.json(resp[0].starred.length > 0);
+                    res.json(resp[0] != null);
                 },
                 function (err) {
                     res.status(400).send(err);

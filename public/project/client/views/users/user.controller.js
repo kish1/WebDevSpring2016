@@ -90,7 +90,7 @@
                                         .checkFollows(vm.currentUser._id, vm.pageOwner._id)
                                         .then(function (resp) {
                                             console.log(resp);
-                                            if (resp.data) {
+                                            if (resp.data === true) {
 
                                                 vm.isFollowing = true;
                                             }
@@ -112,6 +112,7 @@
                 .then(
                     function (resp) {
                         vm.isFollowing = true;
+                        vm.pageOwner.followersCount += 1;
                     },
                     function (err) {
 
@@ -124,6 +125,7 @@
                 .then(
                     function (resp) {
                         vm.isFollowing = false;
+                        vm.pageOwner.followersCount -= 1;
                     },
                     function (err) {
                         console.log("err");

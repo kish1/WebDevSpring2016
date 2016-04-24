@@ -18,12 +18,11 @@ module.exports = function (app, userModel) {
             .checkFollows(userId1, userId2)
             .then(
                 function (resp) {
-                    console.log(userId1 + " " + userId2);
-                    console.log("cf");
-                    console.log(resp);
-                    res.json(resp[0].following.length > 0);
+                    console.log(resp[0] != null);
+                    res.json(resp[0] != null);
                 },
                 function (err) {
+                    console.log(err);
                     res.status(400).send(err);
                 }
             );
