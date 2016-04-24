@@ -150,6 +150,8 @@ body {
 }
 
 @media (max-width: 992px) {
+
+
     .display-picture {
         float: left;
         margin-right: 15px;
@@ -169,6 +171,8 @@ body {
         float: left;
     }
 }
+
+
 
 .thumb-picture img{
     height: 50px;
@@ -254,21 +258,47 @@ body {
     z-index: 2;
     top: 50%;
     position: relative;
-    left: 0;
-    right: 0;
+    left: -15%;
+    right: 0%;
     width: 100%;
     text-align: center;
 }
 
 .home-img h3 {
     z-index: 2;
-    top: 45%;
+    top: 50%;
     position: relative;
-    left: 0;
+    left: -15%;
     right: 0;
     width: 100%;
     text-align: center;
 }
+
+@media (max-device-width: 480px) {
+    .home-img h1 {
+        z-index: 2;
+        top: 40%;
+        position: relative;
+        left: -10%;
+        right: 0%;
+        width: 100%;
+        text-align: center;
+        font-size: 80px;
+    }
+
+    .home-img h3 {
+        z-index: 2;
+        top: 40%;
+        position: relative;
+        left: -10%;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 55px;
+    }
+}
+
+
 
 
 .box {

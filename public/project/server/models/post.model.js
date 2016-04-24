@@ -24,6 +24,11 @@ module.exports = function(db, mongoose) {
     return api;
 
     function findStarCountForPost(postId) {
+        return PostModel.findById(postId, "name starrersCount");
+    }
+
+    /*
+    function findStarCountForPost(postId) {
         var deferred = q.defer();
         return PostModel.aggregate([{$match: {"_id": new mongoose.Types.ObjectId(postId)}}, {$project: {"starrersCount": {$size: '$starrers'}}}],
         function (err, val) {
@@ -35,6 +40,7 @@ module.exports = function(db, mongoose) {
         });
         return deferred.promise;
     }
+    */
 
     function findStarsForPost(postId, start, count) {
         start = parseInt(start);
@@ -43,11 +49,11 @@ module.exports = function(db, mongoose) {
     }
 
     function deleteStarForPost(postId, userId) {
-        return PostModel.findByIdAndUpdate(postId, {$pullAll: {"starrers": [userId]}});
+        return PostModel.findByIdAndUpdate(postId, {$pullAll: {"starrers": [userId]}, $inc:{"starrersCount": -1}});
     }
 
     function createStarForPost(postId, userId) {
-        return PostModel.findByIdAndUpdate(postId, {$addToSet: {"starrers": userId}});
+        return PostModel.findByIdAndUpdate(postId, {$addToSet: {"starrers": userId}, $inc:{"starrersCount": 1}});
     }
 
     function findLastPostsForUser(userId, count) {
@@ -73,12 +79,18 @@ module.exports = function(db, mongoose) {
             tags: post.tags,
             createdOn: post.createdOn,
             content: post.content,
-            starrers: []
+            starrers: [],
+            starrersCount: 0
         };
         console.log(newPost);
         return PostModel.create(newPost);
     }
 
+    function findPostById(postId) {
+        return PostModel.findById(postId, "userId name tags createdOn content starrersCount");
+    }
+
+    /*
     function findPostById(postId) {
         var deferred = q.defer();
         PostModel.aggregate([{$match: {"_id": mongoose.Types.ObjectId(postId)}}, {$project: {
@@ -93,8 +105,9 @@ module.exports = function(db, mongoose) {
         });
         return deferred.promise;
     }
+    */
 
     function findAllPostsForUser(userId) {
-        return PostModel.find({"userId": userId}, {"name": 1});
+        return PostModel.find({"userId": userId}, "name");
     }
 };

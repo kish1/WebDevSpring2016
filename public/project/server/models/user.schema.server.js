@@ -18,6 +18,9 @@ module.exports = function (mongoose) {
         followers: [mongoose.Schema.ObjectId],
         following: [mongoose.Schema.ObjectId],
         starred: [mongoose.Schema.ObjectId],
+        followersCount: Number,
+        followingCount: Number,
+        starredCount: Number,
         isAdmin: Boolean
     }, {collection: 'project.user'});
     return userSchema;

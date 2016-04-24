@@ -24,6 +24,7 @@
             updateDisplayPictureById: updateDisplayPictureById,
             deleteUserById: deleteUserById,
 
+            register: register,
             login: login,
             logout: logout
         };
@@ -39,6 +40,10 @@
 
         function findUserById(userId) {
             return $http.get("/api/project/user/" + userId);
+        }
+
+        function register(user) {
+            return $http.post("/api/project/register", user);
         }
 
         function login(credentials) {
@@ -58,8 +63,8 @@
             $rootScope.currentUser = user;
         }
 
-        function findUserByCredentials(email, password) {
-            return $http.get("/api/project/user?handle=" + email + "&password=" + password);
+        function findUserByCredentials(handle, password) {
+            return $http.post("/api/project/user/credentials", {"handle": handle,"password":password});
         }
 
         function findAllUsers() {

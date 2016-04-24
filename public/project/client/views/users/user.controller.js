@@ -31,7 +31,10 @@
                 .findUserByHandle(vm.pageOwnerHandle)
                 .then(function (resp) {
                     vm.pageOwner = resp.data;
-                    vm.dp = imageUrl(vm.pageOwner.displayPicture);
+                    if (vm.pageOwner.displayPicture) {
+                        vm.dp = imageUrl(vm.pageOwner.displayPicture);
+                    }
+
 
                     PostService
                         .findLastPostsForUser(vm.pageOwner._id, vm.postCount)
@@ -46,8 +49,8 @@
                             $q.all(promises)
                                 .then(
                                     function (resp) {
-
-                                        var result = resp.map(function (x) { return x.data[0]});
+                                        console.log(resp);
+                                        var result = resp.map(function (x) { return x.data});
                                         console.log(result);
                                         for(var i in result) {
                                             vm.lastNPosts[i].createdOn = new Date(vm.lastNPosts[i].createdOn);
@@ -283,7 +286,7 @@
             init();
 
             function pic(result) {
-                return imageUrl(result.displayPicture? result.displayPicture : $scope.defaultImage);
+                return result.displayPicture? imageUrl(result.displayPicture) : $scope.defaultImage;
             }
 
             function makeContent() {
@@ -376,8 +379,7 @@
             init();
 
             function pic(result) {
-
-                return imageUrl(result.displayPicture? result.displayPicture : $scope.defaultImage);
+                return result.displayPicture? imageUrl(result.displayPicture) : $scope.defaultImage;
             }
 
             function makeContent() {

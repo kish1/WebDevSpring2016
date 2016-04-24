@@ -10,7 +10,8 @@ module.exports = function (mongoose) {
         tags: [String],
         //content: [{type: String, value: String}],
         content:[{type: mongoose.Schema.Types.Object, ref:"project.contentPart"}],
-        starrers: [mongoose.Schema.ObjectId]
+        starrers: [mongoose.Schema.ObjectId],
+        starrersCount: Number
     }, {collection: 'project.post'});
     return postSchema;
 }

@@ -28,7 +28,7 @@ module.exports = function (app, userModel) {
 
     app.get("/api/project/user/handle/:handle", findUserByHandle);
     app.get("/api/project/user/all", auth, findAllUsers);
-    app.get("/api/project/user", findUserByCredentials);
+    app.post("/api/project/user/credentials", findUserByCredentials);
     app.get("/api/project/user/:id", findUserById);
     app.get("/api/project/user/name/:id", findNameByUserId);
     app.post("/api/project/user", auth, createUser);
@@ -162,8 +162,8 @@ module.exports = function (app, userModel) {
 */
     function findUserByCredentials(req, res) {
         var credentials = {
-            handle: req.query.handle,
-            password: req.query.password
+            handle: req.body.handle,
+            password: req.body.password
         };
         userModel
             .findUserByCredentials(credentials)

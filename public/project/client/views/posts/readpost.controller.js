@@ -274,7 +274,7 @@
             init();
 
             function pic(result) {
-                return imageUrl(result.displayPicture? result.displayPicture : $scope.defaultImage);
+                return result.displayPicture? imageUrl(result.displayPicture) : $scope.defaultImage;
             }
 
             function makeContent() {

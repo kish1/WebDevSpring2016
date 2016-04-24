@@ -46,12 +46,12 @@
             UserService.
                 findUserByCredentials(user.handle, user.password)
                 .then(function(response) {
-                    //console.log(response);
+                    console.log(response);
                     if (response.data) {
                         vm.message = "'" + user.handle + "'" + " is already in use. Choose a different handle.";
                     } else {
                         UserService.
-                            createUser(user)
+                            register(user)
                             .then(function(response) {
                                 UserService.setCurrentUser(response.data);
                                 $location.url("/profile");
