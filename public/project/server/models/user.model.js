@@ -77,11 +77,11 @@ module.exports = function(db, mongoose) {
     }
 
     function checkStarred(userId, postId) {
-        return UserModel.find({"_id": userId}, {starred: {$elemMatch: {$eq: postId}}});
+        return UserModel.find({"_id": userId}, {starred: {$elemMatch: {$not: {$ne: mongoose.Schema.ObjectId(postId)}}}});
     }
 
     function checkFollows(userId1, userId2) {
-        return UserModel.find({"_id": userId1}, {following: {$elemMatch: {$eq: userId2}}});
+        return UserModel.find({"_id": userId1}, {following: {$elemMatch: {$not: {$ne: mongoose.Schema.ObjectId(userId2)}}}});
     }
 
     function findFollowingForUser(userId, start, count) {

@@ -89,7 +89,9 @@
                                     FollowService
                                         .checkFollows(vm.currentUser._id, vm.pageOwner._id)
                                         .then(function (resp) {
+                                            console.log(resp);
                                             if (resp.data) {
+
                                                 vm.isFollowing = true;
                                             }
                                         });
