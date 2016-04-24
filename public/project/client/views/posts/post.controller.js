@@ -23,6 +23,10 @@
             UserService
                 .findUserByHandle(vm.pageOwnerHandle)
                 .then(function (resp) {
+                    if (!resp.data) {
+                        $location.path("/notfound");
+                        return;
+                    }
                     vm.pageOwner = resp.data;
                     console.log(vm.pageOwner);
                     PostService.findAllPostsForUser(vm.pageOwner._id)

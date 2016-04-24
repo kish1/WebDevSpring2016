@@ -17,6 +17,9 @@
                     loggedIn : checkCurrentUser
                 }
             })
+            .when("/notfound", {
+              templateUrl: "views/redirect/notfound.view.html"
+            })
             .when("/login", {
                 templateUrl: "views/users/login.view.html",
                 controller: "LoginController",

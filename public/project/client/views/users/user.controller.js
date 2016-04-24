@@ -30,6 +30,10 @@
             UserService
                 .findUserByHandle(vm.pageOwnerHandle)
                 .then(function (resp) {
+                    if (!resp.data) {
+                        $location.path("/notfound");
+                        return;
+                    }
                     vm.pageOwner = resp.data;
                     if (vm.pageOwner.displayPicture) {
                         vm.dp = imageUrl(vm.pageOwner.displayPicture);

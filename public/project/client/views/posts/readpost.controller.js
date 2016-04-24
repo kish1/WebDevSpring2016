@@ -103,6 +103,10 @@
 
 
                         });
+                },
+                function (err) {
+                    $location.path("/notfound");
+                    return;
                 });
         };
         init();
