@@ -43,8 +43,12 @@
                     {{post.content[0].value.slice(0, 400)}}... <a href="" ng-click="model.readPost(post._id)">Read more</a>
                 </div>
                 <div ng-if="post.content[0].type == 'video'">
-                    <iframe class="pull-left" ng-src="{{model.trust(post.content[0].value)}}" type="text/html" width="280" frameborder="0"  allowfullscreen></iframe>
-                    <a href="" ng-click="model.readPost(post._id)">Read more</a>
+                    <div class="row container">
+                        <iframe class="pull-left" ng-src="{{model.trust(post.content[0].value)}}" type="text/html" width="280" frameborder="0"  allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-5"></div>
+                    <a class="lead" href="" ng-click="model.readPost(post._id)">View more</a>
+                    <br>
                 </div>
                 <footer ng-repeat="tag in post.tags" class="pull-left">
                     <span class="label label-default">{{tag}}</span>
