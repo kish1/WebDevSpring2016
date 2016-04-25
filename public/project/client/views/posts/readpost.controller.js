@@ -51,7 +51,40 @@
                             vm.postOwnerName = data.firstName + " " + data.lastName;
                             vm.postOwnerHandle = data.handle;
                             vm.postOwnerDP = imageUrl(data.displayPicture);
+
+                            CommentService.findAllCommentsForPost(vm.postId)
+                                .then(function(response) {
+                                    vm.comments = response.data;
+
+                                    var promises = vm.comments.map(function (x) {
+                                        return UserService.findNameByUserId(x.userId);
+                                    });
+
+                                    var userDetailsMap = {};
+                                    $q.all(promises)
+                                        .then(function(resp) {
+                                            console.log(resp);
+                                            var names = resp.map(function(x){return x.data;});
+                                            for(var i in names) {
+                                                userDetailsMap[names[i]._id] = names[i];
+                                            }
+                                            console.log(userDetailsMap);
+                                            for(var i in vm.comments) {
+                                                vm.comments[i].timestamp = new Date(vm.comments[i].timestamp);
+                                                var userDetails = userDetailsMap[vm.comments[i].userId];
+                                                vm.comments[i].firstName = userDetails.firstName;
+                                                vm.comments[i].lastName = userDetails.lastName;
+                                                vm.comments[i].displayPicture = userDetails.displayPicture;
+                                                vm.comments[i].handle = userDetails.handle;
+                                            }
+                                            console.log(vm.comments);
+                                        });
+
+
+                                });
+
                         });
+
 
                     UserService
                         .getCurrentUser()
@@ -73,36 +106,6 @@
                             }
                         });
 
-                    CommentService.findAllCommentsForPost(vm.postId)
-                        .then(function(response) {
-                            vm.comments = response.data;
-
-                            var promises = vm.comments.map(function (x) {
-                                return UserService.findNameByUserId(x.userId);
-                            });
-
-                            var userDetailsMap = {};
-                            $q.all(promises)
-                                .then(function(resp) {
-                                    console.log(resp);
-                                    var names = resp.map(function(x){return x.data;});
-                                    for(var i in names) {
-                                        userDetailsMap[names[i]._id] = names[i];
-                                    }
-                                    console.log(userDetailsMap);
-                                    for(var i in vm.comments) {
-                                        vm.comments[i].timestamp = new Date(vm.comments[i].timestamp);
-                                        var userDetails = userDetailsMap[vm.comments[i].userId];
-                                        vm.comments[i].firstName = userDetails.firstName;
-                                        vm.comments[i].lastName = userDetails.lastName;
-                                        vm.comments[i].displayPicture = userDetails.displayPicture;
-                                        vm.comments[i].handle = userDetails.handle;
-                                    }
-                                    console.log(vm.comments);
-                                });
-
-
-                        });
                 },
                 function (err) {
                     $location.path("/notfound");

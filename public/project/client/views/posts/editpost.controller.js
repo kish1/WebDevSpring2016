@@ -44,7 +44,8 @@
                             .then(function (response) {
                                 if (response.data) {
                                     vm.post = response.data;
-                                    console.log(vm.post);
+                                    vm.post.tags = vm.post.tags.join(" ");
+                                //    console.log(vm.post);
                                 }
                             });
                     }
