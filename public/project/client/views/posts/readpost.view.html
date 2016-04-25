@@ -18,17 +18,14 @@
         <div class="col-xs-2 pull-right no-wrapping btn-group" role="group">
             <a ng-disabled="!model.currentUser || model.isOwnPost" ng-class="{'btn btn-primary btn-sm': model.hasStarred, 'btn btn-default btn-sm': !model.hasStarred}" role="button" ng-click="model.clickStar()"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star</a>
             <a  role="button" ng-click="model.findStarrers()" class="btn btn-default btn-sm">{{model.starrersCount}}</a>
-
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-2"></div>
         <div class="col-md-8 text-center post-heading">
             <h2>{{model.post.name}}</h2>
             <small>{{model.post.createdOn.toDateString()}}</small>
             <hr>
-
             <div ng-repeat="part in model.post.content" ng-switch="part.type">
                 <div class="row" ng-switch-when="text">
                     <div class="col-xs-2"></div>
@@ -45,28 +42,29 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="social-icons">
                 <div class="col-xs-2"></div>
-                <div class="col-md-12">
-                    <div class="social-icons">
-                        <p>Share this post:</p>
-                        <ul class="clearfix">
-                            <li><a href="https://www.facebook.com/" target="_blank"><img src="/project/images/icons/fb.png"></a></li>
-                            <li><a href="https://twitter.com/" target="_blank"><img src="/project/images/icons/twitter.png"></a></li>
-                            <li><a href="https://www.pinterest.com/" target="_blank"><img src="/project/images/icons/pinterest.png"></a></li>
-                            <li><a href="https://plus.google.com/" target="_blank"><img src="/project/images/icons/gplus.png"></a></li>
-                            <li><a href="https://www.linkedin.com/" target="_blank"><img src="/project/images/icons/linkedin.png"></a></li>
-                        </ul>
-                    </div>
-                </div>
+                <p>Share this post:</p>
+                <div class="col-xs-2"></div>
+                <ul class="clearfix">
+                    <li><a href="https://www.facebook.com/" target="_blank"><img src="/project/images/icons/fb.png"></a></li>
+                    <li><a href="https://twitter.com/" target="_blank"><img src="/project/images/icons/twitter.png"></a></li>
+                    <li><a href="https://www.pinterest.com/" target="_blank"><img src="/project/images/icons/pinterest.png"></a></li>
+                    <li><a href="https://plus.google.com/" target="_blank"><img src="/project/images/icons/gplus.png"></a></li>
+                    <li><a href="https://www.linkedin.com/" target="_blank"><img src="/project/images/icons/linkedin.png"></a></li>
+                </ul>
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-2"></div>
         <div class="col-xs-8">
             <br>
+            <hr>
             <h3>Comments</h3>
             <div class="alert alert-danger" role="alert" ng-show="model.message != null">{{model.message}}</div>
             <div class="form-group row">
@@ -76,11 +74,9 @@
                 <button class="btn btn-selected btn-sm" ng-hide="model.commentSelected" ng-click="model.addComment(model.comment)">Add Comment</button>
                 <button class="btn btn-info btn-sm" ng-show="model.commentSelected" ng-click="model.updateComment(model.comment)">Update Comment</button>
             </div>
-
             <br><br>
             <div ng-repeat="comment in model.comments">
                 <div class="row">
-
                     <div class="col-xs-8 comment comment-thumb-picture">
                         <div class="row">
                             <div class="comment-picture-col">
@@ -108,8 +104,5 @@
             </div>
         </div>
     </div>
-
     <div class="row"></div>
-
 </div>
-

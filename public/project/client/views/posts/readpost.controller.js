@@ -210,6 +210,7 @@
                     var comm = response.data;
                     comm.firstName = vm.currentUser.firstName;
                     comm.lastName = vm.currentUser.lastName;
+                    comm.timestamp = new Date(comm.timestamp);
                     vm.comments.push(comm);
                     vm.comment = {};
                 });
