@@ -10,7 +10,7 @@
     function PostController(UserService, PostService, $location, $routeParams) {
         var vm = this;
         vm.currentUser = null;
-        vm.myposts = null;
+        vm.posts = null;
         vm.pageOwnerHandle = null;
         vm.pageOwner = null;
         vm.isOwnPage = false;
@@ -50,7 +50,7 @@
             PostService
                 .deletePostById(postId)
                 .then(function (resp) {
-                    vm.myposts.splice($index, 1);
+                    vm.posts.splice($index, 1);
                 });
         }
 
