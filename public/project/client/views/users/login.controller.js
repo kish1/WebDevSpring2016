@@ -40,12 +40,12 @@
                         UserService.setCurrentUser(response.data);
                         $location.url('/profile');
                     } else {
-                        vm.message = "User not found";
+                        vm.message = "This handle and password combination does not exist";
 
                     }
                 },
                     function (err)  {
-                        vm.message = "User not found";
+                        vm.message = "This handle and password combination does not exist";
                     });
         }
 
