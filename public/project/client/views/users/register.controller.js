@@ -44,9 +44,8 @@
             }
 
             UserService.
-                findUserByCredentials(user.handle, user.password)
+                findUserByHandle(user.handle)
                 .then(function(response) {
-                    console.log(response);
                     if (response.data) {
                         vm.message = "'" + user.handle + "'" + " is already in use. Choose a different handle.";
                     } else {

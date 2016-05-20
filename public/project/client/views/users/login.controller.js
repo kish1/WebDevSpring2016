@@ -38,13 +38,15 @@
                 .then(function(response) {
                     if (response.data) {
                         UserService.setCurrentUser(response.data);
-                        //console.log(response);
                         $location.url('/profile');
                     } else {
                         vm.message = "User not found";
 
                     }
-                });
+                },
+                    function (err)  {
+                        vm.message = "User not found";
+                    });
         }
 
     }
