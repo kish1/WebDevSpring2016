@@ -7,11 +7,12 @@
         .module("BlogApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController(UserService, $location) {
+    function HeaderController(UserService, $location, $rootScope) {
         //console.log("Header Loaded");
         var vm = this;
         vm.isLoggedIn = isLoggedIn;
         vm.signOut = signOut;
+        vm.goHome = goHome;
         vm.currentUser = null;
 
 
@@ -19,6 +20,14 @@
             vm.$location = $location;
         };
         init();
+
+        function goHome() {
+            if ($rootScope.currentUser) {
+                $location.path('/user/' + $rootScope.currentUser.handle);
+            } else {
+                $location.path('/home');
+            }
+        }
 
 
         function isLoggedIn() {

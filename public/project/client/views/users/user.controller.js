@@ -45,7 +45,6 @@
                         .then(function (resp) {
                             //vm.lastNPosts = JSON.parse(JSON.stringify(resp.data))
                             vm.lastNPosts = resp.data
-                            console.log(vm.lastNPosts);
                             //var starCountDict = {};
                             var promises = vm.lastNPosts.map(function (x) {
                                 return StarService.findStarCountForPost(x._id);
@@ -53,9 +52,7 @@
                             $q.all(promises)
                                 .then(
                                     function (resp) {
-                                        console.log(resp);
                                         var result = resp.map(function (x) { return x.data});
-                                        console.log(result);
                                         for(var i in result) {
                                             vm.lastNPosts[i].createdOn = new Date(vm.lastNPosts[i].createdOn);
                                             vm.lastNPosts[i].starrersCount = result[i].starrersCount;
@@ -72,7 +69,6 @@
                             for(var i in vm.lastNPosts) {
                                 vm.lastNPosts[i].starrersCount = starCountDict[vm.lastNPosts[i]._id];
                             }*/
-                            console.log(vm.lastNPosts);
 
                         });
 
@@ -89,7 +85,6 @@
                                     FollowService
                                         .checkFollows(vm.currentUser._id, vm.pageOwner._id)
                                         .then(function (resp) {
-                                            console.log(resp);
                                             if (resp.data === true) {
 
                                                 vm.isFollowing = true;
@@ -202,14 +197,11 @@
             init();
 
             function makeContent() {
-                console.log($scope.results);
                 var promises = $scope.results.map(function(x) { return PostService.findPostById(x)});
                 var news = [];
                 $q.all(promises)
                     .then(function (resp) {
-                        console.log(resp);
                         news = resp.map(function(x) {return x.data;});
-                        console.log(news);
                         $scope.results = news.map(function(x) {x.content = x.name; return x;});
                         //console.log($scope.results);
                     });
@@ -314,7 +306,6 @@
                 FollowService
                     .findFollowingForUser(userId, $scope.current, $scope.count)
                     .then(function (resp) {
-                        console.log(resp);
                         $scope.results = resp.data.following;
                         $scope.current += $scope.count;
                         if ($scope.current - $scope.count > 0) {
